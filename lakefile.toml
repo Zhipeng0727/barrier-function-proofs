@@ -1,0 +1,14 @@
+name = "prover1"
+version = "0.1.0"
+defaultTargets = ["prover1"]
+
+[[lean_lib]]
+name = "Prover1"
+
+[[lean_exe]]
+name = "prover1"
+root = "Main"
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
