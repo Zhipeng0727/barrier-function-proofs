@@ -7,7 +7,7 @@ noncomputable section
 noncomputable section
 
 -- ==========================================
--- 1. 基础框架定义 (Robust Barrier Function)
+-- 1.  (Robust Barrier Function)
 -- ==========================================
 structure IsRobustBarrierFunction
   (f : (ℝ × ℝ) → (ℝ × ℝ) → (ℝ × ℝ))
@@ -17,7 +17,7 @@ structure IsRobustBarrierFunction
   robust_barrier_condition : ∀ p, p ∈ S → ∀ u, u ∈ U → B (f p u) - l * B p ≥ 0
 
 -- ==========================================
--- 2. 系统参数与函数定义 (Example 3)
+-- 2.  (Example 3)
 -- ==========================================
 def f_ex3 (p u : ℝ × ℝ) : ℝ × ℝ :=
   ((1 / 2 : ℝ) * p.1 + (2 / 5 : ℝ) * p.2 + u.1,
@@ -38,7 +38,7 @@ lemma ex3_outside_safe : ∀ p, p ∉ S_ex3 → B_ex3 p < 0 := by
 
   by_cases hx : |x| ≤ (1/5 : ℝ)
 
-  · -- 从 ¬(A ∧ B) 和 A 推出 ¬B
+  · -- from ¬(A ∧ B) and  A to ¬B
     have hy_not : ¬ |y| ≤ (1/5 : ℝ) := by
       exact (not_and.mp hp) hx
 
@@ -46,8 +46,7 @@ lemma ex3_outside_safe : ∀ p, p ∉ S_ex3 → B_ex3 p < 0 := by
       exact lt_of_not_ge hy_not
 
     have hy2 : (1/5 : ℝ)^2 < y^2 := by
-      rw [← sq_abs]
-      nlinarith [hy]
+      nlinarith [hy, sq_abs y]
 
     dsimp [B_ex3]
     nlinarith [hy2, sq_nonneg x]
@@ -56,15 +55,13 @@ lemma ex3_outside_safe : ∀ p, p ∉ S_ex3 → B_ex3 p < 0 := by
       exact lt_of_not_ge hx
 
     have hx2 : (1/5 : ℝ)^2 < x^2 := by
-      rw [← sq_abs]
-      nlinarith [hx']
+      nlinarith [hx', sq_abs x]
 
     dsimp [B_ex3]
     nlinarith [hx2, sq_nonneg y]
 -- ==========================================
--- 4. 关键一步：
---    对所有状态 (x,y) 都有 barrier inequality，
---    所以当然也对所有 p ∈ S_ex3 成立
+-- 4. for all (x,y) , barrier inequality，
+--    and for all p ∈ S_ex3
 -- ==========================================
 lemma ex3_barrier_step
     {x y u1 u2 : ℝ}
@@ -146,7 +143,7 @@ lemma ex3_barrier_step
   nlinarith [hquad, hu1sq, hu2sq, hxu1, hyu1, hyu2, hxlower, hylower]
 
 -- ==========================================
--- 5. 最终结论：B_ex3 是 robust barrier function
+-- 5. B_ex3 is robust barrier function
 -- ==========================================
 theorem ex3_B_isRobustBarrier :
   IsRobustBarrierFunction f_ex3 S_ex3 U_ex3 B_ex3 (7 / 10 : ℝ) := by
