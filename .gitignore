@@ -13,3 +13,11 @@ __pycache__/
 .secrets.env
 # Web UI per-run outputs
 webapp/_runs/
+# backups / snapshots / run logs (kept local, not published)
+*_backup_*/
+*_backup.*
+*_old.*
+snapshot_v*/
+.refactor_backup_*/
+logs/
+*.log

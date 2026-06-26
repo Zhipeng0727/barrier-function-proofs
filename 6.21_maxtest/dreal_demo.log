@@ -1,4 +1,0 @@
-dreal docker available: True
-L4-014: dreal status=unknown sound=True | conditions={'positivity': 'proved (via interval PSD)', 'decrease': 'unknown'} delta=0.0001
-L1-009: dreal status=unknown sound=True | conditions={'positivity': 'proved (via interval PSD)', 'decrease': 'unknown'} delta=0.0001
-L2-001: dreal status=unknown sound=True | conditions={'positivity': 'proved (via interval PSD)', 'decrease': 'unknown'} delta=0.0001
