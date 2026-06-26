@@ -1,0 +1,120 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B2-013",
+    "ode": "dx1/dt = -x1 - tanh(x1), dx2/dt = -x2 - tanh(x2)",
+    "state_vars": [
+      "x1",
+      "x2"
+    ],
+    "f_expr": [
+      "-x1 - tanh(x1)",
+      "-x2 - tanh(x2)"
+    ],
+    "X_domain": "ball",
+    "X_u_desc": "||x|| >= 1.131",
+    "X_u_expr": "x1**2 + x2**2 >= 1.279161",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B2-013",
+      "layer": "L2-new",
+      "group": "B2",
+      "task": "barrier",
+      "cert_class": "nonpoly-explicit",
+      "source": "tanh-dissipative (c=0.5)"
+    }
+  },
+  "timestamp": "2026-06-11T18:23:07.988760",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "1.279160999 - x1**2 - x2**2",
+        "invariant_set": "C = {x in X : x1**2 + x2**2 <= 1.279160999}, i.e. the ball of radius sqrt(1.279160999) ≈ 1.1309999995579134, intersected with X",
+        "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 1.131}, equivalently x1**2 + x2**2 >= 1.131**2 = 1.279161. For any x in X_u, h(x) = 1.279160999 - x1**2 - x2**2 <= 1.279160999 - 1.279161 = -0.000000001 < 0. Therefore h(x) < 0 for all x in X_u.",
+        "lie_derivative": "We have h(x) = 1.279160999 - x1**2 - x2**2, so ∇h(x) = (-2*x1, -2*x2). The dynamics are f1(x) = -x1 - tanh(x1), f2(x) = -x2 - tanh(x2). Hence ḣ(x) = ∇h·f = (-2*x1)*(-x1 - tanh(x1)) + (-2*x2)*(-x2 - tanh(x2)) = 2*x1**2 + 2*x1*tanh(x1) + 2*x2**2 + 2*x2*tanh(x2).",
+        "condition2_check": "On the boundary ∂C, h(x)=0, so x1**2 + x2**2 = 1.279160999. For every real scalar z, tanh(z) has the same sign as z, and tanh(0)=0. Therefore z*tanh(z) >= 0 for all z in R. Applying this to z=x1 and z=x2 gives x1*tanh(x1) >= 0 and x2*tanh(x2) >= 0. Thus on ∂C, ḣ(x) = 2*x1**2 + 2*x1*tanh(x1) + 2*x2**2 + 2*x2*tanh(x2) >= 2*x1**2 + 2*x2**2 = 2*(x1**2 + x2**2) = 2*1.279160999 = 2.558321998 > 0. Hence ḣ(x) >= 0 on ∂C, satisfying Nagumo's condition.",
+        "reasoning": "The dynamics are radially inward in each coordinate because -x_i - tanh(x_i) always points opposite to x_i. Therefore Euclidean balls centered at the origin are forward invariant when expressed as superlevel sets h(x)=r**2-||x||**2. To avoid the unsafe set ||x|| >= 1.131, the barrier must be strictly negative at and beyond radius 1.131. Choosing r**2 = 1.279160999, just below 1.131**2 = 1.279161, gives an invariant ball whose radius is extremely close to the unsafe radius while maintaining the required strict negativity on the unsafe set."
+      },
+      "proposer_elapsed_s": 25.462,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "2*x1*(x1 + tanh(x1)) + 2*x2*(x2 + tanh(x2))",
+          "boundary_epsilon": 0.354779,
+          "boundary_pts_found": 203,
+          "cond1_max_h_in_Xu": -0.00035,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 3.310639,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.1
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.027117,
+          "trajectory_valid": true,
+          "elapsed_s": 0.164
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "Condition 1 holds. The unsafe set is ||x|| >= 1.131, so x1^2 + x2^2 >= 1.131^2 = 1.279161. Therefore h(x) = 1.279160999 - x1^2 - x2^2 <= 1.279160999 - 1.279161 = -1.0e-9 < 0. For example, at x = (1.131, 0), which is in X_u, h(x) = -1.0e-9.",
+        "lie_derivative_computed": "∇h = (-2x1, -2x2). With f1 = -x1 - tanh(x1), f2 = -x2 - tanh(x2), the Lie derivative is ḣ = (-2x1)(-x1 - tanh(x1)) + (-2x2)(-x2 - tanh(x2)) = 2x1^2 + 2x2^2 + 2x1 tanh(x1) + 2x2 tanh(x2) = 2(x1^2 + x2^2 + x1 tanh(x1) + x2 tanh(x2)).",
+        "condition2_result": "Condition 2 holds. On the boundary h(x)=0, one has x1^2 + x2^2 = 1.279160999. Since tanh(z) has the same sign as z, z tanh(z) >= 0 for all real z. Hence on h=0, ḣ = 2(1.279160999 + x1 tanh(x1) + x2 tanh(x2)) >= 2(1.279160999) = 2.558321998 > 0. Thus the Nagumo condition ḣ >= 0 holds strictly on the entire boundary, including axis cases such as x=(±sqrt(1.279160999),0) and x=(0,±sqrt(1.279160999)).",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The invariant ball can be enlarged slightly while preserving both conditions. For a radial quadratic h_epsilon(x) = 1.131^2 - epsilon - x1^2 - x2^2 = 1.279161 - epsilon - x1^2 - x2^2, any epsilon > 0 satisfies Condition 1 with margin at least -epsilon on the unsafe boundary ||x||=1.131, and Condition 2 still holds because ḣ >= 2(1.279161 - epsilon) > 0 for epsilon < 1.279161. The current choice uses epsilon = 1e-9. For example, epsilon = 1e-12 gives h(x)=1.279160999999 - x1^2 - x2^2, enlarging the certified radius to approximately 1.130999999999558 while retaining h<0 on all ||x|| >= 1.131."
+      },
+      "refuter_elapsed_s": 75.109
+    }
+  ],
+  "final_barrier": {
+    "h": "1.279160999 - x1**2 - x2**2",
+    "invariant_set": "C = {x in X : x1**2 + x2**2 <= 1.279160999}, i.e. the ball of radius sqrt(1.279160999) ≈ 1.1309999995579134, intersected with X",
+    "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 1.131}, equivalently x1**2 + x2**2 >= 1.131**2 = 1.279161. For any x in X_u, h(x) = 1.279160999 - x1**2 - x2**2 <= 1.279160999 - 1.279161 = -0.000000001 < 0. Therefore h(x) < 0 for all x in X_u.",
+    "lie_derivative": "We have h(x) = 1.279160999 - x1**2 - x2**2, so ∇h(x) = (-2*x1, -2*x2). The dynamics are f1(x) = -x1 - tanh(x1), f2(x) = -x2 - tanh(x2). Hence ḣ(x) = ∇h·f = (-2*x1)*(-x1 - tanh(x1)) + (-2*x2)*(-x2 - tanh(x2)) = 2*x1**2 + 2*x1*tanh(x1) + 2*x2**2 + 2*x2*tanh(x2).",
+    "condition2_check": "On the boundary ∂C, h(x)=0, so x1**2 + x2**2 = 1.279160999. For every real scalar z, tanh(z) has the same sign as z, and tanh(0)=0. Therefore z*tanh(z) >= 0 for all z in R. Applying this to z=x1 and z=x2 gives x1*tanh(x1) >= 0 and x2*tanh(x2) >= 0. Thus on ∂C, ḣ(x) = 2*x1**2 + 2*x1*tanh(x1) + 2*x2**2 + 2*x2*tanh(x2) >= 2*x1**2 + 2*x2**2 = 2*(x1**2 + x2**2) = 2*1.279160999 = 2.558321998 > 0. Hence ḣ(x) >= 0 on ∂C, satisfying Nagumo's condition.",
+    "reasoning": "The dynamics are radially inward in each coordinate because -x_i - tanh(x_i) always points opposite to x_i. Therefore Euclidean balls centered at the origin are forward invariant when expressed as superlevel sets h(x)=r**2-||x||**2. To avoid the unsafe set ||x|| >= 1.131, the barrier must be strictly negative at and beyond radius 1.131. Choosing r**2 = 1.279160999, just below 1.131**2 = 1.279161, gives an invariant ball whose radius is extremely close to the unsafe radius while maintaining the required strict negativity on the unsafe set."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 100.842
+  },
+  "tokens": {
+    "input": 2508,
+    "output": 5231,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1700,
+        "output_tokens": 1244,
+        "elapsed_s": 25.462
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 808,
+        "output_tokens": 3987,
+        "elapsed_s": 75.109
+      }
+    ]
+  }
+}

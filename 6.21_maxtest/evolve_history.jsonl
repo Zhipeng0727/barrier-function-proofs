@@ -1,0 +1,9 @@
+{"key": "tanh.tanh_sign", "verified": false, "rounds": 4, "sec": 62, "goal": "0 ≤ y * Real.tanh y", "out_tokens_cum": 772}
+{"key": "tanh.tanh_bound", "verified": false, "rounds": 4, "sec": 52, "goal": "Real.tanh y ≤ 1 ∧ -1 ≤ Real.tanh y", "out_tokens_cum": 1903}
+{"key": "log.log_sub_one", "verified": true, "rounds": 1, "sec": 12, "goal": "0 < x → Real.log x ≤ x - 1", "out_tokens_cum": 1964}
+{"key": "log.log_self_lower", "verified": false, "rounds": 4, "sec": 68, "goal": "0 < x → 1 - 1 / x ≤ Real.log x", "out_tokens_cum": 2856}
+{"key": "exp.exp_add_one", "verified": true, "rounds": 2, "sec": 23, "goal": "1 + x ≤ Real.exp x", "out_tokens_cum": 2960}
+{"key": "exp.exp_pos", "verified": true, "rounds": 1, "sec": 8, "goal": "0 < Real.exp x", "out_tokens_cum": 3005}
+{"key": "trig.sin_cos_sq", "verified": true, "rounds": 3, "sec": 35, "goal": "Real.sin t ^ 2 + Real.cos t ^ 2 = 1", "out_tokens_cum": 3182}
+{"key": "trig.one_sub_cos_nonneg", "verified": true, "rounds": 1, "sec": 12, "goal": "0 ≤ 1 - Real.cos t", "out_tokens_cum": 3237}
+{"round": 1, "solved": 1, "total": 2, "new_recipes": 0, "out_tokens_cum": 13320}

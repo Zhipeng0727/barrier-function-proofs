@@ -1,0 +1,130 @@
+provider=glm model=glm-5.1 budget={'inner': 2, 'barriers': 2, 'max_calls': 4, 'repeat_l3': 2}
+
+
+================================================================
+L4-014: L4-014 tanh-damped oscillator  | cert: 0.5*x**2+0.5*y**2
+================================================================
+  [L0] barrier candidate #1: h = 0.5*x**2+0.5*y**2
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-fresh (high): in=1626 out=1164
+      attempt b0.0 [fresh] FAIL → L2 (tactic_failed_nonlinear)
+      ↑ escalate L2  (tactic_failed_nonlinear)
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-new_strategy (high): in=1830 out=1477
+      attempt b0.1 [new_strategy] FAIL → L1 (unknown_identifier)
+      ↑ escalate L1  (unknown_identifier)
+  [L3] regenerating barrier (certificate formalization-hostile)…
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] L3-reproposer (high): in=811 out=508
+  [L0] barrier candidate #2: h = 0.5*x**2 + 0.5*y**2
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-fresh (high): in=1627 out=1616
+      attempt b1.0 [fresh] FAIL → L2 (type_mismatch)
+      ↑ escalate L2  (type_mismatch)
+  [Retry 1/8] SSLError (provider zhipu-glm), retrying in 2s...
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-new_strategy (high): in=1780 out=707
+      attempt b1.1 [new_strategy] FAIL → L1 (unknown_identifier)
+      ↑ escalate L1  (unknown_identifier)
+
+  RESULT L4-014: solved=False level=partial calls=4 out_tokens=5472 191s  routes=L2→L1→L2→L1
+  last diag: /Users/zhipeng/lean/_check_esc4.lean:8:9: warning: unused variable `x` |  | Note: This linter can be disabled with `set_option linter.unusedVariables false` | /Users/zhipeng/lean/_check_esc4.lean:9:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' 
+
+================================================================
+B2-008: B2-008 saddle invariant-line separator  | cert: x
+================================================================
+  [L0] barrier candidate #1: h = x
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-fresh (high): in=1575 out=758
+      attempt b0.0 [fresh] FAIL → L2 (type_mismatch)
+      ↑ escalate L2  (type_mismatch)
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-new_strategy (high): in=1728 out=432
+      attempt b0.1 [new_strategy] FAIL → L2 (unknown)
+      ↑ escalate L2  (unknown)
+  [L3] regenerating barrier (certificate formalization-hostile)…
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] L3-reproposer (high): in=1140 out=1576
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] L3-reproposer (high): in=1140 out=764
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] L3-reproposer (high): in=1140 out=571
+  [L3] could not propose a new verified certificate — stopping
+
+  RESULT B2-008: solved=False level=partial calls=2 out_tokens=4101 123s  routes=L2→L2
+  last diag: /Users/zhipeng/lean/_check_esc2.lean:12:22: warning: unused variable `y` |  | Note: This linter can be disabled with `set_option linter.unusedVariables false` | /Users/zhipeng/lean/_check_esc2.lean:20:2: error: No goals to be solved | /Users/zhipeng/lean/_check_esc2.lean:24:31: warning: unused variable `y` | 
+
+================================================================
+B2-007: B2-007 Darboux parabola separator  | cert: y-x**2
+================================================================
+  [L0] barrier candidate #1: h = y-x**2
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-fresh (high): in=1583 out=885
+      attempt b0.0 [fresh] FAIL → L2 (tactic_failed_nonlinear)
+      ↑ escalate L2  (tactic_failed_nonlinear)
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-new_strategy (high): in=1787 out=676
+      attempt b0.1 [new_strategy] OK ✅
+
+  RESULT B2-007: solved=True level=new_strategy calls=2 out_tokens=1561 50s  routes=L2→OK
+
+================================================================
+B4-017: B4-017 logistic map unit-interval barrier  | cert: x1*(1-x1)
+================================================================
+  [L0] barrier candidate #1: h = x1*(1-x1)
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-fresh (high): in=1652 out=1398
+      attempt b0.0 [fresh] FAIL → L2 (tactic_failed_nonlinear)
+      ↑ escalate L2  (tactic_failed_nonlinear)
+  [Retry 1/8] SSLError (provider zhipu-glm), retrying in 2s...
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-new_strategy (high): in=1856 out=1027
+      attempt b0.1 [new_strategy] FAIL → L2 (tactic_failed_nonlinear)
+      ↑ escalate L3  (tactic_failed_nonlinear×2)
+  [L3] regenerating barrier (certificate formalization-hostile)…
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] L3-reproposer (high): in=699 out=2315
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] L3-reproposer (high): in=699 out=792
+  [L0] barrier candidate #2: h = x1*(1 - x1) - 0.0475
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-fresh (high): in=1661 out=967
+      attempt b1.0 [fresh] FAIL → L2 (tactic_failed_nonlinear)
+      ↑ escalate L2  (tactic_failed_nonlinear)
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-new_strategy (high): in=1865 out=894
+      attempt b1.1 [new_strategy] FAIL → L2 (tactic_failed_nonlinear)
+      ↑ escalate L3  (tactic_failed_nonlinear×2)
+
+  RESULT B4-017: solved=False level=partial calls=4 out_tokens=7393 247s  routes=L2→L2→L2→L2
+  last diag: /Users/zhipeng/lean/_check_esc4.lean:35:2: error: linarith failed to find a contradiction | case h | x : ℝ | hpos : h x ≥ 0 | dom1 : x ≥ -0.5 | dom2 : x ≤ 1.5 | h1 : 0 ≤ (3.8 * x * (1 - x) - 0.38) ^ 2 | h2 : 0 ≤ (3.8 * x * (1 - x) - 0.125) ^ 2 | h3 : 0 ≤ x ^ 2 | h4 : 0 ≤ (3.8 * x - 1) ^ 2 | a✝ : 3.8 * x * (1 - x) * (1 
+
+
+################################################################
+SUMMARY
+################################################################
+id         solved  level        calls  out_tok  sec   routes
+L4-014     False   partial      4      5472     191   L2→L1→L2→L1
+B2-008     False   partial      2      4101     123   L2→L2
+B2-007     True    new_strategy 2      1561     50    L2→OK
+B4-017     False   partial      4      7393     247   L2→L2→L2→L2
+
+SOLVED 1/4

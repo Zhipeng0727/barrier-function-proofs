@@ -1,0 +1,126 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B2-005",
+    "ode": "dx1/dt = -x1*(1 + sin(x1)**2), dx2/dt = -x2*(1 + sin(x2)**2), dx3/dt = -x3*(1 + sin(x3)**2)",
+    "state_vars": [
+      "x1",
+      "x2",
+      "x3"
+    ],
+    "f_expr": [
+      "-x1*(1 + sin(x1)**2)",
+      "-x2*(1 + sin(x2)**2)",
+      "-x3*(1 + sin(x3)**2)"
+    ],
+    "X_domain": "ball",
+    "X_u_desc": "||x|| >= 2.082",
+    "X_u_expr": "x1**2 + x2**2 + x3**2 >= 4.334724",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B2-005",
+      "layer": "L2-new",
+      "group": "B2",
+      "task": "barrier",
+      "cert_class": "nonpoly-explicit",
+      "source": "sin^2-damped dissipation"
+    }
+  },
+  "timestamp": "2026-06-11T18:14:24.165600",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "4.334723999999 - x1**2 - x2**2 - x3**2",
+        "invariant_set": "C = {x in X : x1**2 + x2**2 + x3**2 <= 4.334723999999}, i.e. the ball of radius sqrt(4.334723999999), just inside the unsafe threshold radius 2.082.",
+        "condition1_check": "For every x in the unsafe set X_u, ||x|| >= 2.082. Therefore x1**2 + x2**2 + x3**2 = ||x||**2 >= 2.082**2 = 4.334724. Hence h(x) = 4.334723999999 - x1**2 - x2**2 - x3**2 <= 4.334723999999 - 4.334724 = -0.000000000001 < 0. Thus h(x) < 0 for all x in X_u.",
+        "lie_derivative": "The gradient is grad h = (-2*x1, -2*x2, -2*x3). The vector field is f(x) = (-x1*(1 + sin(x1)**2), -x2*(1 + sin(x2)**2), -x3*(1 + sin(x3)**2)). Therefore the Lie derivative is dh/dt = grad h · f = (-2*x1)*(-x1*(1 + sin(x1)**2)) + (-2*x2)*(-x2*(1 + sin(x2)**2)) + (-2*x3)*(-x3*(1 + sin(x3)**2)) = 2*x1**2*(1 + sin(x1)**2) + 2*x2**2*(1 + sin(x2)**2) + 2*x3**2*(1 + sin(x3)**2).",
+        "condition2_check": "On the boundary partial C, h(x)=0, so x1**2 + x2**2 + x3**2 = 4.334723999999. For every real z, sin(z)**2 >= 0, hence 1 + sin(z)**2 >= 1. Therefore 2*x1**2*(1 + sin(x1)**2) >= 2*x1**2, 2*x2**2*(1 + sin(x2)**2) >= 2*x2**2, and 2*x3**2*(1 + sin(x3)**2) >= 2*x3**2. Summing gives dh/dt >= 2*(x1**2 + x2**2 + x3**2) = 2*4.334723999999 = 8.669447999998 > 0. Thus dh/dt >= 0 on partial C, satisfying Nagumo's condition.",
+        "reasoning": "The dynamics are componentwise exponentially stabilizing toward the origin with an additional nonnegative damping factor sin(xi)**2. Therefore Euclidean balls centered at the origin are forward invariant for the superlevel barrier h = c - ||x||**2. To avoid the unsafe set ||x|| >= 2.082 with the required strict condition h < 0 on X_u, the constant c must be strictly smaller than 2.082**2 = 4.334724. The choice c = 4.334723999999 is only 1e-12 below the unsafe squared radius, making C essentially the largest possible analytic spherical invariant set while rigorously satisfying h(x) < 0 throughout the unsafe set."
+      },
+      "proposer_elapsed_s": 28.763,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "2*x1**2*(sin(x1)**2 + 1) + 2*x2**2*(sin(x2)**2 + 1) + 2*x3**2*(sin(x3)**2 + 1)",
+          "boundary_epsilon": 0.510054,
+          "boundary_pts_found": 179,
+          "cond1_max_h_in_Xu": -0.00029,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 14.023419,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.068
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.010105,
+          "trajectory_valid": true,
+          "elapsed_s": 0.191
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "For any x in X_u, ||x|| >= 2.082, so x1^2 + x2^2 + x3^2 >= 2.082^2 = 4.334724. Therefore h(x) = 4.334723999999 - ||x||^2 <= 4.334723999999 - 4.334724 = -0.000000000001 < 0. For example, at x = (2.082, 0, 0), h(x) = -1.0e-12 < 0. Thus Condition 1 holds.",
+        "lie_derivative_computed": "∇h = (-2x1, -2x2, -2x3). With fi = -xi(1 + sin(xi)^2), the Lie derivative is ḣ(x) = ∇h·f = 2x1^2(1 + sin(x1)^2) + 2x2^2(1 + sin(x2)^2) + 2x3^2(1 + sin(x3)^2) = 2||x||^2 + 2[x1^2 sin(x1)^2 + x2^2 sin(x2)^2 + x3^2 sin(x3)^2].",
+        "condition2_result": "On the boundary ∂C, h(x) = 0, hence ||x||^2 = 4.334723999999. Since each term xi^2 sin(xi)^2 >= 0, we have ḣ(x) >= 2||x||^2 = 2 * 4.334723999999 = 8.669447999998 > 0. Therefore the Nagumo condition ḣ >= 0 holds strictly everywhere on ∂C. No degenerate boundary point with ḣ = 0 exists because the boundary radius is nonzero.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The invariant ball can be enlarged slightly by replacing the constant 4.334723999999 with any value a satisfying a < 2.082^2 = 4.334724. For h_a(x) = a - ||x||^2, Condition 1 holds because h_a(x) <= a - 4.334724 < 0 on X_u, and Condition 2 holds because on h_a = 0, ḣ >= 2a > 0 as long as a > 0. The current constant is only 1e-12 below the unsafe threshold, so only an arbitrarily small enlargement is possible while preserving the strict h < 0 requirement on X_u. The value a = 4.334724 exactly would fail Condition 1 at points such as (2.082, 0, 0), where h = 0 rather than h < 0."
+      },
+      "refuter_elapsed_s": 24.274
+    }
+  ],
+  "final_barrier": {
+    "h": "4.334723999999 - x1**2 - x2**2 - x3**2",
+    "invariant_set": "C = {x in X : x1**2 + x2**2 + x3**2 <= 4.334723999999}, i.e. the ball of radius sqrt(4.334723999999), just inside the unsafe threshold radius 2.082.",
+    "condition1_check": "For every x in the unsafe set X_u, ||x|| >= 2.082. Therefore x1**2 + x2**2 + x3**2 = ||x||**2 >= 2.082**2 = 4.334724. Hence h(x) = 4.334723999999 - x1**2 - x2**2 - x3**2 <= 4.334723999999 - 4.334724 = -0.000000000001 < 0. Thus h(x) < 0 for all x in X_u.",
+    "lie_derivative": "The gradient is grad h = (-2*x1, -2*x2, -2*x3). The vector field is f(x) = (-x1*(1 + sin(x1)**2), -x2*(1 + sin(x2)**2), -x3*(1 + sin(x3)**2)). Therefore the Lie derivative is dh/dt = grad h · f = (-2*x1)*(-x1*(1 + sin(x1)**2)) + (-2*x2)*(-x2*(1 + sin(x2)**2)) + (-2*x3)*(-x3*(1 + sin(x3)**2)) = 2*x1**2*(1 + sin(x1)**2) + 2*x2**2*(1 + sin(x2)**2) + 2*x3**2*(1 + sin(x3)**2).",
+    "condition2_check": "On the boundary partial C, h(x)=0, so x1**2 + x2**2 + x3**2 = 4.334723999999. For every real z, sin(z)**2 >= 0, hence 1 + sin(z)**2 >= 1. Therefore 2*x1**2*(1 + sin(x1)**2) >= 2*x1**2, 2*x2**2*(1 + sin(x2)**2) >= 2*x2**2, and 2*x3**2*(1 + sin(x3)**2) >= 2*x3**2. Summing gives dh/dt >= 2*(x1**2 + x2**2 + x3**2) = 2*4.334723999999 = 8.669447999998 > 0. Thus dh/dt >= 0 on partial C, satisfying Nagumo's condition.",
+    "reasoning": "The dynamics are componentwise exponentially stabilizing toward the origin with an additional nonnegative damping factor sin(xi)**2. Therefore Euclidean balls centered at the origin are forward invariant for the superlevel barrier h = c - ||x||**2. To avoid the unsafe set ||x|| >= 2.082 with the required strict condition h < 0 on X_u, the constant c must be strictly smaller than 2.082**2 = 4.334724. The choice c = 4.334723999999 is only 1e-12 below the unsafe squared radius, making C essentially the largest possible analytic spherical invariant set while rigorously satisfying h(x) < 0 throughout the unsafe set."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 53.306
+  },
+  "tokens": {
+    "input": 2509,
+    "output": 2443,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1645,
+        "output_tokens": 1285,
+        "elapsed_s": 28.763
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 864,
+        "output_tokens": 1158,
+        "elapsed_s": 24.274
+      }
+    ]
+  }
+}

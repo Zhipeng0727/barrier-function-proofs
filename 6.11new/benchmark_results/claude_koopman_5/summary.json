@@ -1,0 +1,77 @@
+{
+  "config": {
+    "dataset": "/Users/zhipeng/lean/data/koopman_nopoly_extension.json",
+    "limit": 5,
+    "start": 0,
+    "turns": 5,
+    "provider": "anthropic",
+    "model": null,
+    "no_kb": false,
+    "lean": false,
+    "name": "claude_koopman_5"
+  },
+  "model": "claude-sonnet-4-6",
+  "rows": [
+    {
+      "id": "X01",
+      "solved": false,
+      "turns": 5,
+      "refuter_calls": 0,
+      "tokens_in": 3723,
+      "tokens_out": 23278,
+      "elapsed_s": 494.763,
+      "h": "9 - x1 - 2*exp(x2 + x3 - 2)",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "X02",
+      "solved": true,
+      "turns": 4,
+      "refuter_calls": 2,
+      "tokens_in": 2133,
+      "tokens_out": 19283,
+      "elapsed_s": 521.084,
+      "h": "log(10) - log(x1) - x2*exp(x3) - 0.13*x2*exp(-x3)",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "X03",
+      "solved": false,
+      "turns": 5,
+      "refuter_calls": 0,
+      "tokens_in": 3930,
+      "tokens_out": 22133,
+      "elapsed_s": 552.097,
+      "h": "x3 - 0.01*exp(0.5*(x1**2 + x2**2))",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "X04",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 1056,
+      "tokens_out": 3351,
+      "elapsed_s": 58.797,
+      "h": "4 - x1**2 - x2**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "X05",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 796,
+      "tokens_out": 4533,
+      "elapsed_s": 80.917,
+      "h": "1.8852944 - log(x1**2) - x2**4/2 + log(x2**2)",
+      "lean_compile_ok": null,
+      "error": null
+    }
+  ],
+  "skipped": []
+}

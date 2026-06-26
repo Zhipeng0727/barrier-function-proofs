@@ -1,0 +1,39 @@
+{
+ "outer": 3.0,
+ "inner": 0.5,
+ "rows": [
+  {
+   "id": "fossil_nonpoly2",
+   "dim": 3,
+   "A0": true,
+   "A0_blk": null,
+   "A1": true,
+   "A1_blk": null,
+   "A1_cert": "0.1*x1**2 + 0.1*x2**2 + 0.1*x3**2 + (0.118262764631881 - tanh(0.551570"
+  },
+  {
+   "id": "fossil_nonpoly3",
+   "dim": 3,
+   "A0": true,
+   "A0_blk": null,
+   "A1": true,
+   "A1_blk": null,
+   "A1_cert": "0.1*x1**2 + 0.1*x2**2 + 0.1*x3**2 + (0.118262764631881 - tanh(0.551570"
+  },
+  {
+   "id": "fossil_poly1",
+   "dim": 3,
+   "A0": false,
+   "A0_blk": "max rounds",
+   "A1": true,
+   "A1_blk": null,
+   "A1_cert": "0.1*x1**2 + 0.1*x2**2 + 0.1*x3**2 + (0.123336235837933 - tanh(0.585115"
+  }
+ ],
+ "A0": 2,
+ "A1": 3,
+ "exclusive": [
+  "fossil_poly1"
+ ],
+ "reverse": []
+}

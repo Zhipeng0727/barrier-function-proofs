@@ -1,0 +1,120 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B2-014",
+    "ode": "dx1/dt = -x1 - tanh(x1), dx2/dt = -x2 - tanh(x2)",
+    "state_vars": [
+      "x1",
+      "x2"
+    ],
+    "f_expr": [
+      "-x1 - tanh(x1)",
+      "-x2 - tanh(x2)"
+    ],
+    "X_domain": "ball",
+    "X_u_desc": "||x|| >= 2.263",
+    "X_u_expr": "x1**2 + x2**2 >= 5.121168999999999",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B2-014",
+      "layer": "L2-new",
+      "group": "B2",
+      "task": "barrier",
+      "cert_class": "nonpoly-explicit",
+      "source": "tanh-dissipative (c=2)"
+    }
+  },
+  "timestamp": "2026-06-11T18:24:48.834453",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "5.121168 - x1**2 - x2**2",
+        "invariant_set": "C = {x : x1**2 + x2**2 <= 5.121168}, i.e. the closed ball of radius sqrt(5.121168) ≈ 2.262999779, which lies strictly inside the safe region ||x|| < 2.263.",
+        "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 2.263}, equivalently x1**2 + x2**2 >= 2.263**2. Since 2.263**2 = 5.121169, for any x in X_u we have h(x) = 5.121168 - x1**2 - x2**2 <= 5.121168 - 5.121169 = -0.000001 < 0. Therefore h(x) < 0 for all x in X_u.",
+        "lie_derivative": "For h(x) = 5.121168 - x1**2 - x2**2, the gradient is ∇h(x) = (-2*x1, -2*x2). The vector field is f(x) = (-x1 - tanh(x1), -x2 - tanh(x2)). Hence ḣ(x) = ∇h(x)·f(x) = (-2*x1)*(-x1 - tanh(x1)) + (-2*x2)*(-x2 - tanh(x2)) = 2*x1**2 + 2*x1*tanh(x1) + 2*x2**2 + 2*x2*tanh(x2).",
+        "condition2_check": "On the boundary ∂C, h(x)=0, so x1**2 + x2**2 = 5.121168. For every real scalar z, tanh(z) has the same sign as z, and tanh(0)=0. Therefore z*tanh(z) >= 0 for all z. Applying this to z=x1 and z=x2 gives x1*tanh(x1) >= 0 and x2*tanh(x2) >= 0. Thus on ∂C, ḣ(x) = 2*x1**2 + 2*x1*tanh(x1) + 2*x2**2 + 2*x2*tanh(x2) >= 2*x1**2 + 2*x2**2 = 2*(x1**2 + x2**2) = 2*5.121168 = 10.242336 > 0. Hence ḣ(x) >= 0 on ∂C, satisfying Nagumo's condition.",
+        "reasoning": "The dynamics are componentwise dissipative: each term -x_i - tanh(x_i) points toward the origin, and x_i*tanh(x_i) >= 0 strengthens inward radial motion. Therefore Euclidean balls centered at the origin are forward invariant. To maximize the certified safe invariant set while ensuring h<0 on the unsafe set ||x|| >= 2.263, choose a ball with squared radius just below 2.263**2 = 5.121169. The value 5.121168 gives an invariant ball essentially as large as the entire safe ball while preserving the strict negativity requirement on the unsafe boundary."
+      },
+      "proposer_elapsed_s": 25.959,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "2*x1*(x1 + tanh(x1)) + 2*x2*(x2 + tanh(x2))",
+          "boundary_epsilon": 0.354779,
+          "boundary_pts_found": 163,
+          "cond1_max_h_in_Xu": -0.00136,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 13.807043,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.084
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.196001,
+          "trajectory_valid": true,
+          "elapsed_s": 0.159
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "Valid. Let r^2 = x1^2 + x2^2. The proposed h is h(x)=5.121168-r^2. The unsafe set is r >= 2.263, so r^2 >= 2.263^2 = 5.121169. Therefore, for every unsafe point, h(x) <= 5.121168 - 5.121169 = -0.000001 < 0. For example, at x=(2.263,0), h(x)=-0.000001; similarly at x=(0,2.263), h(x)=-0.000001. Thus Condition 1 holds with a margin of 1e-6 at the unsafe boundary.",
+        "lie_derivative_computed": "∇h(x)=(-2x1,-2x2). With f1=-x1-tanh(x1), f2=-x2-tanh(x2), the Lie derivative is ḣ(x)=∇h·f=(-2x1)(-x1-tanh(x1))+(-2x2)(-x2-tanh(x2))=2x1^2+2x2^2+2x1 tanh(x1)+2x2 tanh(x2). Equivalently, ḣ(x)=2||x||^2+2[x1 tanh(x1)+x2 tanh(x2)].",
+        "condition2_result": "Valid. On the boundary ∂C, h(x)=0, so x1^2+x2^2=5.121168. For every real z, z tanh(z) >= 0 because tanh(z) has the same sign as z. Hence on ∂C, ḣ(x)=2(x1^2+x2^2)+2[x1 tanh(x1)+x2 tanh(x2)] >= 2(5.121168)=10.242336 > 0. Therefore the Nagumo condition ḣ(x) >= 0 holds strictly everywhere on the boundary. For example, at x=(sqrt(5.121168),0)≈(2.262999779,0), ḣ≈14.671 > 0. Degenerate coordinate cases such as x1=0 or x2=0 cause no problem because z tanh(z)=0 only when z=0, and the boundary radius is nonzero.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The same quadratic form can be enlarged slightly. For h_c(x)=c-x1^2-x2^2, Condition 2 holds for every c>0 because on h_c=0 one has ḣ>=2c>0. Condition 1 requires c < 2.263^2 = 5.121169, since the unsafe set includes the radius r=2.263 and the framework requires strict h<0 there. The current value c=5.121168 leaves a gap of 1e-6 in squared radius. One concrete enlargement is h(x)=5.121168999-x1^2-x2^2, whose invariant radius is sqrt(5.121168999)≈2.2629999998, still strictly below 2.263 while preserving both conditions."
+      },
+      "refuter_elapsed_s": 67.399
+    }
+  ],
+  "final_barrier": {
+    "h": "5.121168 - x1**2 - x2**2",
+    "invariant_set": "C = {x : x1**2 + x2**2 <= 5.121168}, i.e. the closed ball of radius sqrt(5.121168) ≈ 2.262999779, which lies strictly inside the safe region ||x|| < 2.263.",
+    "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 2.263}, equivalently x1**2 + x2**2 >= 2.263**2. Since 2.263**2 = 5.121169, for any x in X_u we have h(x) = 5.121168 - x1**2 - x2**2 <= 5.121168 - 5.121169 = -0.000001 < 0. Therefore h(x) < 0 for all x in X_u.",
+    "lie_derivative": "For h(x) = 5.121168 - x1**2 - x2**2, the gradient is ∇h(x) = (-2*x1, -2*x2). The vector field is f(x) = (-x1 - tanh(x1), -x2 - tanh(x2)). Hence ḣ(x) = ∇h(x)·f(x) = (-2*x1)*(-x1 - tanh(x1)) + (-2*x2)*(-x2 - tanh(x2)) = 2*x1**2 + 2*x1*tanh(x1) + 2*x2**2 + 2*x2*tanh(x2).",
+    "condition2_check": "On the boundary ∂C, h(x)=0, so x1**2 + x2**2 = 5.121168. For every real scalar z, tanh(z) has the same sign as z, and tanh(0)=0. Therefore z*tanh(z) >= 0 for all z. Applying this to z=x1 and z=x2 gives x1*tanh(x1) >= 0 and x2*tanh(x2) >= 0. Thus on ∂C, ḣ(x) = 2*x1**2 + 2*x1*tanh(x1) + 2*x2**2 + 2*x2*tanh(x2) >= 2*x1**2 + 2*x2**2 = 2*(x1**2 + x2**2) = 2*5.121168 = 10.242336 > 0. Hence ḣ(x) >= 0 on ∂C, satisfying Nagumo's condition.",
+    "reasoning": "The dynamics are componentwise dissipative: each term -x_i - tanh(x_i) points toward the origin, and x_i*tanh(x_i) >= 0 strengthens inward radial motion. Therefore Euclidean balls centered at the origin are forward invariant. To maximize the certified safe invariant set while ensuring h<0 on the unsafe set ||x|| >= 2.263, choose a ball with squared radius just below 2.263**2 = 5.121169. The value 5.121168 gives an invariant ball essentially as large as the entire safe ball while preserving the strict negativity requirement on the unsafe boundary."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 93.612
+  },
+  "tokens": {
+    "input": 2512,
+    "output": 4544,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1700,
+        "output_tokens": 1231,
+        "elapsed_s": 25.959
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 812,
+        "output_tokens": 3313,
+        "elapsed_s": 67.399
+      }
+    ]
+  }
+}

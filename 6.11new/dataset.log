@@ -1,0 +1,63 @@
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] dataset-poly-1 (high): in=130 out=89
+  try 1: ✅ KEEP  h=poly(exp(1), x**2 + y**2)  ()
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] dataset-poly-2 (high): in=130 out=105
+/opt/anaconda3/lib/python3.12/site-packages/sympy/functions/elementary/miscellaneous.py:152: SymPyDeprecationWarning: 
+
+Using non-Expr arguments in Pow is deprecated (in this case, one of the
+arguments is of type 'Poly').
+
+If you really did intend to construct a power with this base, use the **
+operator instead.
+
+See https://docs.sympy.org/latest/explanation/active-deprecations.html#non-expr-args-deprecated
+for details.
+
+This has been deprecated since SymPy version 1.7. It
+will be removed in a future version of SymPy.
+
+  return Pow(arg, S.Half, evaluate=evaluate)
+  try 2: ✗ reject  h=poly(x^2+y^2) - sqrt(poly(x^2+y^2))  (h expression unparseable: poly(x^2+y^2) - sqrt(poly(x^2+y^2))
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] dataset-poly-3 (high): in=130 out=95
+  try 3: ✗ reject  h=1 - poly(exp(-0.5*(x^2+y^2)), x, y)  (h expression unparseable: 1 - poly(exp(-0.5*(x^2+y^2)), x, y)
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] dataset-poly-4 (high): in=130 out=108
+  try 4: ✗ reject  h=poly(x, 2) + poly(y, 2) + poly(sqrt(poly  (h expression unparseable: poly(x, 2) + poly(y, 2) + poly(sqr)
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] dataset-poly-5 (high): in=130 out=99
+  try 5: ✅ KEEP  h=poly(exp(-2*x), 2) + poly(exp(-y), 2) -   ()
+
+kept 2/5 candidates for family 'poly' (out_tokens=496)
+[
+  {
+    "name": "poly_exponential_lyapunov",
+    "ode": "dx/dt = -x, dy/dt = -y",
+    "state_vars": [
+      "x",
+      "y"
+    ],
+    "X_domain": "",
+    "task": "lyapunov",
+    "h": "poly(exp(1), x**2 + y**2)",
+    "_verified_family": "exp"
+  },
+  {
+    "name": "exponential_lyapunov_2d",
+    "ode": "dx/dt=-x, dy/dt=-2*y",
+    "state_vars": [
+      "x",
+      "y"
+    ],
+    "X_domain": "",
+    "task": "lyapunov",
+    "h": "poly(exp(-2*x), 2) + poly(exp(-y), 2) - 2",
+    "_verified_family": "exp"
+  }
+]

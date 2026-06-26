@@ -1,0 +1,9 @@
+provider=glm model=glm-5.1  L4-014  cert=0.5*x**2+0.5*y**2
+
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-fresh (high): in=2252 out=646
+  attempt 1 [fresh] OK ✅
+
+solved=True level=L1 calls=1 out_tokens=646
+artifacts in /Users/zhipeng/Desktop/paper4/6.11new/artifacts/  (1 programs dumped)

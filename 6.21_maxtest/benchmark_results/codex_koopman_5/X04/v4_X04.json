@@ -1,0 +1,118 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "Strengthened Ahmadi-Krstic-Parrilo: tunable super-polynomial excursion family (a",
+    "ode": "dx1/dt = -x1 + x1*x2, dx2/dt = -x2",
+    "state_vars": [
+      "x1",
+      "x2"
+    ],
+    "f_expr": [
+      "-x1 + x1*x2",
+      "-x2"
+    ],
+    "X_domain": "R^2; representative numerical instance of the family with k = 1",
+    "X_u_desc": "Invented unsafe set for safety verification: states outside the radius-2 ball around the globally asymptotically stable origin.",
+    "X_u_expr": "x1**2 + x2**2 >= 4",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "title": "Strengthened Ahmadi-Krstic-Parrilo: tunable super-polynomial excursion family (alpha = 2k-1)",
+      "group": "B* — Growth-lemma constructions",
+      "system_class": "polynomial (degree 2k in x,y)",
+      "poly_failure_mechanism": "growth-lemma"
+    }
+  },
+  "timestamp": "2026-06-11T19:21:08.445089",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "4 - x1**2 - x2**2",
+        "invariant_set": "C = { (x1,x2) in R^2 : x1**2 + x2**2 <= 4 }, i.e. the closed radius-2 ball centered at the origin.",
+        "condition1_check": "The unsafe set is X_u = { (x1,x2) : x1**2 + x2**2 > 4 }. For any x in X_u, h(x) = 4 - x1**2 - x2**2 < 0. Hence the entire unsafe set lies strictly in the negative region of h.",
+        "lie_derivative": "We have h(x) = 4 - x1**2 - x2**2, so grad h = (-2*x1, -2*x2). The vector field is f(x) = (x1*(-1 + x2), -x2). Therefore, hdot = grad h · f = (-2*x1)*x1*(-1 + x2) + (-2*x2)*(-x2) = 2*x1**2*(1 - x2) + 2*x2**2.",
+        "condition2_check": "On the boundary partial C, h(x)=0, hence x1**2 + x2**2 = 4. Therefore x1**2 = 4 - x2**2 and x2 is in [-2,2]. Substituting into the Lie derivative gives hdot = 2*(4 - x2**2)*(1 - x2) + 2*x2**2 = 2*(x2**3 - 4*x2 + 4). Let p(y) = y**3 - 4*y + 4 for y in [-2,2]. Then p'(y) = 3*y**2 - 4, so the only critical points in [-2,2] are y = -2/sqrt(3) and y = 2/sqrt(3). Checking endpoints and critical points: p(-2)=4, p(2)=4, p(-2/sqrt(3)) = 4 + 16/(3*sqrt(3)) > 0, and p(2/sqrt(3)) = 4 - 16/(3*sqrt(3)) > 0 because 12*sqrt(3) > 16. Hence p(y) > 0 for all y in [-2,2]. Therefore hdot = 2*p(x2) > 0 on partial C, so in particular hdot >= 0 on partial C. Nagumo's condition is satisfied.",
+        "reasoning": "The unsafe set is exactly the exterior of the radius-2 ball, so the largest possible safe invariant candidate is the full closed radius-2 ball. The simple analytic barrier h = 4 - x1**2 - x2**2 defines precisely this ball as its superlevel set. Although the x1 dynamics contains the cross term x1*x2, the Lie derivative on the boundary reduces to a one-variable cubic x2**3 - 4*x2 + 4, which is strictly positive on the entire boundary circle. Therefore the full radius-2 ball is forward invariant and excludes the unsafe set."
+      },
+      "proposer_elapsed_s": 110.979,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "-2*x1**2*(x2 - 1) + 2*x2**2",
+          "boundary_epsilon": 0.354779,
+          "boundary_pts_found": 196,
+          "cond1_max_h_in_Xu": -0.001574,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 1.896024,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.018
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.09111,
+          "trajectory_valid": true,
+          "elapsed_s": 0.16
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "For h(x)=4-x1^2-x2^2 and unsafe set interpreted as X_u={x: x1^2+x2^2>4}, h(x)<0 holds immediately because x1^2+x2^2>4 implies 4-x1^2-x2^2<0. Numerical checks: at (2.1,0), h=4-4.41=-0.41<0; at (0,3), h=4-9=-5<0; at (1.5,1.5), x1^2+x2^2=4.5 and h=-0.5<0.",
+        "lie_derivative_computed": "∇h=(-2x1,-2x2), f=(x1(x2-1),-x2), so ḣ=∇h·f=(-2x1)x1(x2-1)+(-2x2)(-x2)=2x1^2(1-x2)+2x2^2.",
+        "condition2_result": "On ∂C, x1^2+x2^2=4. Let y=x2, so x1^2=4-y^2 with y∈[-2,2]. Then ḣ=2[(4-y^2)(1-y)+y^2]=2[y^3-4y+4]. Define p(y)=y^3-4y+4. On [-2,2], p'(y)=3y^2-4, so critical points are y=±2/sqrt(3). Values: p(-2)=4, p(2)=4, p(-2/sqrt(3))=4+16/(3sqrt(3))>0, and p(2/sqrt(3))=4-16/(3sqrt(3))>0 because 3sqrt(3)>4. Hence p(y)>0 on [-2,2], so ḣ>0 everywhere on ∂C. Numerical boundary checks: at (2,0), ḣ=8>0; at (0,2), ḣ=8>0; at (sqrt(8/3),2/sqrt(3)), ḣ=2[4-16/(3sqrt(3))]≈1.841>0.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": null
+      },
+      "refuter_elapsed_s": 32.803
+    }
+  ],
+  "final_barrier": {
+    "h": "4 - x1**2 - x2**2",
+    "invariant_set": "C = { (x1,x2) in R^2 : x1**2 + x2**2 <= 4 }, i.e. the closed radius-2 ball centered at the origin.",
+    "condition1_check": "The unsafe set is X_u = { (x1,x2) : x1**2 + x2**2 > 4 }. For any x in X_u, h(x) = 4 - x1**2 - x2**2 < 0. Hence the entire unsafe set lies strictly in the negative region of h.",
+    "lie_derivative": "We have h(x) = 4 - x1**2 - x2**2, so grad h = (-2*x1, -2*x2). The vector field is f(x) = (x1*(-1 + x2), -x2). Therefore, hdot = grad h · f = (-2*x1)*x1*(-1 + x2) + (-2*x2)*(-x2) = 2*x1**2*(1 - x2) + 2*x2**2.",
+    "condition2_check": "On the boundary partial C, h(x)=0, hence x1**2 + x2**2 = 4. Therefore x1**2 = 4 - x2**2 and x2 is in [-2,2]. Substituting into the Lie derivative gives hdot = 2*(4 - x2**2)*(1 - x2) + 2*x2**2 = 2*(x2**3 - 4*x2 + 4). Let p(y) = y**3 - 4*y + 4 for y in [-2,2]. Then p'(y) = 3*y**2 - 4, so the only critical points in [-2,2] are y = -2/sqrt(3) and y = 2/sqrt(3). Checking endpoints and critical points: p(-2)=4, p(2)=4, p(-2/sqrt(3)) = 4 + 16/(3*sqrt(3)) > 0, and p(2/sqrt(3)) = 4 - 16/(3*sqrt(3)) > 0 because 12*sqrt(3) > 16. Hence p(y) > 0 for all y in [-2,2]. Therefore hdot = 2*p(x2) > 0 on partial C, so in particular hdot >= 0 on partial C. Nagumo's condition is satisfied.",
+    "reasoning": "The unsafe set is exactly the exterior of the radius-2 ball, so the largest possible safe invariant candidate is the full closed radius-2 ball. The simple analytic barrier h = 4 - x1**2 - x2**2 defines precisely this ball as its superlevel set. Although the x1 dynamics contains the cross term x1*x2, the Lie derivative on the boundary reduces to a one-variable cubic x2**3 - 4*x2 + 4, which is strictly positive on the entire boundary circle. Therefore the full radius-2 ball is forward invariant and excludes the unsafe set."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 143.973
+  },
+  "tokens": {
+    "input": 2433,
+    "output": 3709,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1594,
+        "output_tokens": 2128,
+        "elapsed_s": 110.979
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 839,
+        "output_tokens": 1581,
+        "elapsed_s": 32.803
+      }
+    ]
+  }
+}

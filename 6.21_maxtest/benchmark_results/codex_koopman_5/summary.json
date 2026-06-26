@@ -1,0 +1,76 @@
+{
+  "config": {
+    "dataset": "/Users/zhipeng/lean/data/koopman_nopoly_extension.json",
+    "limit": 5,
+    "start": 0,
+    "turns": 5,
+    "model": null,
+    "no_kb": false,
+    "lean": false,
+    "name": "codex_koopman_5"
+  },
+  "model": "gpt-5.5",
+  "rows": [
+    {
+      "id": "X01",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2735,
+      "tokens_out": 14243,
+      "elapsed_s": 347.467,
+      "h": "log(10) - log(x1) - x2*(exp(x3) + 0.13*exp(-x3))",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "X02",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2871,
+      "tokens_out": 10340,
+      "elapsed_s": 202.819,
+      "h": "log(10) - log(x1) - x2*(exp(x3) + 0.125*exp(-x3))",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "X03",
+      "solved": true,
+      "turns": 2,
+      "refuter_calls": 1,
+      "tokens_in": 4159,
+      "tokens_out": 25787,
+      "elapsed_s": 566.041,
+      "h": "-1",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "X04",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2433,
+      "tokens_out": 3709,
+      "elapsed_s": 143.973,
+      "h": "4 - x1**2 - x2**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "X05",
+      "solved": false,
+      "turns": null,
+      "refuter_calls": null,
+      "tokens_in": null,
+      "tokens_out": null,
+      "elapsed_s": null,
+      "h": null,
+      "lean_compile_ok": null,
+      "error": "PrintMethodNotImplementedError: Unsupported by <class 'sympy.printing.numpy.NumPyPrinter'>: <class 'sympy.core.function.Derivative'>\nSet the printer option 'strict' to False in order to generate partially printed code."
+    }
+  ],
+  "skipped": []
+}

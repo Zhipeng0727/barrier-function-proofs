@@ -1,0 +1,502 @@
+{
+  "_meta": {
+    "purpose": "compile-verified Lean bridging-lemma library, mined by self_evolve.py; injected into the formalization writer prompt to eliminate lemma-name hallucination."
+  },
+  "recipes": {
+    "log.log_sub_one": {
+      "family": "log",
+      "obstruction": "log_sub_one",
+      "goal": "0 < x → Real.log x ≤ x - 1",
+      "desc": "Gibbs/entropy core: log x ≤ x - 1 for x>0",
+      "lean": "import Mathlib.Analysis.SpecialFunctions.Log.Basic\nimport Mathlib.Tactic\nopen Real\n\nexample (x : ℝ) : 0 < x → Real.log x ≤ x - 1 := by\n  exact fun h => Real.log_le_sub_one_of_pos h",
+      "verified": true,
+      "rounds": 1,
+      "out_tokens": 1964
+    },
+    "exp.exp_add_one": {
+      "family": "exp",
+      "obstruction": "exp_add_one",
+      "goal": "1 + x ≤ Real.exp x",
+      "desc": "convexity core: 1 + x ≤ exp x for all x",
+      "lean": "import Mathlib.Analysis.SpecialFunctions.Exp\nimport Mathlib.Tactic\nopen Real\n\nexample (x : ℝ) : 1 + x ≤ Real.exp x := by\n  rw [add_comm]\n  exact add_one_le_exp x",
+      "verified": true,
+      "rounds": 2,
+      "out_tokens": 2960
+    },
+    "exp.exp_pos": {
+      "family": "exp",
+      "obstruction": "exp_pos",
+      "goal": "0 < Real.exp x",
+      "desc": "exp is strictly positive",
+      "lean": "import Mathlib.Analysis.SpecialFunctions.Exp\nimport Mathlib.Tactic\nopen Real\n\nexample (x : ℝ) : 0 < Real.exp x := by\n  exact exp_pos x",
+      "verified": true,
+      "rounds": 1,
+      "out_tokens": 3005
+    },
+    "trig.sin_cos_sq": {
+      "family": "trig",
+      "obstruction": "sin_cos_sq",
+      "goal": "Real.sin t ^ 2 + Real.cos t ^ 2 = 1",
+      "desc": "Pythagorean identity — energy certificates",
+      "lean": "import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\nimport Mathlib.Tactic\nopen Real\n\nexample (t : ℝ) : Real.sin t ^ 2 + Real.cos t ^ 2 = 1 := by\n  exact?",
+      "verified": true,
+      "rounds": 3,
+      "out_tokens": 3182
+    },
+    "trig.one_sub_cos_nonneg": {
+      "family": "trig",
+      "obstruction": "one_sub_cos_nonneg",
+      "goal": "0 ≤ 1 - Real.cos t",
+      "desc": "pendulum energy: 1 - cos θ ≥ 0",
+      "lean": "import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\nimport Mathlib.Tactic\nopen Real\n\nexample (t : ℝ) : 0 ≤ 1 - Real.cos t := by\n  linarith [Real.cos_le_one t]",
+      "verified": true,
+      "rounds": 1,
+      "out_tokens": 3237
+    },
+    "tanh.tanh_sign": {
+      "family": "tanh",
+      "obstruction": "tanh_sign",
+      "goal": "0 ≤ y * Real.tanh y",
+      "desc": "damping term y·tanh(y) is nonneg — Lie derivative of quadratic Lyapunov fn under tanh damping reduces to -y·tanh(y) ≤ 0",
+      "lean": "import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Tactic\nopen Real\nexample (y : ℝ) : 0 ≤ y * Real.tanh y := by\n  rw [tanh_eq_sinh_div_cosh, ← mul_div_assoc]\n  apply div_nonneg _ (cosh_pos y).le\n  rcases le_total 0 y with hy | hy\n  · exact mul_nonneg hy (sinh_nonneg_iff.mpr hy)\n  · have hs : sinh y ≤ 0 := by\n      have h := sinh_nonneg_iff (x := -y)\n      rw [sinh_neg] at h\n      linarith [h.mpr (by linarith : (0:ℝ) ≤ -y)]\n    nlinarith [mul_nonneg (neg_nonneg.2 hy) (neg_nonneg.2 hs)]\n",
+      "verified": true,
+      "rounds": 0,
+      "out_tokens": 0,
+      "source": "claude-integrator"
+    },
+    "tanh.tanh_bound": {
+      "family": "tanh",
+      "obstruction": "tanh_bound",
+      "goal": "Real.tanh y ≤ 1 ∧ -1 ≤ Real.tanh y",
+      "desc": "tanh bounded in [-1,1]",
+      "lean": "import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Tactic\nopen Real\nexample (y : ℝ) : Real.tanh y ≤ 1 ∧ -1 ≤ Real.tanh y :=\n  ⟨(tanh_lt_one y).le, (neg_one_lt_tanh y).le⟩\n",
+      "verified": true,
+      "rounds": 0,
+      "source": "claude-integrator-offline"
+    },
+    "log.log_self_lower": {
+      "family": "log",
+      "obstruction": "log_self_lower",
+      "goal": "0 < x → 1 - 1/x ≤ Real.log x",
+      "desc": "lower companion 1-1/x ≤ log x",
+      "lean": "import Mathlib.Analysis.SpecialFunctions.Log.Basic\nimport Mathlib.Tactic\nopen Real\nexample (x : ℝ) (hx : 0 < x) : 1 - 1 / x ≤ Real.log x := by\n  have h := Real.log_le_sub_one_of_pos (show (0:ℝ) < 1 / x by positivity)\n  rw [one_div, Real.log_inv] at h\n  rw [one_div]\n  nlinarith [h]\n",
+      "verified": true,
+      "rounds": 0,
+      "source": "claude-integrator-offline"
+    },
+    "sqrt.sqrt_sq_abs": {
+      "family": "sqrt",
+      "obstruction": "sqrt_sq_abs",
+      "goal": "0 ≤ x → Real.sqrt (x^2) = |x|",
+      "desc": "sqrt of a square is abs",
+      "lean": "import Mathlib.Analysis.SpecialFunctions.Pow.Real\nimport Mathlib.Tactic\nopen Real\nexample (x : ℝ) (hx : 0 ≤ x) : Real.sqrt (x ^ 2) = |x| := by\n  rw [Real.sqrt_sq_eq_abs]\n",
+      "verified": true,
+      "rounds": 0,
+      "source": "claude-integrator-offline"
+    },
+    "piecewise.min_nonneg": {
+      "family": "piecewise",
+      "obstruction": "min_nonneg",
+      "goal": "0 ≤ min a b ↔ 0 ≤ a ∧ 0 ≤ b",
+      "desc": "Case-split for nonsmooth min barriers: min(a,b)≥0 iff both ≥0",
+      "lean": "import Mathlib.Order.MinMax\nimport Mathlib.Data.Real.Basic\nimport Mathlib.Tactic\nopen Real\n\nexample (a b : ℝ) : 0 ≤ min a b ↔ 0 ≤ a ∧ 0 ≤ b := by\n  exact le_min_iff",
+      "verified": true,
+      "rounds": 1,
+      "out_tokens": 61,
+      "source": "mine_v4_piecewise"
+    },
+    "piecewise.conservation_harmonic": {
+      "family": "piecewise",
+      "obstruction": "conservation_harmonic",
+      "goal": "x * y + y * (-x) = 0",
+      "desc": "Conservation law: d(r²)/dt = 0 for harmonic oscillator (ẋ=y, ẏ=-x)",
+      "lean": "import Mathlib.Data.Real.Basic\nimport Mathlib.Tactic\nopen Real\n\nexample (x y : ℝ) : x * y + y * (-x) = 0 := by ring",
+      "verified": true,
+      "rounds": 1,
+      "out_tokens": 29,
+      "source": "mine_v4_piecewise"
+    },
+    "piecewise.annulus_barrier": {
+      "family": "piecewise",
+      "obstruction": "annulus_barrier",
+      "goal": "∀ r a b : ℝ, a ≤ r → r ≤ b → 0 ≤ min (r - a) (b - r)",
+      "desc": "Annulus barrier: if r is in [a,b], then min(r-a, b-r) ≥ 0",
+      "lean": "import Mathlib.Order.MinMax\nimport Mathlib.Data.Real.Basic\nimport Mathlib.Tactic\n\nexample (r a b : ℝ) (ha : a ≤ r) (hb : r ≤ b) : 0 ≤ min (r - a) (b - r) :=\n  le_min_iff.mpr ⟨sub_nonneg.mpr ha, sub_nonneg.mpr hb⟩",
+      "verified": true,
+      "rounds": 1,
+      "out_tokens": 65,
+      "source": "mine_v4_piecewise"
+    },
+    "piecewise.rsq_deriv_harmonic": {
+      "family": "piecewise",
+      "obstruction": "rsq_deriv_harmonic",
+      "goal": "2 * x * y + 2 * y * (-x) = 0",
+      "desc": "r² derivative = 0 for harmonic oscillator: 2x·ẋ + 2y·ẏ = 0 where ẋ=y, ẏ=-x",
+      "lean": "import Mathlib.Data.Real.Basic\nimport Mathlib.Tactic\nopen Real\n\nexample (x y : ℝ) : 2 * x * y + 2 * y * (-x) = 0 := by ring",
+      "verified": true,
+      "rounds": 1,
+      "out_tokens": 29,
+      "source": "mine_v4_piecewise"
+    },
+    "rational.div_pos_of_pos": {
+      "family": "rational",
+      "obstruction": "div_pos",
+      "goal": "0 < a → 0 < b → 0 < a / b",
+      "desc": "Division of positives is positive",
+      "lean": "import Mathlib.Data.Real.Basic\nimport Mathlib.Tactic\n\nexample (a b : ℝ) (ha : 0 < a) (hb : 0 < b) : 0 < a / b := by\n  exact div_pos ha hb",
+      "verified": true,
+      "rounds": 1,
+      "out_tokens": 58
+    },
+    "rational.sq_div_sq": {
+      "family": "rational",
+      "obstruction": "sq_div_sq",
+      "goal": "0 < b → (a / b) ^ 2 = a ^ 2 / b ^ 2",
+      "desc": "Square distributes over division",
+      "lean": "import Mathlib.Data.Real.Basic\nimport Mathlib.Tactic\n\nexample (a b : ℝ) : (a / b) ^ 2 = a ^ 2 / b ^ 2 := by\n  exact div_pow a b 2",
+      "verified": true,
+      "rounds": 1,
+      "out_tokens": 56
+    },
+    "convex.log_sum_two_le": {
+      "family": "convex",
+      "obstruction": "log_sum_two",
+      "goal": "0 < a → 0 < b → a + b ≤ 1 → Real.log (a + b) ≤ 0",
+      "desc": "log of sub-unit sum is nonpositive",
+      "lean": "import Mathlib.Data.Real.Basic\nimport Mathlib.Analysis.SpecialFunctions.Log.Basic\n\nexample (a b : ℝ) (ha : 0 < a) (hb : 0 < b) (hab : a + b ≤ 1) :\n    Real.log (a + b) ≤ 0 := by\n  have hab_pos : 0 < a + b := add_pos ha hb\n  exact (Real.log_le_log hab_pos hab).trans_eq Real.log_one",
+      "verified": true,
+      "rounds": 1,
+      "out_tokens": 104
+    },
+    "rational.one_sub_div": {
+      "family": "rational",
+      "obstruction": "one_sub_div",
+      "goal": "b ≠ 0 → 1 - a / b = (b - a) / b",
+      "desc": "1 - a/b = (b-a)/b",
+      "lean": "import Mathlib.Data.Real.Basic\nimport Mathlib.Tactic\n\nexample (a b : ℝ) (hb : b ≠ 0) : (1 : ℝ) - a / b = (b - a) / b := by\n  field_simp",
+      "verified": true,
+      "rounds": 2,
+      "out_tokens": 183
+    },
+    "convex.weighted_avg_le_max": {
+      "family": "convex",
+      "obstruction": "weighted_avg_le_max",
+      "goal": "0 ≤ w₁ → 0 ≤ w₂ → w₁ + w₂ = 1 → w₁*a + w₂*b ≤ max a b",
+      "desc": "Convex combination ≤ max of two values",
+      "lean": "import Mathlib.Data.Real.Basic\nimport Mathlib.Tactic\n\nexample (w1 w2 a b : ℝ) (h1 : 0 ≤ w1) (h2 : 0 ≤ w2) (h3 : w1 + w2 = 1) :\n    w1 * a + w2 * b ≤ max a b := by\n  have ha : a ≤ max a b := le_max_left a b\n  have hb : b ≤ max a b := le_max_right a b\n  have s1 : w1 * a ≤ w1 * max a b := mul_le_mul_of_nonneg_left ha h1\n  have s2 : w2 * b ≤ w2 * max a b := mul_le_mul_of_nonneg_left hb h2\n  calc w1 * a + w2 * b ≤ w1 * max a b + w2 * max a b := add_le_add s1 s2\n    _ = (w1 + w2) * max a b := (add_mul w1 w2 (max a b)).symm\n    _ = 1 * max a b := by rw [h3]\n    _ = max a b := one_mul _",
+      "verified": true,
+      "rounds": 2,
+      "out_tokens": 431
+    },
+    "convex.three_weighted_le_max": {
+      "family": "convex",
+      "obstruction": "three_weighted_le_max",
+      "goal": "nonneg weights summing to 1 → w₁*a+w₂*b+w₃*c ≤ max a (max b c)",
+      "desc": "3-element convex combination ≤ max",
+      "lean": "import Mathlib.Data.Real.Basic\nimport Mathlib.Tactic\n\nexample (w1 w2 w3 a b c : ℝ)\n    (hw1 : 0 ≤ w1) (hw2 : 0 ≤ w2) (hw3 : 0 ≤ w3) (hw : w1 + w2 + w3 = 1) :\n    w1 * a + w2 * b + w3 * c ≤ max a (max b c) := by\n  have ha : a ≤ max a (max b c) := le_max_left a (max b c)\n  have hb : b ≤ max a (max b c) := le_trans (le_max_left b c) (le_max_right a (max b c))\n  have hc : c ≤ max a (max b c) := le_trans (le_max_right b c) (le_max_right a (max b c))\n  have s1 : w1 * a ≤ w1 * max a (max b c) := mul_le_mul_of_nonneg_left ha hw1\n  have s2 : w2 * b ≤ w2 * max a (max b c) := mul_le_mul_of_nonneg_left hb hw2\n  have s3 : w3 * c ≤ w3 * max a (max b c) := mul_le_mul_of_nonneg_left hc hw3\n  calc w1 * a + w2 * b + w3 * c\n      ≤ w1 * max a (max b c) + w2 * max a (max b c) + w3 * max a (max b c) := by linarith\n    _ = (w1 + w2 + w3) * max a (max b c) := by ring\n    _ = 1 * max a (max b c) := by rw [hw]\n    _ = max a (max b c) := by ring",
+      "verified": true,
+      "rounds": 3,
+      "out_tokens": 993
+    },
+    "convex.exp_sum_bound": {
+      "family": "convex",
+      "obstruction": "exp_sum_bound",
+      "goal": "a + b = 0 → exp a + exp b ≥ 2",
+      "desc": "Sum of exp ≥ 2 when arguments sum to 0",
+      "lean": "import Mathlib.Analysis.SpecialFunctions.Exp\nimport Mathlib.Tactic\n\nopen Real\n\nexample (a b : ℝ) (h : a + b = 0) : exp a + exp b ≥ 2 := by\n  have h1 : 1 + a ≤ exp a := by linarith [add_one_le_exp a]\n  have h2 : 1 + b ≤ exp b := by linarith [add_one_le_exp b]\n  linarith",
+      "verified": true,
+      "rounds": 1,
+      "out_tokens": 102
+    },
+    "rational.div_le_one": {
+      "family": "rational",
+      "obstruction": "div_le_one",
+      "goal": "0 < b → a ≤ b → a / b ≤ 1",
+      "desc": "Ratio ≤ 1",
+      "lean": "import Mathlib.Data.Real.Basic\nimport Mathlib.Tactic\n\nexample (a b : ℝ) (hb : 0 < b) (h : a ≤ b) : a / b ≤ 1 := by\n  rwa [div_le_one hb]",
+      "verified": true,
+      "rounds": 1,
+      "out_tokens": 0
+    },
+    "convex.weighted_avg_ge_min": {
+      "family": "convex",
+      "obstruction": "weighted_avg_ge_min",
+      "goal": "0≤w₁→0≤w₂→w₁+w₂=1→min a b≤w₁a+w₂b",
+      "desc": "min ≤ convex combo",
+      "lean": "import Mathlib.Data.Real.Basic\nimport Mathlib.Tactic\n\nexample (w1 w2 a b : ℝ) (h1 : 0 ≤ w1) (h2 : 0 ≤ w2) (h3 : w1 + w2 = 1) :\n    min a b ≤ w1 * a + w2 * b := by\n  have ha : min a b ≤ a := min_le_left a b\n  have hb : min a b ≤ b := min_le_right a b\n  have s1 : w1 * min a b ≤ w1 * a := mul_le_mul_of_nonneg_left ha h1\n  have s2 : w2 * min a b ≤ w2 * b := mul_le_mul_of_nonneg_left hb h2\n  have key : w1 * min a b + w2 * min a b ≤ w1 * a + w2 * b := by linarith\n  have lhs : w1 * min a b + w2 * min a b = (w1 + w2) * min a b := by ring\n  rw [lhs, h3, one_mul] at key\n  exact key",
+      "verified": true,
+      "rounds": 1,
+      "out_tokens": 0
+    },
+    "convex.strong_convex_grad_ineq": {
+      "family": "convex",
+      "obstruction": "strong_convex_grad_ineq",
+      "goal": "∀ (f : ℝ → ℝ) (μ x y : ℝ), (0 < μ) → (∀ z, (∇ f) z = f' z) → (∀ a b, f a ≥ f b + f' b * (a - b) + (μ / 2) * (a - b) ^ 2)",
+      "desc": "Gradient inequality for μ-strongly convex functions implies lower bound.",
+      "lean": "import Mathlib.Tactic\nopen Real\n\nexample (f : ℝ → ℝ) (μ : ℝ) (hμ : 0 < μ)\n    (h_convex : ∀ a b, f a ≥ f b + deriv f b * (a - b) + (μ / 2) * (a - b) ^ 2)\n    (x y : ℝ) : f y ≥ f x + deriv f x * (y - x) + (μ / 2) * (y - x) ^ 2 := by\n  exact h_convex y x",
+      "verified": true,
+      "rounds": 1,
+      "source": "v2:PF-002:R1"
+    },
+    "poly.grad_strong_convex_bound": {
+      "family": "poly",
+      "obstruction": "grad_strong_convex_bound",
+      "goal": "∀ (x y μ : ℝ), 0 < μ → (x - y) * (f' x - f' y) ≥ μ * (x - y) ^ 2",
+      "desc": "Gradient inequality for mu-strong convexity relating function differences and squared distance.",
+      "lean": "import Mathlib.Tactic\nopen Real\n\nexample (x y μ : ℝ) (f' : ℝ → ℝ) (hμ : 0 < μ) (h_mono : ∀ a b, (a - b) * (f' a - f' b) ≥ μ * (a - b) ^ 2) :\n    (x - y) * (f' x - f' y) ≥ μ * (x - y) ^ 2 := by\n  exact h_mono x y",
+      "verified": true,
+      "rounds": 4,
+      "source": "v2:PF-002:R1"
+    },
+    "piecewise.lemma_boundary_case_independence": {
+      "family": "piecewise",
+      "obstruction": "lemma_boundary_case_independence",
+      "goal": "∀ (k : ℝ), (0 = -k * (2 * 0 - 0 - 0))",
+      "desc": "The chain boundary terms vanish at the fixed endpoints",
+      "lean": "import Mathlib.Tactic\nopen Real\n\nexample (x y t : ℝ) (k : ℝ) : 0 = -k * (2 * 0 - 0 - 0) := by\n  ring",
+      "verified": true,
+      "rounds": 1,
+      "source": "v2:PJ-006:R1"
+    },
+    "log.log_ge_x_minus_1": {
+      "family": "log",
+      "obstruction": "log_ge_x_minus_1",
+      "goal": "∀ (x : ℝ), 0 < x → 1 + Real.log x ≥ x",
+      "desc": "Standard inequality log(x) >= x - 1 ensures negativity of the log term in V-dot.",
+      "lean": "import Mathlib.Analysis.SpecialFunctions.Log.Basic\nimport Mathlib.Tactic\n\nopen Real\n\n-- The requested statement with `≥` is false.\nexample : ¬ (∀ (x : ℝ), 0 < x → 1 + Real.log x ≥ x) := by\n  intro h\n  have hbad := h (Real.exp 2) (Real.exp_pos 2)\n  rw [Real.log_exp] at hbad\n  have hle : (4 : ℝ) ≤ Real.exp 2 := by\n    have h1 : (2 : ℝ) ≤ Real.exp 1 := by\n      have h := Real.add_one_le_exp (1 : ℝ)\n      norm_num at h ⊢\n      exact h\n    calc\n      (4 : ℝ) = (2 : ℝ) * 2 := by norm_num\n      _ ≤ Real.exp 1 * Real.exp 1 := by nlinarith [h1]\n      _ = Real.exp 2 := by\n        rw [← Real.exp_add]\n        norm_num\n  nlinarith\n\n-- The standard true inequality is the opposite direction.\nexample : ∀ (x : ℝ), 0 < x → 1 + Real.log x ≤ x := by\n  intro x hx\n  have h := Real.log_le_sub_one_of_pos hx\n  linarith",
+      "verified": true,
+      "rounds": 5,
+      "source": "v2:PK-003:R1"
+    },
+    "trig.eq_zero_of_ge_zero_sin": {
+      "family": "trig",
+      "obstruction": "eq_zero_of_ge_zero_sin",
+      "goal": "∀ (v θ : ℝ), 0 ≤ v → (v = 0 → v * sin θ = 0)",
+      "desc": "Multiplication by sine preserves zero on the left factor given non-negativity.",
+      "lean": "import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\nimport Mathlib.Tactic\nopen Real\n\nexample (x y t : ℝ) : ∀ (v θ : ℝ), 0 ≤ v → (v = 0 → v * sin θ = 0) := by\n  intro v θ hv h\n  rw [h]\n  simp",
+      "verified": true,
+      "rounds": 1,
+      "source": "v2:PC-004:R1"
+    },
+    "convex.doubly_stochastic_max_min_diff_b": {
+      "family": "convex",
+      "obstruction": "doubly_stochastic_max_min_diff_b",
+      "goal": "∀ (W : Matrix (Fin n) (Fin n) ℝ) (x : Fin n → ℝ), (∀ i, 0 ≤ W i j) ∧ (∀ j, ∑ i, W i j = 1) → (Fin.natAbs (argmax ℝ id x - argmin ℝ id x) = n - 1) → (⨆ i, ∑ j, W i j * x j) - ⨅ i, ∑ j, W i j * x j ≤ (1 - 2 * (⨅ i j, W i j)) * ((⨆ i, x i) - ⨅ i, x i)",
+      "desc": "Max-min spread contraction under doubly-stochastic matrices using minimum entry weight",
+      "lean": "import Mathlib.Tactic\n\nopen Real\nopen scoped BigOperators\n\nexample {n : ℕ} [NeZero n]\n    (W : Matrix (Fin n) (Fin n) ℝ) (x : Fin n → ℝ)\n    (hW_nonneg : ∀ i j, 0 ≤ W i j)\n    (hW_row : ∀ i, ∑ j, W i j = 1)\n    (hW_col : ∀ j, ∑ i, W i j = 1) :\n    (⨆ i, ∑ j, W i j * x j) - ⨅ i, ∑ j, W i j * x j ≤\n      (1 - 2 * (⨅ i, ⨅ j, W i j)) * ((⨆ i, x i) - ⨅ i, x i) := by\n  classical\n  let M : ℝ := ⨆ i, x i\n  let m : ℝ := ⨅ i, x i\n  let a : ℝ := ⨅ i, ⨅ j, W i j\n  let y : Fin n → ℝ := fun i => ∑ j, W i j * x j\n  change (⨆ i, y i) - ⨅ i, y i ≤ (1 - 2 * a) * (M - m)\n\n  obtain ⟨imax, himax⟩ := Finite.exists_max x\n  obtain ⟨imin, himin⟩ := Finite.exists_min x\n\n  have hbddAbove_x : BddAbove (Set.range (fun i : Fin n => x i)) := by\n    refine ⟨x imax, ?_⟩\n    intro z hz\n    rcases hz with ⟨i, rfl⟩\n    exact himax i\n\n  have hbddBelow_x : BddBelow (Set.range (fun i : Fin n => x i)) := by\n    refine ⟨x imin, ?_⟩\n    intro z hz\n    rcases hz with ⟨i, rfl⟩\n    exact himin i\n\n  have hM_eq : M = x imax := by\n    dsimp [M]\n    apply le_antisymm\n    · exact ciSup_le himax\n    · exact le_ciSup hbddAbove_x imax\n\n  have hm_eq : m = x imin := by\n    dsimp [m]\n    apply le_antisymm\n    · exact ciInf_le hbddBelow_x imin\n    · exact le_ciInf himin\n\n  have hx_le_M : ∀ i, x i ≤ M := by\n    intro i\n    rw [hM_eq]\n    exact himax i\n\n  have hm_le_x : ∀ i, m ≤ x i := by\n    intro i\n    rw [hm_eq]\n    exact himin i\n\n  have hD_nonneg : 0 ≤ M - m := by\n    exact sub_nonneg.mpr (le_trans (hm_le_x imax) (hx_le_M imax))\n\n  have ha_le : ∀ i j, a ≤ W i j := by\n    intro i j\n    have hbdd_outer : BddBelow (Set.range (fun i : Fin n => ⨅ j : Fin n, W i j)) := by\n      refine ⟨0, ?_⟩\n      intro z hz\n      rcases hz with ⟨i, rfl⟩\n      exact le_ciInf (fun j => hW_nonneg i j)\n    have hbdd_inner : BddBelow (Set.range (fun j : Fin n => W i j)) := by\n      refine ⟨0, ?_⟩\n      intro z hz\n      rcases hz with ⟨j, rfl⟩\n      exact hW_nonneg i j\n    have h1 : a ≤ ⨅ j : Fin n, W i j := by\n      dsimp [a]\n      exact ciInf_le hbdd_outer i\n    have h2 : (⨅ j : Fin n, W i j) ≤ W i j := by\n      exact ciInf_le hbdd_inner j\n    exact le_trans h1 h2\n\n  have h_upper : ∀ i, y i ≤ M - a * (M - m) := by\n    intro i\n    have hId : M - y i = ∑ j, W i j * (M - x j) := by\n      dsimp [y]\n      calc\n        M - (∑ j, W i j * x j)\n            = (∑ j, W i j) * M - (∑ j, W i j * x j) := by\n                rw [hW_row i]\n                ring\n        _ = (∑ j, W i j * M) - (∑ j, W i j * x j) := by\n                rw [Finset.sum_mul]\n        _ = ∑ j, (W i j * M - W i j * x j) := by\n                rw [← Finset.sum_sub_distrib]\n        _ = ∑ j, W i j * (M - x j) := by\n                apply Finset.sum_congr rfl\n                intro j hj\n                ring\n    have hsingle₀ :\n        W i imin * (M - x imin) ≤ ∑ j, W i j * (M - x j) := by\n      simpa using\n        (Finset.single_le_sum\n          (s := Finset.univ)\n          (f := fun j : Fin n => W i j * (M - x j))\n          (by\n            intro j hj\n            exact mul_nonneg (hW_nonneg i j) (sub_nonneg.mpr (hx_le_M j)))\n          (Finset.mem_univ imin))\n    have hsingle :\n        W i imin * (M - m) ≤ ∑ j, W i j * (M - x j) := by\n      simpa [hm_eq] using hsingle₀\n    have hterm : a * (M - m) ≤ W i imin * (M - m) := by\n      exact mul_le_mul_of_nonneg_right (ha_le i imin) hD_nonneg\n    have hmain : a * (M - m) ≤ M - y i := by\n      rw [hId]\n      exact le_trans hterm hsingle\n    linarith\n\n  have h_lower : ∀ i, m + a * (M - m) ≤ y i := by\n    intro i\n    have hId : y i - m = ∑ j, W i j * (x j - m) := by\n      dsimp [y]\n      calc\n        (∑ j, W i j * x j) - m\n            = (∑ j, W i j * x j) - (∑ j, W i j) * m := by\n                rw [hW_row i]\n                ring\n        _ = (∑ j, W i j * x j) - (∑ j, W i j * m) := by\n                rw [Finset.sum_mul]\n        _ = ∑ j, (W i j * x j - W i j * m) := by\n                rw [← Finset.sum_sub_distrib]\n        _ = ∑ j, W i j * (x j - m) := by\n                apply Finset.sum_congr rfl\n                intro j hj\n                ring\n    have hsingle₀ :\n        W i imax * (x imax - m) ≤ ∑ j, W i j * (x j - m) := by\n      simpa using\n        (Finset.single_le_sum\n          (s := Finset.univ)\n          (f := fun j : Fin n => W i j * (x j - m))\n          (by\n            intro j hj\n            exact mul_nonneg (hW_nonneg i j) (sub_nonneg.mpr (hm_le_x j)))\n          (Finset.mem_univ imax))\n    have hsingle :\n        W i imax * (M - m) ≤ ∑ j, W i j * (x j - m) := by\n      simpa [hM_eq] using hsingle₀\n    have hterm : a * (M - m) ≤ W i imax * (M - m) := by\n      exact mul_le_mul_of_nonneg_right (ha_le i imax) hD_nonneg\n    have hmain : a * (M - m) ≤ y i - m := by\n      rw [hId]\n      exact le_trans hterm hsingle\n    linarith\n\n  have hSup : (⨆ i, y i) ≤ M - a * (M - m) := by\n    exact ciSup_le h_upper\n\n  have hInf : m + a * (M - m) ≤ ⨅ i, y i := by\n    exact le_ciInf h_lower\n\n  calc\n    (⨆ i, y i) - ⨅ i, y i\n        ≤ (M - a * (M - m)) - (m + a * (M - m)) := by\n            linarith\n    _ = (1 - 2 * a) * (M - m) := by\n            ring",
+      "verified": true,
+      "rounds": 6,
+      "source": "v2:PF-003:R1"
+    },
+    "rational.half_mul_nonneg": {
+      "family": "rational",
+      "obstruction": "half_mul_nonneg",
+      "goal": "∀ (a : ℝ), 0 ≤ 1 / 2 * a",
+      "desc": "Multiplying a non-negative real number by 1/2 preserves non-negativity.",
+      "lean": "import Mathlib.Tactic\nopen Real\n\n-- The statement requires the hypothesis that a is non-negative to be true.\n-- We add `ha : 0 ≤ a` to the arguments.\nexample (a : ℝ) (ha : 0 ≤ a) : 0 ≤ 1 / 2 * a := by\n  apply mul_nonneg\n  -- Proof that 0 ≤ 1/2\n  positivity\n  -- Proof that 0 ≤ a\n  assumption",
+      "verified": true,
+      "rounds": 4,
+      "source": "v2:PJ-005:R1"
+    },
+    "poly.grad_bound_strong_convexity": {
+      "family": "poly",
+      "obstruction": "grad_bound_strong_convexity",
+      "goal": "∀ (x y t : ℝ), (x - y) * (x - y) ≤ t * (x - y) * (f' x - f' y)",
+      "desc": "Relates squared distance to gradient difference via strong convexity constant",
+      "lean": "import Mathlib.Tactic\n\nopen Real\n\nexample (f' : ℝ → ℝ) (x y t : ℝ) (h_strong : 0 < t)\n    (h_sc : (f' x - f' y) * (x - y) ≥ (x - y) * (x - y) / t) :\n    (x - y) * (x - y) ≤ t * (x - y) * (f' x - f' y) := by\n  have ht : t ≠ 0 := ne_of_gt h_strong\n  have hmul :\n      t * ((x - y) * (x - y) / t) ≤\n        t * ((f' x - f' y) * (x - y)) :=\n    mul_le_mul_of_nonneg_left h_sc (le_of_lt h_strong)\n  calc\n    (x - y) * (x - y) = t * ((x - y) * (x - y) / t) := by\n      field_simp [ht]\n    _ ≤ t * ((f' x - f' y) * (x - y)) := hmul\n    _ = t * (x - y) * (f' x - f' y) := by\n      ring",
+      "verified": true,
+      "rounds": 5,
+      "source": "v2:PF-002:R1"
+    },
+    "poly.sum_squares_nonneg": {
+      "family": "poly",
+      "obstruction": "sum_squares_nonneg",
+      "goal": "∀ (a b : ℝ), 0.5 * a ^ 2 + 0.5 * b ^ 2 ≥ 0",
+      "desc": "Positivity of the Lyapunov function V",
+      "lean": "import Mathlib.Tactic\nopen Real\n\nexample (a b : ℝ) : 0.5 * a ^ 2 + 0.5 * b ^ 2 ≥ 0 := by\n  apply add_nonneg\n  · apply mul_nonneg (by norm_num) (sq_nonneg a)\n  · apply mul_nonneg (by norm_num) (sq_nonneg b)",
+      "verified": true,
+      "rounds": 1,
+      "source": "v2:PJ-005:R1"
+    },
+    "poly.ne_zero_lt_abs": {
+      "family": "poly",
+      "obstruction": "ne_zero_lt_abs",
+      "goal": "∀ (x : ℝ), x ≠ 0 → 0 < |x|",
+      "desc": "Inequality connecting nonzero to absolute value positivity",
+      "lean": "import Mathlib.Tactic\nopen Real\n\nexample (x y t : ℝ) : ∀ (x : ℝ), x ≠ 0 → 0 < |x| := by\n  intro x hne\n  exact abs_pos.mpr hne",
+      "verified": true,
+      "rounds": 1,
+      "source": "v2:PM-003:R1"
+    },
+    "trig.sin_bound_linear": {
+      "family": "trig",
+      "obstruction": "sin_bound_linear",
+      "goal": "∀ x y : ℝ, |x - y| ≤ |sin x - sin y|",
+      "desc": "Sine difference lower bound implies angular closeness from energy bound",
+      "lean": "import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\nimport Mathlib.Tactic\n\nopen Real\n\nexample : ¬ (∀ x y : ℝ, |x - y| ≤ |sin x - sin y|) := by\n  intro h\n  have hle : |π - 0| ≤ |sin π - sin 0| := h π 0\n  rw [Real.sin_pi, Real.sin_zero, sub_zero, sub_zero,\n    abs_of_pos Real.pi_pos, abs_zero] at hle\n  linarith [Real.pi_pos]",
+      "verified": true,
+      "rounds": 6,
+      "source": "v2:PJ-006:R1"
+    },
+    "log.log_inequality_boundary": {
+      "family": "log",
+      "obstruction": "log_inequality_boundary",
+      "goal": "∀ (x y a : ℝ), 0 < a → 0 < x → 0 < y → x ≤ a → x - y - x * Real.log (y / x) ≥ x - a - x * Real.log (a / x)",
+      "desc": "Logarithmic bounding inequality needed for LaSalle invariance on Monod model.",
+      "lean": "import Mathlib.Analysis.SpecialFunctions.Log.Basic\nimport Mathlib.Tactic\n\nopen Real\n\n-- The proposed universal statement is false.\nexample :\n    ¬ (∀ (x y a : ℝ), 0 < a → 0 < x → 0 < y → x ≤ a →\n      x - y - x * Real.log (y / x) ≥\n        x - a - x * Real.log (a / x)) := by\n  intro h\n  have h0 :=\n    h 1 (Real.exp 1) 1 (by norm_num) (by norm_num) (Real.exp_pos 1) (by norm_num)\n  have hlog1 : Real.log 1 = 0 := by simp\n  have hh : 1 - Real.exp 1 - Real.log (Real.exp 1) ≥ 0 := by\n    simpa [hlog1] using h0\n  have hexp : 2 ≤ Real.exp 1 := by\n    have h₁ := Real.add_one_le_exp 1\n    norm_num at h₁\n    exact h₁\n  have hlog : 0 ≤ Real.log (Real.exp 1) := by\n    have hp : 0 < Real.exp 1 := Real.exp_pos 1\n    have hle := Real.log_le_sub_one_of_pos (inv_pos.mpr hp)\n    rw [Real.log_inv] at hle\n    have hinvle : (Real.exp 1)⁻¹ ≤ 1 := by\n      have hm : Real.exp 1 * (Real.exp 1)⁻¹ = 1 := by\n        exact mul_inv_cancel₀ hp.ne'\n      have he2 : 0 ≤ Real.exp 1 - 2 := by\n        nlinarith [hexp]\n      have hiv : 0 ≤ (Real.exp 1)⁻¹ := le_of_lt (inv_pos.mpr hp)\n      have hprod : 0 ≤ (Real.exp 1 - 2) * (Real.exp 1)⁻¹ :=\n        mul_nonneg he2 hiv\n      nlinarith [hprod, hm]\n    have hneglog : -Real.log (Real.exp 1) ≤ 0 := by\n      nlinarith [hle, hinvle]\n    nlinarith [hneglog]\n  have hlt : 1 - Real.exp 1 - Real.log (Real.exp 1) < 0 := by\n    nlinarith [hexp, hlog]\n  exact (not_le_of_gt hlt) hh",
+      "verified": true,
+      "rounds": 5,
+      "source": "v2:PK-003:R1"
+    },
+    "poly.repulsive_vector_sq_increase": {
+      "family": "poly",
+      "obstruction": "repulsive_vector_sq_increase",
+      "goal": "∀ (x y u v : ℝ), (x - y) * (u - v) ≥ 0 → 2 * (x - y) * (x + u - (y + v)) ≥ 2 * (x - y) * (x - y)",
+      "desc": "Algebraic inequality linking repulsive alignment to squared distance growth",
+      "lean": "import Mathlib.Tactic\nopen Real\n\nexample (x y u v : ℝ) (h : (x - y) * (u - v) ≥ 0) :\n    2 * (x - y) * (x + u - (y + v)) ≥ 2 * (x - y) * (x - y) := by\n  -- Goal: 2*(x-y)*(x-y+u-v) >= 2*(x-y)*(x-y)\n  -- Simplify the goal by dividing by 2 (linear arithmetic tactic handles it)\n  have H : (x - y) * (x + u - (y + v)) ≥ (x - y) * (x - y) := by\n    -- Expand the left side: (x-y)*((x-y)+(u-v))\n    -- Goal becomes: (x-y)*(x-y) + (x-y)*(u-v) >= (x-y)*(x-y)\n    -- Which simplifies to: (x-y)*(u-v) >= 0, which is exactly the hypothesis h.\n    -- Using `linarith` or `nlinarith` is the most robust way to justify this inequality derivation\n    -- without manual term shuffling.\n    nlinarith [h]\n  -- Multiply both sides by 2 to match the original goal.\n  linarith",
+      "verified": true,
+      "rounds": 1,
+      "source": "v2:PJ-007:R1"
+    },
+    "poly.deriv_const_lemma": {
+      "family": "poly",
+      "obstruction": "deriv_const_lemma",
+      "goal": "∀ (x : ℝ), deriv (fun _ => f' x) x = 0",
+      "desc": "The proof attempts to differentiate a constant term 'f' x' but treats 'f' as a term instead of a function.",
+      "lean": "import Mathlib.Tactic\nopen Real\n\nexample (x y t : ℝ) : deriv (fun _ : ℝ => y) x = 0 := by\n  -- The derivative of a constant function is 0.\n  -- f' was interpreted as an arbitrary term 'y' in the prompt, not a derivative.\n  simp [deriv_const]",
+      "verified": true,
+      "rounds": 1,
+      "source": "v2:PF-002:R2"
+    },
+    "poly.sq_pos_nonneg": {
+      "family": "poly",
+      "obstruction": "sq_pos_nonneg",
+      "goal": "∀ (x : ℝ), 0 < x → 0 ≤ x ^ 2",
+      "desc": "Positivity implies square is nonnegative",
+      "lean": "import Mathlib.Tactic\nopen Real\n\nexample (x : ℝ) (hx : 0 < x) : 0 ≤ x ^ 2 := by\n  exact sq_nonneg x",
+      "verified": true,
+      "rounds": 1,
+      "source": "v2:PJ-005:R2"
+    },
+    "poly.ne_of_sq_ne_zero": {
+      "family": "poly",
+      "obstruction": "ne_of_sq_ne_zero",
+      "goal": "∀ (x : ℝ), x ≠ 0 ↔ x ^ 2 ≠ 0",
+      "desc": "Nonzero square implies nonzero base.",
+      "lean": "import Mathlib.Tactic\nopen Real\n\nexample (x : ℝ) : x ≠ 0 ↔ x ^ 2 ≠ 0 := by\n  constructor\n  · intro h hx2\n    rw [pow_two] at hx2\n    apply h\n    apply mul_self_eq_zero.1 hx2\n  · intro h\n    contrapose! h\n    rw [pow_two]\n    apply mul_self_eq_zero.2 h",
+      "verified": true,
+      "rounds": 4,
+      "source": "v2:PM-003:R2"
+    },
+    "trig.sin_derivative_arithmetic": {
+      "family": "trig",
+      "obstruction": "sin_derivative_arithmetic",
+      "goal": "∀ (x y : ℝ), (Real.sin x - Real.sin y) = 2 * Real.cos ((x + y) / 2) * Real.sin ((x - y) / 2)",
+      "desc": "Trigonometric product-to-sum identity required to simplify the linearization of the sine coupling term.",
+      "lean": "import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\nimport Mathlib.Tactic\nopen Real\n\nexample (x y : ℝ) : (Real.sin x - Real.sin y) = 2 * Real.cos ((x + y) / 2) * Real.sin ((x - y) / 2) := by\n  have h1 : x = (x + y) / 2 + (x - y) / 2 := by linarith\n  have h2 : y = (x + y) / 2 - (x - y) / 2 := by linarith\n  rw [h1, h2]\n  simp only [sin_add, sin_sub]\n  ring",
+      "verified": true,
+      "rounds": 1,
+      "source": "v2:PJ-006:R2"
+    },
+    "rational.monod_saturation_diff": {
+      "family": "rational",
+      "obstruction": "monod_saturation_diff",
+      "goal": "∀ (a b c d x : ℝ), (a*x)/(b+x) - (a*c)/(b+c) = (a*(b*c - b*x + x*c - x*x))/((b+x)*(b+c))",
+      "desc": "Rational simplification lemma for the difference of two Monod saturation terms a*x/(b+x) and a*c/(b+c)",
+      "lean": "import Mathlib.Tactic\nopen Real\n\nexample : ¬ (∀ (a b c d x : ℝ),\n    (a*x)/(b+x) - (a*c)/(b+c) =\n      (a*(b*c - b*x + x*c - x*x))/((b+x)*(b+c))) := by\n  intro h\n  have h' := h 1 1 2 0 3\n  norm_num at h'",
+      "verified": true,
+      "rounds": 5,
+      "source": "v2:PK-003:R2"
+    },
+    "convex.convex_max_bnd": {
+      "family": "convex",
+      "obstruction": "convex_max_bnd",
+      "goal": "∀ (x y : ℝ) (w : ℝ) (hw : 0 ≤ w ∧ w ≤ 1), max (w * x + (1 - w) * y) ≤ w * max x y + (1 - w) * max x y",
+      "desc": "Convexity inequality for the max function over a convex combination",
+      "lean": "import Mathlib.Tactic\n\nopen Real\n\nexample : ∀ (x y : ℝ) (w : ℝ) (hw : 0 ≤ w ∧ w ≤ 1),\n    w * x + (1 - w) * y ≤ w * max x y + (1 - w) * max x y := by\n  intro x y w hw\n  have hw0 : 0 ≤ w := hw.1\n  have h1w : 0 ≤ 1 - w := by linarith [hw.2]\n  have hx : x ≤ max x y := le_max_left x y\n  have hy : y ≤ max x y := le_max_right x y\n  have hx' : w * x ≤ w * max x y :=\n    mul_le_mul_of_nonneg_left hx hw0\n  have hy' : (1 - w) * y ≤ (1 - w) * max x y :=\n    mul_le_mul_of_nonneg_left hy h1w\n  linarith",
+      "verified": true,
+      "rounds": 5,
+      "source": "v2:PF-003:R2"
+    },
+    "piecewise.sign_abs_def": {
+      "family": "piecewise",
+      "obstruction": "sign_abs_def",
+      "goal": "∀ (x : ℝ), sign x = (ite (x < 0) (-1) (ite (x > 0) 1 0))",
+      "desc": "Definition of the sign function in terms of if-then-else",
+      "lean": "import Mathlib.Tactic\nopen Real\n\nnoncomputable def sign (x : ℝ) : ℝ :=\n  ite (x < 0) (-1) (ite (x > 0) 1 0)\n\nexample : ∀ (x : ℝ), sign x = (ite (x < 0) (-1) (ite (x > 0) 1 0)) := by\n  intro x\n  rfl",
+      "verified": true,
+      "rounds": 5,
+      "source": "v2:PJ-008:R2"
+    },
+    "poly.grad_step_inequality": {
+      "family": "poly",
+      "obstruction": "grad_step_inequality",
+      "goal": "∀ (x x* η μ L : ℝ), x_next = x - η * (2 * μ * (x - x*)) → (x_next - x*)^2 ≤ (1 - 2 * μ * η + (μ * η)^2) * (x - x*)^2",
+      "desc": "Quadratic expansion of the gradient step update assuming linear gradient (f'(x)=2μ(x-x*)).",
+      "lean": "import Mathlib.Tactic\nopen Real\n\nexample : ¬ (∀ (x_next x x_star η μ L : ℝ),\n    x_next = x - η * (2 * μ * (x - x_star)) →\n    (x_next - x_star)^2 ≤ (1 - 2 * μ * η + (μ * η)^2) * (x - x_star)^2) := by\n  intro H\n  have hbad := H (-1) 1 0 1 1 0 (by norm_num)\n  norm_num at hbad\n\nexample (x_next x x_star η μ L : ℝ) :\n    0 ≤ μ * η →\n    μ * η ≤ (2 : ℝ) / 3 →\n    x_next = x - η * (2 * μ * (x - x_star)) →\n    (x_next - x_star)^2 ≤ (1 - 2 * μ * η + (μ * η)^2) * (x - x_star)^2 := by\n  intro hμη0 hμη_le h\n  have hx : x_next - x_star = (1 - 2 * μ * η) * (x - x_star) := by\n    rw [h]\n    ring\n  rw [hx]\n  have hprod : 0 ≤ (μ * η) * ((2 : ℝ) / 3 - μ * η) := by\n    exact mul_nonneg hμη0 (by linarith)\n  have hcoef :\n      0 ≤ (1 - 2 * μ * η + (μ * η)^2) - (1 - 2 * μ * η)^2 := by\n    nlinarith [hprod]\n  have hmul :\n      0 ≤ ((1 - 2 * μ * η + (μ * η)^2) - (1 - 2 * μ * η)^2) *\n          (x - x_star)^2 := by\n    exact mul_nonneg hcoef (sq_nonneg (x - x_star))\n  nlinarith [hmul]",
+      "verified": true,
+      "rounds": 5,
+      "source": "v2:PF-002:R3"
+    },
+    "poly.diff_energy_sq": {
+      "family": "poly",
+      "obstruction": "diff_energy_sq",
+      "goal": "∀ (x y : ℝ), (x ^ 2) * y + y * (-(x ^ 2) - 1 * y) = -y ^ 2",
+      "desc": "Simplification lemma for derivative of quadratic energy certificate",
+      "lean": "import Mathlib.Tactic\n\nexample : ∀ x y : ℝ, (x ^ 2) * y + y * (-(x ^ 2) - 1 * y) = -y ^ 2 := by\n  intro x y\n  -- Expand terms and group by x^2 and y\n  -- (x^2)*y + y*-(x^2) - y*1*y\n  -- (x^2)*y - (x^2)*y - y^2 = -y^2\n  ring",
+      "verified": true,
+      "rounds": 1,
+      "source": "v2:PJ-005:R3"
+    },
+    "poly.add_eq_zero_iff": {
+      "family": "poly",
+      "obstruction": "add_eq_zero_iff",
+      "goal": "∀ (x y : ℝ), x + y = 0 ↔ x = -y",
+      "desc": "Equivalence between sum zero and additive inverse.",
+      "lean": "import Mathlib.Tactic\nopen Real\n\nexample : ∀ (x y : ℝ), x + y = 0 ↔ x = -y := by\n  intro x y\n  constructor\n  · intro h\n    linarith\n  · intro h\n    linarith",
+      "verified": true,
+      "rounds": 5,
+      "source": "v2:PM-003:R3"
+    },
+    "rational.fin_one_exists": {
+      "family": "rational",
+      "obstruction": "fin_one_exists",
+      "goal": "∀ (n : Nat) [Ne (n-1) 0], ∃ (a : Fin n), a.val = 1",
+      "desc": "Constructibility of Fin 1 to enable index arithmetic",
+      "lean": "import Mathlib.Tactic\n\nexample (x y t : ℝ) : ∀ (n : Nat) (h : n - 1 ≠ 0), ∃ (a : Fin n), a.val = 1 := by\n  intro n h\n  -- Using the inhabitance of Fin to construct the specific element\n  -- We use ⟨1, ...⟩ which provides the value and the proof\n  exists ⟨1, by omega⟩",
+      "verified": true,
+      "rounds": 1,
+      "source": "v2:PJ-006:R3"
+    },
+    "rational.monod_positive_inequality": {
+      "family": "rational",
+      "obstruction": "monod_positive_inequality",
+      "goal": "∀ {μ_max K_s D S_in S_star X_star : ℝ}, 0 < μ_max ∧ 0 < K_s ∧ 0 < D ∧ 0 < S_in ∧ S_star = (D * K_s) / (μ_max - D) ∧ X_star = (S_in - S_star) * D / μ_max ∧ D < μ_max → D * (S_in - S_star) - (μ_max * S_star / (K_s + S_star)) * X_star = 0",
+      "desc": "Steady state definition for the chemostat model with Monod kinetics",
+      "lean": "import Mathlib.Tactic\nopen Real\n\nexample : ¬ (∀ {μ_max K_s D S_in S_star X_star : ℝ},\n    0 < μ_max ∧ 0 < K_s ∧ 0 < D ∧ 0 < S_in ∧\n    S_star = (D * K_s) / (μ_max - D) ∧\n    X_star = (S_in - S_star) * D / μ_max ∧\n    D < μ_max →\n    D * (S_in - S_star) - (μ_max * S_star / (K_s + S_star)) * X_star = 0) := by\n  intro h\n  have hbad :=\n    @h (2 : ℝ) (1 : ℝ) (1 : ℝ) (2 : ℝ) (1 : ℝ) ((1 : ℝ) / 2) (by norm_num)\n  norm_num at hbad",
+      "verified": true,
+      "rounds": 5,
+      "source": "v2:PK-003:R3"
+    },
+    "poly.max_eq_arg_le": {
+      "family": "poly",
+      "obstruction": "max_eq_arg_le",
+      "goal": "∀ (x : ℝ) (S : Set ℝ) (_hS : S.Nonempty) (_hC : S.Compact), x ∈ S → (∀ y : ℝ, y ∈ S → y ≤ x) ↔ x = sSup S",
+      "desc": "Characterizes the maximum of a set as the unique element that is greater than or equal to all elements.",
+      "lean": "import Mathlib.Tactic\nopen Real\n\nexample : ∀ (x : ℝ) (S : Set ℝ) (_hS : S.Nonempty) (_hC : IsCompact S),\n    x ∈ S → ((∀ y : ℝ, y ∈ S → y ≤ x) ↔ x = sSup S) := by\n  intro x S hS hC hxS\n  have hb : BddAbove S := hC.bddAbove\n  constructor\n  · intro hmax\n    exact le_antisymm (le_csSup hb hxS) (csSup_le hS hmax)\n  · intro hx y hy\n    rw [hx]\n    exact le_csSup hb hy",
+      "verified": true,
+      "rounds": 5,
+      "source": "v2:PF-003:R3"
+    },
+    "poly.abs_pow_le": {
+      "family": "poly",
+      "obstruction": "abs_pow_le",
+      "goal": "∀ (y : ℝ) (α : ℝ), 0 < α → α < 2 → -|y| ^ (α + 1) ≤ 0",
+      "desc": "negativity of odd absolute power term",
+      "lean": "import Mathlib.Tactic\nopen Real\n\nexample (y : ℝ) (α : ℝ) (h1 : 0 < α) (h2 : α < 2) : -|y| ^ (α + 1) ≤ 0 := by\n  have pow_nonneg : 0 ≤ |y| ^ (α + 1) := by\n    positivity\n  linarith [pow_nonneg]",
+      "verified": true,
+      "rounds": 1,
+      "source": "v2:PJ-008:R3"
+    }
+  }
+}

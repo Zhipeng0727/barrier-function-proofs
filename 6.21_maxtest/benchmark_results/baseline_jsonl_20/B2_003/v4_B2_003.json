@@ -1,0 +1,132 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B2-003",
+    "ode": "dx1/dt = -x1 - tanh(x1), dx2/dt = -x2 - tanh(x2), dx3/dt = -x3 - tanh(x3), dx4/dt = -x4 - tanh(x4)",
+    "state_vars": [
+      "x1",
+      "x2",
+      "x3",
+      "x4"
+    ],
+    "f_expr": [
+      "-x1 - tanh(x1)",
+      "-x2 - tanh(x2)",
+      "-x3 - tanh(x3)",
+      "-x4 - tanh(x4)"
+    ],
+    "X_domain": "ball",
+    "X_u_desc": "||x|| >= 2.263",
+    "X_u_expr": "x1**2 + x2**2 + x3**2 + x4**2 >= 5.121168999999999",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B2-003",
+      "layer": "L2-new",
+      "group": "B2",
+      "task": "barrier",
+      "cert_class": "nonpoly-explicit",
+      "source": "tanh-dissipative system"
+    }
+  },
+  "timestamp": "2026-06-11T18:10:52.790213",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "5.121168 - x1**2 - x2**2 - x3**2 - x4**2",
+        "invariant_set": "C = {x in X : x1**2 + x2**2 + x3**2 + x4**2 <= 5.121168}, i.e. the ball of radius sqrt(5.121168) ≈ 2.262999779, intersected with X.",
+        "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 2.263}. Since 2.263**2 = 5.121169, for any x in X_u we have x1**2 + x2**2 + x3**2 + x4**2 = ||x||**2 >= 5.121169. Therefore h(x) = 5.121168 - ||x||**2 <= 5.121168 - 5.121169 = -0.000001 < 0. Hence h(x) < 0 for all x in X_u.",
+        "lie_derivative": "We have h(x) = 5.121168 - x1**2 - x2**2 - x3**2 - x4**2, so ∇h(x) = (-2*x1, -2*x2, -2*x3, -2*x4). The dynamics are fi(xi) = -xi - tanh(xi). Thus ḣ(x) = sum_{i=1}^4 (-2*xi)*(-xi - tanh(xi)) = 2*x1**2 + 2*x1*tanh(x1) + 2*x2**2 + 2*x2*tanh(x2) + 2*x3**2 + 2*x3*tanh(x3) + 2*x4**2 + 2*x4*tanh(x4).",
+        "condition2_check": "On the boundary ∂C, h(x)=0, so x1**2 + x2**2 + x3**2 + x4**2 = 5.121168. For every real scalar z, tanh(z) has the same sign as z and tanh(0)=0, hence z*tanh(z) >= 0. Therefore xi*tanh(xi) >= 0 for i=1,2,3,4. Consequently, on ∂C, ḣ(x) = 2*sum_{i=1}^4 xi**2 + 2*sum_{i=1}^4 xi*tanh(xi) >= 2*sum_{i=1}^4 xi**2 = 2*5.121168 = 10.242336 > 0. Hence ḣ(x) >= 0 on ∂C, satisfying Nagumo's invariance condition.",
+        "reasoning": "The dynamics are componentwise dissipative: each coordinate satisfies dxi/dt = -xi - tanh(xi), and xi*tanh(xi) >= 0. Therefore the squared norm decreases along trajectories, making Euclidean balls centered at the origin forward invariant. To avoid the unsafe set ||x|| >= 2.263 while making C as large as possible, choose a ball with squared radius just below 2.263**2 = 5.121169. The value 5.121168 gives a very close inner approximation of the safe ball while ensuring strict negativity of h on the unsafe boundary."
+      },
+      "proposer_elapsed_s": 27.819,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "2*x1*(x1 + tanh(x1)) + 2*x2*(x2 + tanh(x2)) + 2*x3*(x3 + tanh(x3)) + 2*x4*(x4 + tanh(x4))",
+          "boundary_epsilon": 0.670751,
+          "boundary_pts_found": 152,
+          "cond1_max_h_in_Xu": -0.004321,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 13.527395,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.409
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.040771,
+          "trajectory_valid": true,
+          "elapsed_s": 0.214
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "For any x in the unsafe set, ||x|| >= 2.263, so ||x||^2 >= 2.263^2 = 5.121169. Therefore h(x) = 5.121168 - ||x||^2 <= 5.121168 - 5.121169 = -0.000001 < 0. For example, at x = (2.263, 0, 0, 0), h(x) = -0.000001. Thus Condition 1 holds strictly.",
+        "lie_derivative_computed": "∇h(x) = (-2x1, -2x2, -2x3, -2x4). With fi(xi) = -xi - tanh(xi), the Lie derivative is ḣ(x) = Σ_i (-2xi)(-xi - tanh(xi)) = 2Σ_i xi^2 + 2Σ_i xi tanh(xi) = 2||x||^2 + 2Σ_i xi tanh(xi).",
+        "condition2_result": "On the boundary ∂C, h(x)=0, hence ||x||^2 = 5.121168. Therefore ḣ(x) = 2(5.121168) + 2Σ_i xi tanh(xi). For every real xi, xi tanh(xi) >= 0 because tanh(xi) has the same sign as xi. Hence on ∂C, ḣ(x) >= 10.242336 > 0. For example, at x = (sqrt(5.121168), 0, 0, 0) ≈ (2.262999779, 0, 0, 0), ḣ ≈ 10.242336 + 2(2.262999779)tanh(2.262999779) ≈ 14.671 > 0. Thus Condition 2 holds strictly.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The barrier is valid and already extremely close to the unsafe radius. Since the unsafe set begins at ||x|| >= 2.263 and 2.263^2 = 5.121169, the constant 5.121168 could be increased to any value c satisfying c < 5.121169, using h_c(x) = c - ||x||^2. Condition 1 would still hold because h_c(x) <= c - 5.121169 < 0 on the unsafe set, and Condition 2 would still hold because on h_c=0, ḣ >= 2c > 0. For example, c = 5.121168999 would enlarge C slightly while preserving both conditions. The exact value c = 5.121169 is not allowed under the stated strict Condition 1 because h would equal 0 at ||x|| = 2.263, which is already unsafe."
+      },
+      "refuter_elapsed_s": 44.209
+    }
+  ],
+  "final_barrier": {
+    "h": "5.121168 - x1**2 - x2**2 - x3**2 - x4**2",
+    "invariant_set": "C = {x in X : x1**2 + x2**2 + x3**2 + x4**2 <= 5.121168}, i.e. the ball of radius sqrt(5.121168) ≈ 2.262999779, intersected with X.",
+    "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 2.263}. Since 2.263**2 = 5.121169, for any x in X_u we have x1**2 + x2**2 + x3**2 + x4**2 = ||x||**2 >= 5.121169. Therefore h(x) = 5.121168 - ||x||**2 <= 5.121168 - 5.121169 = -0.000001 < 0. Hence h(x) < 0 for all x in X_u.",
+    "lie_derivative": "We have h(x) = 5.121168 - x1**2 - x2**2 - x3**2 - x4**2, so ∇h(x) = (-2*x1, -2*x2, -2*x3, -2*x4). The dynamics are fi(xi) = -xi - tanh(xi). Thus ḣ(x) = sum_{i=1}^4 (-2*xi)*(-xi - tanh(xi)) = 2*x1**2 + 2*x1*tanh(x1) + 2*x2**2 + 2*x2*tanh(x2) + 2*x3**2 + 2*x3*tanh(x3) + 2*x4**2 + 2*x4*tanh(x4).",
+    "condition2_check": "On the boundary ∂C, h(x)=0, so x1**2 + x2**2 + x3**2 + x4**2 = 5.121168. For every real scalar z, tanh(z) has the same sign as z and tanh(0)=0, hence z*tanh(z) >= 0. Therefore xi*tanh(xi) >= 0 for i=1,2,3,4. Consequently, on ∂C, ḣ(x) = 2*sum_{i=1}^4 xi**2 + 2*sum_{i=1}^4 xi*tanh(xi) >= 2*sum_{i=1}^4 xi**2 = 2*5.121168 = 10.242336 > 0. Hence ḣ(x) >= 0 on ∂C, satisfying Nagumo's invariance condition.",
+    "reasoning": "The dynamics are componentwise dissipative: each coordinate satisfies dxi/dt = -xi - tanh(xi), and xi*tanh(xi) >= 0. Therefore the squared norm decreases along trajectories, making Euclidean balls centered at the origin forward invariant. To avoid the unsafe set ||x|| >= 2.263 while making C as large as possible, choose a ball with squared radius just below 2.263**2 = 5.121169. The value 5.121168 gives a very close inner approximation of the safe ball while ensuring strict negativity of h on the unsafe boundary."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 72.659
+  },
+  "tokens": {
+    "input": 2545,
+    "output": 3450,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1661,
+        "output_tokens": 1238,
+        "elapsed_s": 27.819
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 884,
+        "output_tokens": 2212,
+        "elapsed_s": 44.209
+      }
+    ]
+  }
+}

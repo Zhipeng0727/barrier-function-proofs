@@ -1,1 +1,15 @@
+# Lean build artifacts
 /.lake
+.lake/
+*.olean
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+# OS / editor
+.DS_Store
+.claude/
+# Secrets — never commit API keys
+.secrets.env
+# Web UI per-run outputs
+webapp/_runs/

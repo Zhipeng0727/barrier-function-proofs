@@ -1,0 +1,120 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B2-006",
+    "ode": "dx1/dt = -x1, dx2/dt = -x2",
+    "state_vars": [
+      "x1",
+      "x2"
+    ],
+    "f_expr": [
+      "-x1",
+      "-x2"
+    ],
+    "X_domain": "R^n",
+    "X_u_desc": "||x|| >= 1.0",
+    "X_u_expr": "x1**2 + x2**2 >= 1.0",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B2-006",
+      "layer": "L2-new",
+      "group": "B2",
+      "task": "barrier",
+      "cert_class": "nonpoly-explicit",
+      "source": "exponential barrier"
+    }
+  },
+  "timestamp": "2026-06-11T18:15:17.475284",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "0.999999999 - x1**2 - x2**2",
+        "invariant_set": "C = { (x1,x2) : x1**2 + x2**2 <= 0.999999999 }, i.e. the closed disk of radius sqrt(0.999999999), lying strictly inside the safe region ||x|| < 1",
+        "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 1}, equivalently x1**2 + x2**2 >= 1. For any x in X_u, h(x) = 0.999999999 - x1**2 - x2**2 <= 0.999999999 - 1 = -0.000000001 < 0. Therefore h(x) < 0 for all x in X_u.",
+        "lie_derivative": "For h(x) = 0.999999999 - x1**2 - x2**2, we have ∇h(x) = (-2*x1, -2*x2). The vector field is f(x) = (-x1, -x2). Hence ḣ(x) = ∇h(x)·f(x) = (-2*x1)*(-x1) + (-2*x2)*(-x2) = 2*x1**2 + 2*x2**2.",
+        "condition2_check": "On the boundary ∂C, h(x)=0, so x1**2 + x2**2 = 0.999999999. Substituting into the Lie derivative gives ḣ(x) = 2*x1**2 + 2*x2**2 = 2*(x1**2 + x2**2) = 2*0.999999999 = 1.999999998 > 0. Therefore ḣ(x) >= 0 for all x in ∂C, satisfying Nagumo's condition.",
+        "reasoning": "The dynamics dx/dt = -x contract every trajectory radially toward the origin, so disks centered at the origin are natural invariant sets. Because the unsafe set includes the unit circle ||x|| = 1 and the requirement is strict h(x) < 0 on X_u, the barrier cannot be h = 1 - x1**2 - x2**2, since that would equal zero on the unsafe boundary. Therefore a slightly smaller disk is used: h(x) = 0.999999999 - x1**2 - x2**2. This makes C nearly the entire open safe unit disk while maintaining strict negativity on all unsafe states and satisfying the Nagumo boundary condition."
+      },
+      "proposer_elapsed_s": 24.034,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "2*x1**2 + 2*x2**2",
+          "boundary_epsilon": 0.354779,
+          "boundary_pts_found": 192,
+          "cond1_max_h_in_Xu": -0.004655,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 1.291992,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.013
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.026837,
+          "trajectory_valid": true,
+          "elapsed_s": 0.167
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "Let a = 0.999999999 and r^2 = x1^2 + x2^2. For any unsafe point with ||x|| >= 1 in the given 2D system, r^2 >= 1, so h(x) = a - r^2 <= 0.999999999 - 1 = -0.000000001 < 0. Numerical checks: at (1,0), h = -0.000000001; at (0,1), h = -0.000000001; at (sqrt(1/2), sqrt(1/2)), h = -0.000000001. Thus Condition 1 holds rigorously.",
+        "lie_derivative_computed": "∇h = (-2x1, -2x2), f(x) = (-x1, -x2), so ḣ(x) = ∇h · f = (-2x1)(-x1) + (-2x2)(-x2) = 2x1^2 + 2x2^2 = 2(x1^2 + x2^2).",
+        "condition2_result": "The boundary ∂C is given by h(x) = 0, i.e. x1^2 + x2^2 = 0.999999999. On this boundary, ḣ(x) = 2(x1^2 + x2^2) = 2(0.999999999) = 1.999999998 > 0. Therefore the Nagumo condition ḣ >= 0 on ∂C holds rigorously. There are no degenerate boundary points with ∇h = 0, since ∇h = 0 only at (0,0), which is not on the boundary.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The invariant disk can be enlarged within the same quadratic family h_c(x) = c - x1^2 - x2^2 by choosing any c < 1. The proposed value c = 0.999999999 is already very close to the maximal admissible threshold. For example, c = 0.999999999999 would give a slightly larger certified disk while still satisfying Condition 1, because for ||x|| >= 1, h_c(x) <= c - 1 < 0. However, c = 1 is not allowed under the stated strict Condition 1, since points with ||x|| = 1 would give h = 0 rather than h < 0."
+      },
+      "refuter_elapsed_s": 23.589
+    }
+  ],
+  "final_barrier": {
+    "h": "0.999999999 - x1**2 - x2**2",
+    "invariant_set": "C = { (x1,x2) : x1**2 + x2**2 <= 0.999999999 }, i.e. the closed disk of radius sqrt(0.999999999), lying strictly inside the safe region ||x|| < 1",
+    "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 1}, equivalently x1**2 + x2**2 >= 1. For any x in X_u, h(x) = 0.999999999 - x1**2 - x2**2 <= 0.999999999 - 1 = -0.000000001 < 0. Therefore h(x) < 0 for all x in X_u.",
+    "lie_derivative": "For h(x) = 0.999999999 - x1**2 - x2**2, we have ∇h(x) = (-2*x1, -2*x2). The vector field is f(x) = (-x1, -x2). Hence ḣ(x) = ∇h(x)·f(x) = (-2*x1)*(-x1) + (-2*x2)*(-x2) = 2*x1**2 + 2*x2**2.",
+    "condition2_check": "On the boundary ∂C, h(x)=0, so x1**2 + x2**2 = 0.999999999. Substituting into the Lie derivative gives ḣ(x) = 2*x1**2 + 2*x2**2 = 2*(x1**2 + x2**2) = 2*0.999999999 = 1.999999998 > 0. Therefore ḣ(x) >= 0 for all x in ∂C, satisfying Nagumo's condition.",
+    "reasoning": "The dynamics dx/dt = -x contract every trajectory radially toward the origin, so disks centered at the origin are natural invariant sets. Because the unsafe set includes the unit circle ||x|| = 1 and the requirement is strict h(x) < 0 on X_u, the barrier cannot be h = 1 - x1**2 - x2**2, since that would equal zero on the unsafe boundary. Therefore a slightly smaller disk is used: h(x) = 0.999999999 - x1**2 - x2**2. This makes C nearly the entire open safe unit disk while maintaining strict negativity on all unsafe states and satisfying the Nagumo boundary condition."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 47.811
+  },
+  "tokens": {
+    "input": 2303,
+    "output": 2184,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1511,
+        "output_tokens": 1091,
+        "elapsed_s": 24.034
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 792,
+        "output_tokens": 1093,
+        "elapsed_s": 23.589
+      }
+    ]
+  }
+}

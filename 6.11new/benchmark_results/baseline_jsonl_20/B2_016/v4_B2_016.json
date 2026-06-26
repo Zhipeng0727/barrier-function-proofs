@@ -1,0 +1,120 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B2-016",
+    "ode": "dx1/dt = -x1*(1+cos(x1)**2), dx2/dt = -x2*(1+cos(x2)**2)",
+    "state_vars": [
+      "x1",
+      "x2"
+    ],
+    "f_expr": [
+      "-x1*(1+cos(x1)**2)",
+      "-x2*(1+cos(x2)**2)"
+    ],
+    "X_domain": "ball",
+    "X_u_desc": "||x|| >= 1.7",
+    "X_u_expr": "x1**2 + x2**2 >= 2.8899999999999997",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B2-016",
+      "layer": "L2-new",
+      "group": "B2",
+      "task": "barrier",
+      "cert_class": "nonpoly-explicit",
+      "source": "cos^2-damped (c=1)"
+    }
+  },
+  "timestamp": "2026-06-11T18:27:30.304794",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "2.889999 - x1**2 - x2**2",
+        "invariant_set": "C = {x in X : x1**2 + x2**2 <= 2.889999}, i.e. the closed ball of radius sqrt(2.889999) approximately 1.699999706",
+        "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 1.7}, equivalently x1**2 + x2**2 >= 1.7**2 = 2.89. For any x in X_u, h(x) = 2.889999 - x1**2 - x2**2 <= 2.889999 - 2.89 = -0.000001 < 0. Therefore h(x) < 0 for all x in the unsafe set.",
+        "lie_derivative": "For h(x) = 2.889999 - x1**2 - x2**2, the gradient is grad h = (-2*x1, -2*x2). The dynamics are f1 = -x1*(1 + cos(x1)**2), f2 = -x2*(1 + cos(x2)**2). Hence dh/dt = grad h dot f = (-2*x1)*(-x1*(1 + cos(x1)**2)) + (-2*x2)*(-x2*(1 + cos(x2)**2)) = 2*x1**2*(1 + cos(x1)**2) + 2*x2**2*(1 + cos(x2)**2).",
+        "condition2_check": "On the boundary partial C, h(x)=0, so x1**2 + x2**2 = 2.889999. Since cos(z)**2 >= 0 for every real z, we have 1 + cos(z)**2 >= 1. Therefore 2*x1**2*(1 + cos(x1)**2) >= 2*x1**2 and 2*x2**2*(1 + cos(x2)**2) >= 2*x2**2. Thus, on partial C, dh/dt >= 2*x1**2 + 2*x2**2 = 2*(x1**2 + x2**2) = 2*2.889999 = 5.779998 > 0. Hence dh/dt >= 0 on the entire boundary partial C, satisfying Nagumo's condition.",
+        "reasoning": "The dynamics contract each coordinate toward the origin because each scalar multiplier 1 + cos(xi)**2 is always at least 1. Therefore Euclidean balls centered at the origin are forward invariant. To avoid the unsafe set ||x|| >= 1.7 while satisfying the strict requirement h < 0 on the unsafe set, the barrier is chosen as a slightly smaller ball than radius 1.7: h = 2.889999 - x1**2 - x2**2. This makes C almost as large as the full safe ball ||x|| < 1.7, while preserving a strict negative margin of 0.000001 on the unsafe boundary ||x|| = 1.7."
+      },
+      "proposer_elapsed_s": 22.936,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "2*x1**2*(cos(x1)**2 + 1) + 2*x2**2*(cos(x2)**2 + 1)",
+          "boundary_epsilon": 0.354779,
+          "boundary_pts_found": 183,
+          "cond1_max_h_in_Xu": -0.001356,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 5.118273,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.061
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.032582,
+          "trajectory_valid": true,
+          "elapsed_s": 0.167
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "Condition 1 holds. For any x in X_u, ||x|| >= 1.7, so x1^2 + x2^2 >= 2.89. Therefore h(x) = 2.889999 - x1^2 - x2^2 <= 2.889999 - 2.89 = -0.000001 < 0. For example, at x = (1.7, 0), h = -0.000001; at x = (0, 1.7), h = -0.000001; at x = (2, 0), h = -1.110001.",
+        "lie_derivative_computed": "∇h = (-2*x1, -2*x2). With f1 = -x1*(1+cos(x1)^2), f2 = -x2*(1+cos(x2)^2), the Lie derivative is ḣ = ∇h·f = 2*x1^2*(1+cos(x1)^2) + 2*x2^2*(1+cos(x2)^2). There are no cross terms.",
+        "condition2_result": "Condition 2 holds. On the boundary ∂C, h(x)=0, hence x1^2 + x2^2 = 2.889999. Since 1+cos(xi)^2 >= 1 for each i, ḣ = 2*x1^2*(1+cos(x1)^2) + 2*x2^2*(1+cos(x2)^2) >= 2*(x1^2+x2^2) = 5.779998 > 0. For example, at x = (sqrt(2.889999), 0) ≈ (1.699999706, 0), h=0 and ḣ≈5.87595>0. Thus the Nagumo condition is satisfied strictly everywhere on ∂C.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The invariant set can be enlarged slightly by replacing 2.889999 with any constant c < 2.89. For example, h_new(x)=2.8899999 - x1^2 - x2^2 is still valid: for ||x||>=1.7, h_new <= 2.8899999 - 2.89 = -0.0000001 < 0, and on h_new=0, ḣ >= 2*c = 5.7799998 > 0. In general, h_epsilon(x)=2.89 - epsilon - x1^2 - x2^2 is valid for any epsilon > 0. The limiting safe radius 1.7 cannot be attained with this continuous quadratic barrier under the strict requirement h<0 on the unsafe set ||x||>=1.7, because c=2.89 would give h=0 at ||x||=1.7, violating Condition 1."
+      },
+      "refuter_elapsed_s": 43.987
+    }
+  ],
+  "final_barrier": {
+    "h": "2.889999 - x1**2 - x2**2",
+    "invariant_set": "C = {x in X : x1**2 + x2**2 <= 2.889999}, i.e. the closed ball of radius sqrt(2.889999) approximately 1.699999706",
+    "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 1.7}, equivalently x1**2 + x2**2 >= 1.7**2 = 2.89. For any x in X_u, h(x) = 2.889999 - x1**2 - x2**2 <= 2.889999 - 2.89 = -0.000001 < 0. Therefore h(x) < 0 for all x in the unsafe set.",
+    "lie_derivative": "For h(x) = 2.889999 - x1**2 - x2**2, the gradient is grad h = (-2*x1, -2*x2). The dynamics are f1 = -x1*(1 + cos(x1)**2), f2 = -x2*(1 + cos(x2)**2). Hence dh/dt = grad h dot f = (-2*x1)*(-x1*(1 + cos(x1)**2)) + (-2*x2)*(-x2*(1 + cos(x2)**2)) = 2*x1**2*(1 + cos(x1)**2) + 2*x2**2*(1 + cos(x2)**2).",
+    "condition2_check": "On the boundary partial C, h(x)=0, so x1**2 + x2**2 = 2.889999. Since cos(z)**2 >= 0 for every real z, we have 1 + cos(z)**2 >= 1. Therefore 2*x1**2*(1 + cos(x1)**2) >= 2*x1**2 and 2*x2**2*(1 + cos(x2)**2) >= 2*x2**2. Thus, on partial C, dh/dt >= 2*x1**2 + 2*x2**2 = 2*(x1**2 + x2**2) = 2*2.889999 = 5.779998 > 0. Hence dh/dt >= 0 on the entire boundary partial C, satisfying Nagumo's condition.",
+    "reasoning": "The dynamics contract each coordinate toward the origin because each scalar multiplier 1 + cos(xi)**2 is always at least 1. Therefore Euclidean balls centered at the origin are forward invariant. To avoid the unsafe set ||x|| >= 1.7 while satisfying the strict requirement h < 0 on the unsafe set, the barrier is chosen as a slightly smaller ball than radius 1.7: h = 2.889999 - x1**2 - x2**2. This makes C almost as large as the full safe ball ||x|| < 1.7, while preserving a strict negative margin of 0.000001 on the unsafe boundary ||x|| = 1.7."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 67.164
+  },
+  "tokens": {
+    "input": 2348,
+    "output": 3326,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1539,
+        "output_tokens": 1106,
+        "elapsed_s": 22.936
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 809,
+        "output_tokens": 2220,
+        "elapsed_s": 43.987
+      }
+    ]
+  }
+}

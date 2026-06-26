@@ -1,0 +1,2 @@
+id,solved,turns,refuter_calls,tokens_in,tokens_out,elapsed_s,h,lean_compile_ok,error
+X05,True,1,1,763,6988,152.404,2.99 - x1**2 * exp(x2**4 / 2) / (1 + x2**2),,

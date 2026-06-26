@@ -1,0 +1,12 @@
+routing L4-014 (tanh) through FULL ladder incl reinforced Lean backend...
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-fresh (high): in=2349 out=709
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-repair (high): in=3164 out=745
+FINAL: chosen= sampling status= proved SOUND= False
+   sampling proved | {}
+   interval unknown | {'conditions': {'positivity(PSD)': 'proved', 'decrease': 'unknown'}}
+   dreal unknown | {'conditions': {'positivity': 'unknown'}}
+   lean unknown | {'solved': False, 'final_level': 'partial', 'calls': 2, 'pipeline': 'reinforced+recipes'}

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barrier 合成 · 试用</title>
+<style>
+  :root{
+    --bg:#0f1117;--panel:#171a22;--panel2:#1d212b;--ink:#e6e9ef;--muted:#9aa3b2;
+    --line:#2a2f3a;--acc:#7aa2f7;--ok:#9ece6a;--bad:#f7768e;--warn:#e0af68;--code:#c0caf5;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+  .wrap{max-width:1000px;margin:0 auto;padding:28px 22px 70px}
+  h1{font-size:23px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 22px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.row{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  label{display:block;font-size:12.5px;color:var(--muted);margin:12px 0 5px}
+  select,input,textarea{width:100%;background:var(--panel2);color:var(--ink);
+    border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:14px;
+    font-family:inherit}
+  textarea{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12.5px;min-height:150px}
+  .ode{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12px;color:var(--acc);
+    margin-top:8px;word-break:break-word}
+  .tabs{display:flex;gap:6px;margin-bottom:6px}
+  .tab{flex:1;text-align:center;padding:7px;border:1px solid var(--line);border-radius:8px;
+    cursor:pointer;font-size:13px;color:var(--muted);background:var(--panel2)}
+  .tab.on{color:var(--ink);border-color:var(--acc);background:#1b2440}
+  .flex{display:flex;align-items:center;gap:10px}
+  .flex label{margin:0}
+  button{background:var(--acc);color:#0b1020;border:0;border-radius:9px;padding:11px 18px;
+    font-size:14px;font-weight:600;cursor:pointer;margin-top:16px;width:100%}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  .warn{color:var(--warn);font-size:12px;margin-top:8px}
+  .log{background:#0a0c11;border:1px solid var(--line);border-radius:10px;padding:12px;
+    height:360px;overflow:auto;font-family:"SF Mono",ui-monospace,Menlo,monospace;
+    font-size:11.5px;line-height:1.5;white-space:pre-wrap;color:#aeb6c6}
+  .log .ph{color:var(--acc)} .log .ok{color:var(--ok)} .log .bad{color:var(--bad)}
+  .status{font-size:13px;margin:0 0 8px;color:var(--muted)}
+  .dot{display:inline-block;width:8px;height:8px;border-radius:99px;background:var(--muted);margin-right:7px}
+  .dot.run{background:var(--warn);animation:pulse 1s infinite}
+  .dot.ok{background:var(--ok)} .dot.bad{background:var(--bad)}
+  @keyframes pulse{50%{opacity:.3}}
+  .result{margin-top:14px;display:none}
+  .kpis{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+  .kpi{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 12px;font-size:12.5px}
+  .kpi b{display:block;font-size:15px;margin-top:2px}
+  pre.lean{background:#0a0c11;border:1px solid var(--line);border-radius:8px;padding:11px;
+    overflow:auto;font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--code)}
+  .gate{position:fixed;inset:0;background:rgba(8,10,15,.85);display:none;
+    align-items:center;justify-content:center;z-index:50}
+  .gate .box{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    padding:24px 22px;width:320px;max-width:90vw}
+  .gate h2{margin:0 0 4px;font-size:17px} .gate p{margin:0 0 14px;color:var(--muted);font-size:13px}
+  .gate button{margin-top:14px} .gate .err{color:var(--bad);font-size:12.5px;margin-top:8px;min-height:16px}
+</style>
+</head>
+<body>
+<div class="gate" id="gate">
+  <div class="box">
+    <h2>🔒 需要访问口令</h2>
+    <p>这是内部试用页面,请输入老师/同学分享给你的口令。</p>
+    <input type="password" id="gatePass" placeholder="访问口令" onkeydown="if(event.key==='Enter')submitGate()">
+    <div class="err" id="gateErr"></div>
+    <button onclick="submitGate()">进入</button>
+  </div>
+</div>
+<div class="wrap">
+  <h1>Barrier / Lyapunov 证书合成 <span style="font-size:13px;color:var(--muted)">· 内部试用</span></h1>
+  <p class="sub">LLM 提议证书 → 本地符号/轨迹验证 → Refuter 反驳 → Lean&nbsp;4 形式化(编译反馈闭环)。每次运行会消耗 API token,请按需试用。</p>
+
+  <div class="row">
+    <!-- LEFT: controls -->
+    <div class="card">
+      <div class="tabs">
+        <div class="tab on" id="tab-curated" onclick="setMode('curated')">选已有系统</div>
+        <div class="tab" id="tab-custom" onclick="setMode('custom')">自定义系统(受限)</div>
+      </div>
+
+      <div id="pane-curated">
+        <label>动力系统</label>
+        <select id="example"></select>
+        <div class="ode" id="ode"></div>
+      </div>
+
+      <div id="pane-custom" style="display:none">
+        <label>系统定义(JSON,与内置 schema 一致)</label>
+        <textarea id="customJson">{
+  "name": "My System",
+  "state_vars": ["x", "y"],
+  "f_expr": ["-x + x*y**2", "-y - x**2*y"],
+  "X_bounds": [[-2, 2], [-2, 2]],
+  "X_u_expr": "(x > 2) | (x < -2) | (y > 2) | (y < -2)"
+}</textarea>
+        <div class="warn">⚠️ 自定义系统可能不收敛、更费 token,turns 上限更低(≤<span id="capCustom">4</span>)。最多 4 个状态变量。</div>
+      </div>
+
+      <label>最大 debate 轮数 (turns): <span id="turnsVal">4</span></label>
+      <input type="range" id="turns" min="1" max="6" value="4" oninput="turnsVal.textContent=this.value">
+
+      <div class="flex" style="margin-top:14px">
+        <input type="checkbox" id="doLean" checked style="width:auto">
+        <label for="doLean">生成 Lean 4 形式化证明(展示编译反馈闭环)</label>
+      </div>
+
+      <button id="runBtn" onclick="run()">▶ 运行合成</button>
+    </div>
+
+    <!-- RIGHT: live -->
+    <div class="card">
+      <p class="status"><span class="dot" id="dot"></span><span id="statusText">就绪</span></p>
+      <div class="log" id="log">运行日志会实时显示在这里…</div>
+
+      <div class="result" id="result">
+        <div class="kpis" id="kpis"></div>
+        <div id="leanWrap" style="display:none">
+          <label>Lean 4 证明</label>
+          <pre class="lean" id="leanCode"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let MODE = "curated", CAPS = {curated:6, custom:4};
+let TOKEN = localStorage.getItem("appToken") || "";
+
+const authHeaders = (extra)=> Object.assign({"X-Access-Token":TOKEN}, extra||{});
+
+async function init(){
+  try{
+    const r = await fetch("/api/check", {headers:authHeaders()});
+    const d = await r.json();
+    if(d.auth_required && !d.ok){ document.getElementById("gate").style.display="flex";
+      document.getElementById("gatePass").focus(); return; }
+  }catch(e){ /* backend down → loadExamples shows its own hint */ }
+  document.getElementById("gate").style.display="none";
+  loadExamples();
+}
+async function submitGate(){
+  TOKEN = document.getElementById("gatePass").value.trim();
+  const r = await fetch("/api/check", {headers:authHeaders()});
+  const d = await r.json();
+  if(d.ok){ localStorage.setItem("appToken", TOKEN); init(); }
+  else { document.getElementById("gateErr").textContent = "口令不对,请重试。"; }
+}
+
+async function loadExamples(){
+  const sel = document.getElementById("example");
+  try{
+    const r = await fetch("/api/examples", {headers:authHeaders()}); if(!r.ok) throw new Error("HTTP "+r.status);
+    const d = await r.json();
+    CAPS = {curated:d.turn_cap_curated, custom:d.turn_cap_custom};
+    capCustom.textContent = d.turn_cap_custom;
+    sel.innerHTML = "";
+    d.examples.forEach(e=>{
+      const o=document.createElement("option"); o.value=e.key; o.textContent=e.name;
+      o.dataset.ode=e.ode; sel.appendChild(o);
+    });
+    sel.onchange = ()=> ode.textContent = sel.selectedOptions[0].dataset.ode;
+    sel.onchange();
+  }catch(e){
+    // No backend reachable (e.g. opened as a static file / server not started).
+    sel.innerHTML = '<option>⚠️ 连不上后端</option>';
+    ode.innerHTML = '后端未运行。请在终端执行 <b>python3 webapp/server.py</b>,'
+      + '然后打开 <b>http://localhost:8000</b>(不要直接双击 HTML 文件)。';
+    ode.style.color = '#e0af68';
+    runBtn.disabled = true;
+  }
+}
+function setMode(m){
+  MODE=m;
+  tab_curated.classList.toggle("on", m==="curated");
+  tab_custom.classList.toggle("on", m==="custom");
+  document.getElementById("pane-curated").style.display = m==="curated"?"":"none";
+  document.getElementById("pane-custom").style.display = m==="custom"?"":"none";
+  const cap = CAPS[m]; const t=document.getElementById("turns");
+  t.max=cap; if(+t.value>cap){t.value=cap; turnsVal.textContent=cap;}
+}
+function setStatus(txt, cls){ statusText.textContent=txt; dot.className="dot "+(cls||""); }
+function appendLog(line){
+  const el=document.getElementById("log");
+  let cls=""; if(/Turn |Proposer|Refuter|Lean4|KB/.test(line))cls="ph";
+  if(/PASS|✅|Solved: True|compile OK|accepted/.test(line))cls="ok";
+  if(/FAIL|❌|error|failed/i.test(line))cls="bad";
+  const span=document.createElement("span"); span.className=cls; span.textContent=line+"\n";
+  el.appendChild(span); el.scrollTop=el.scrollHeight;
+}
+
+async function run(){
+  runBtn.disabled=true; result.style.display="none"; leanWrap.style.display="none";
+  document.getElementById("log").innerHTML="";
+  setStatus("启动中…","run");
+  const body = {turns:+document.getElementById("turns").value, do_lean:doLean.checked};
+  if(MODE==="curated"){ body.system_key = document.getElementById("example").value; }
+  else {
+    try{ body.custom_system = JSON.parse(document.getElementById("customJson").value); }
+    catch(e){ setStatus("JSON 解析失败: "+e.message,"bad"); runBtn.disabled=false; return; }
+  }
+  let jid;
+  try{
+    const r = await fetch("/api/run",{method:"POST",
+                                     headers:authHeaders({"Content-Type":"application/json"}),
+                                     body:JSON.stringify(body)});
+    const d = await r.json();
+    if(!r.ok){ setStatus(d.error||"启动失败","bad"); runBtn.disabled=false; return; }
+    jid=d.job_id; setStatus(`已提交 · ${d.label} · ${d.turns} turns`,"run");
+  }catch(e){ setStatus("网络错误: "+e.message,"bad"); runBtn.disabled=false; return; }
+
+  const es = new EventSource("/api/stream?job="+encodeURIComponent(jid)
+                             +"&token="+encodeURIComponent(TOKEN));
+  es.onmessage = (ev)=>{
+    const m = JSON.parse(ev.data);
+    if(m.type==="queued"){ setStatus(m.data>0?`排队中 · 前面还有 ${m.data} 个`:"即将开始…","run"); }
+    else if(m.type==="log"){ if(statusText.textContent.startsWith("排队")||statusText.textContent.startsWith("即将")) setStatus("运行中","run"); appendLog(m.data); }
+    else if(m.type==="error"){ setStatus("出错","bad"); appendLog("‼️ "+m.data); es.close(); runBtn.disabled=false; }
+    else if(m.type==="done"){ showResult(m.data); es.close(); runBtn.disabled=false; }
+  };
+  es.onerror = ()=>{ es.close(); runBtn.disabled=false; };
+}
+
+function showResult(s){
+  setStatus(s.solved? "✅ 已求解":"未求解(可加 turns 重试)", s.solved?"ok":"bad");
+  result.style.display="block";
+  const k=document.getElementById("kpis"); k.innerHTML="";
+  const add=(t,v)=>{const d=document.createElement("div");d.className="kpi";
+    d.innerHTML=`${t}<b>${v}</b>`;k.appendChild(d);};
+  add("求解", s.solved?"是":"否");
+  add("用时(turns)", s.turns_used);
+  add("模型", s.model||"—");
+  if(s.lean_compile_ok!==null && s.lean_compile_ok!==undefined)
+    add("Lean 编译", s.lean_compile_ok?"通过 ✅":"未过 ❌");
+  if(s.barrier_h){ const d=document.createElement("div");d.className="kpi";
+    d.style.flexBasis="100%"; d.innerHTML=`证书 h<b style="font-size:12.5px">${s.barrier_h}</b>`;k.appendChild(d);}
+  if(s.lean_code){ leanWrap.style.display="block"; leanCode.textContent=s.lean_code; }
+}
+
+init();
+</script>
+</body>
+</html>

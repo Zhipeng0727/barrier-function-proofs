@@ -1,0 +1,126 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B2-007",
+    "ode": "dx1/dt = -x1, dx2/dt = -x2, dx3/dt = -x3",
+    "state_vars": [
+      "x1",
+      "x2",
+      "x3"
+    ],
+    "f_expr": [
+      "-x1",
+      "-x2",
+      "-x3"
+    ],
+    "X_domain": "R^n",
+    "X_u_desc": "||x|| >= 1.5",
+    "X_u_expr": "x1**2 + x2**2 + x3**2 >= 2.25",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B2-007",
+      "layer": "L2-new",
+      "group": "B2",
+      "task": "barrier",
+      "cert_class": "nonpoly-explicit",
+      "source": "exponential barrier"
+    }
+  },
+  "timestamp": "2026-06-11T18:16:05.288953",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "2.249999999999 - x1**2 - x2**2 - x3**2",
+        "invariant_set": "C = {x in R^3 : x1**2 + x2**2 + x3**2 <= 2.249999999999}, i.e. the closed ball of radius sqrt(2.249999999999), just inside the unsafe boundary ||x|| = 1.5",
+        "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 1.5}, equivalently x1**2 + x2**2 + x3**2 >= 2.25. For any x in X_u, h(x) = 2.249999999999 - x1**2 - x2**2 - x3**2 <= 2.249999999999 - 2.25 = -0.000000000001 < 0. Therefore h(x) < 0 for all x in X_u.",
+        "lie_derivative": "Let h(x) = 2.249999999999 - x1**2 - x2**2 - x3**2. Then grad h = (-2*x1, -2*x2, -2*x3). The vector field is f(x) = (-x1, -x2, -x3). Hence dh/dt = grad h · f = (-2*x1)*(-x1) + (-2*x2)*(-x2) + (-2*x3)*(-x3) = 2*x1**2 + 2*x2**2 + 2*x3**2 = 2*(x1**2 + x2**2 + x3**2).",
+        "condition2_check": "On the boundary partial C, h(x) = 0, so x1**2 + x2**2 + x3**2 = 2.249999999999. Substituting into the Lie derivative gives dh/dt = 2*(x1**2 + x2**2 + x3**2) = 2*2.249999999999 = 4.499999999998 > 0. Therefore dh/dt >= 0 for all x in partial C, satisfying Nagumo's condition.",
+        "reasoning": "The system dx/dt = -x is radially contracting toward the origin, since d/dt(||x||**2) = -2*||x||**2. Therefore balls centered at the origin are forward invariant. To avoid the unsafe set ||x|| >= 1.5 while satisfying the strict requirement h(x) < 0 on all of X_u, including the boundary ||x|| = 1.5, the barrier uses a radius squared slightly smaller than 2.25. The chosen value 2.249999999999 makes C nearly as large as the full safe ball ||x|| < 1.5 while preserving strict negativity on the unsafe set and giving a strictly positive Lie derivative on the boundary of C."
+      },
+      "proposer_elapsed_s": 25.275,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "2*x1**2 + 2*x2**2 + 2*x3**2",
+          "boundary_epsilon": 0.510054,
+          "boundary_pts_found": 145,
+          "cond1_max_h_in_Xu": -0.001308,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 3.483411,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.014
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.053479,
+          "trajectory_valid": true,
+          "elapsed_s": 0.186
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "Valid. Let a = 2.249999999999. For any x in the unsafe set, ||x|| >= 1.5, so x1^2 + x2^2 + x3^2 >= 2.25. Therefore h(x) = a - ||x||^2 <= 2.249999999999 - 2.25 = -0.000000000001 < 0. Specific checks: at x = (1.5, 0, 0), h = -0.000000000001 < 0; at x = (2, 0, 0), h = -1.750000000001 < 0.",
+        "lie_derivative_computed": "∇h = (-2x1, -2x2, -2x3), f(x) = (-x1, -x2, -x3), so ḣ(x) = ∇h · f = 2x1^2 + 2x2^2 + 2x3^2 = 2||x||^2.",
+        "condition2_result": "Valid. The boundary ∂C is given by h(x) = 0, equivalently x1^2 + x2^2 + x3^2 = 2.249999999999. On this boundary, ḣ(x) = 2||x||^2 = 2 · 2.249999999999 = 4.499999999998 > 0, so the Nagumo condition ḣ(x) >= 0 holds strictly. Specific check: at x = (sqrt(2.249999999999), 0, 0), h = 0 and ḣ = 4.499999999998 > 0.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The invariant ball can be enlarged arbitrarily close to the unsafe boundary but cannot include it under the strict requirement h(x) < 0 on ||x|| >= 1.5. A concrete enlargement is to replace h by h_epsilon(x) = 2.25 - epsilon - x1^2 - x2^2 - x3^2 for any smaller positive epsilon. For example, using epsilon = 1e-15 gives h(x) = 2.249999999999999 - ||x||^2, which still satisfies h < 0 on the unsafe set and has ḣ = 2||x||^2 > 0 on its boundary. Exact enlargement to radius 1.5 with h = 2.25 - ||x||^2 would fail Condition 1 because h = 0 at unsafe boundary points such as (1.5, 0, 0)."
+      },
+      "refuter_elapsed_s": 23.751
+    }
+  ],
+  "final_barrier": {
+    "h": "2.249999999999 - x1**2 - x2**2 - x3**2",
+    "invariant_set": "C = {x in R^3 : x1**2 + x2**2 + x3**2 <= 2.249999999999}, i.e. the closed ball of radius sqrt(2.249999999999), just inside the unsafe boundary ||x|| = 1.5",
+    "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 1.5}, equivalently x1**2 + x2**2 + x3**2 >= 2.25. For any x in X_u, h(x) = 2.249999999999 - x1**2 - x2**2 - x3**2 <= 2.249999999999 - 2.25 = -0.000000000001 < 0. Therefore h(x) < 0 for all x in X_u.",
+    "lie_derivative": "Let h(x) = 2.249999999999 - x1**2 - x2**2 - x3**2. Then grad h = (-2*x1, -2*x2, -2*x3). The vector field is f(x) = (-x1, -x2, -x3). Hence dh/dt = grad h · f = (-2*x1)*(-x1) + (-2*x2)*(-x2) + (-2*x3)*(-x3) = 2*x1**2 + 2*x2**2 + 2*x3**2 = 2*(x1**2 + x2**2 + x3**2).",
+    "condition2_check": "On the boundary partial C, h(x) = 0, so x1**2 + x2**2 + x3**2 = 2.249999999999. Substituting into the Lie derivative gives dh/dt = 2*(x1**2 + x2**2 + x3**2) = 2*2.249999999999 = 4.499999999998 > 0. Therefore dh/dt >= 0 for all x in partial C, satisfying Nagumo's condition.",
+    "reasoning": "The system dx/dt = -x is radially contracting toward the origin, since d/dt(||x||**2) = -2*||x||**2. Therefore balls centered at the origin are forward invariant. To avoid the unsafe set ||x|| >= 1.5 while satisfying the strict requirement h(x) < 0 on all of X_u, including the boundary ||x|| = 1.5, the barrier uses a radius squared slightly smaller than 2.25. The chosen value 2.249999999999 makes C nearly as large as the full safe ball ||x|| < 1.5 while preserving strict negativity on the unsafe set and giving a strictly positive Lie derivative on the boundary of C."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 49.234
+  },
+  "tokens": {
+    "input": 2463,
+    "output": 2302,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1637,
+        "output_tokens": 1168,
+        "elapsed_s": 25.275
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 826,
+        "output_tokens": 1134,
+        "elapsed_s": 23.751
+      }
+    ]
+  }
+}

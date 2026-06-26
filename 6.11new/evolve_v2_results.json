@@ -1,0 +1,105 @@
+{
+  "agent": "self_evolve_v2",
+  "timestamp": "2026-06-18T01:38:50",
+  "model": "glm-4.7",
+  "fallback": "gpt-5.5",
+  "proved_count": 2,
+  "failed_count": 7,
+  "total": 9,
+  "prove_rate": "22.2%",
+  "recipe_count": 49,
+  "rounds_run": 3,
+  "proved_ids": [
+    "PC-004",
+    "PJ-007"
+  ],
+  "failed_ids": [
+    "PF-002",
+    "PF-003",
+    "PJ-005",
+    "PJ-006",
+    "PJ-008",
+    "PK-003",
+    "PM-003"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "proved": [
+        "PC-004"
+      ],
+      "failed": [
+        "PF-002",
+        "PJ-005",
+        "PM-003",
+        "PJ-006",
+        "PK-003",
+        "PF-003",
+        "PJ-007"
+      ],
+      "new_recipe_keys": [
+        "poly.grad_bound_strong_convexity",
+        "poly.sum_squares_nonneg",
+        "poly.ne_zero_lt_abs",
+        "trig.sin_bound_linear",
+        "log.log_inequality_boundary",
+        "poly.repulsive_vector_sq_increase"
+      ],
+      "recipe_count": 35,
+      "tokens_cum": 4048,
+      "ts": "2026-06-17T23:48:58"
+    },
+    {
+      "round": 2,
+      "proved": [
+        "PJ-007"
+      ],
+      "failed": [
+        "PF-002",
+        "PJ-005",
+        "PM-003",
+        "PJ-006",
+        "PK-003",
+        "PF-003",
+        "PJ-008"
+      ],
+      "new_recipe_keys": [
+        "poly.deriv_const_lemma",
+        "poly.sq_pos_nonneg",
+        "poly.ne_of_sq_ne_zero",
+        "trig.sin_derivative_arithmetic",
+        "rational.monod_saturation_diff",
+        "convex.convex_max_bnd",
+        "piecewise.sign_abs_def"
+      ],
+      "recipe_count": 42,
+      "tokens_cum": 12782,
+      "ts": "2026-06-18T00:45:25"
+    },
+    {
+      "round": 3,
+      "proved": [],
+      "failed": [
+        "PF-002",
+        "PJ-005",
+        "PM-003",
+        "PJ-006",
+        "PK-003",
+        "PF-003",
+        "PJ-008"
+      ],
+      "new_recipe_keys": [
+        "poly.grad_step_inequality",
+        "poly.diff_energy_sq",
+        "poly.add_eq_zero_iff",
+        "rational.fin_one_exists",
+        "rational.monod_positive_inequality",
+        "poly.max_eq_arg_le",
+        "poly.abs_pow_le"
+      ],
+      "recipe_count": 49,
+      "tokens_cum": 1996,
+      "ts": "2026-06-18T01:38:50"
+    }
+  ]
+}

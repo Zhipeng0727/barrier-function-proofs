@@ -1,0 +1,297 @@
+{
+  "C_seq_sos": {
+    "row": {
+      "exp_pos": {
+        "solved": true,
+        "rounds": 2,
+        "proposer_calls": 2,
+        "critic_calls": 0,
+        "tokens": 84
+      },
+      "sin_cos_sq": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 146
+      },
+      "log_sub_one": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 203
+      },
+      "exp_add_one": {
+        "solved": true,
+        "rounds": 2,
+        "proposer_calls": 2,
+        "critic_calls": 0,
+        "tokens": 318
+      },
+      "tanh_sign": {
+        "solved": false,
+        "rounds": 4,
+        "proposer_calls": 4,
+        "critic_calls": 0,
+        "tokens": 930
+      },
+      "log_self_lower": {
+        "solved": false,
+        "rounds": 4,
+        "proposer_calls": 4,
+        "critic_calls": 0,
+        "tokens": 1332
+      },
+      "logistic_inv": {
+        "solved": true,
+        "rounds": 2,
+        "proposer_calls": 2,
+        "critic_calls": 0,
+        "tokens": 1627
+      }
+    },
+    "solved": 5,
+    "n": 7,
+    "proposer_calls": 16,
+    "critic_calls": 0,
+    "out_tokens": 1627,
+    "wall_s": 272
+  },
+  "G_naive_retrieval": {
+    "row": {
+      "exp_pos": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 48
+      },
+      "sin_cos_sq": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 111
+      },
+      "log_sub_one": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 174
+      },
+      "exp_add_one": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 231
+      },
+      "tanh_sign": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 438
+      },
+      "log_self_lower": {
+        "solved": false,
+        "rounds": 4,
+        "proposer_calls": 4,
+        "critic_calls": 0,
+        "tokens": 811
+      },
+      "logistic_inv": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 949
+      }
+    },
+    "solved": 6,
+    "n": 7,
+    "proposer_calls": 10,
+    "critic_calls": 0,
+    "out_tokens": 949,
+    "wall_s": 119
+  },
+  "K_sim_retrieval": {
+    "row": {
+      "exp_pos": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 47
+      },
+      "sin_cos_sq": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 110
+      },
+      "log_sub_one": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 173
+      },
+      "exp_add_one": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 230
+      },
+      "tanh_sign": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 437
+      },
+      "log_self_lower": {
+        "solved": false,
+        "rounds": 4,
+        "proposer_calls": 4,
+        "critic_calls": 0,
+        "tokens": 882
+      },
+      "logistic_inv": {
+        "solved": true,
+        "rounds": 2,
+        "proposer_calls": 2,
+        "critic_calls": 0,
+        "tokens": 1205
+      }
+    },
+    "solved": 6,
+    "n": 7,
+    "proposer_calls": 11,
+    "critic_calls": 0,
+    "out_tokens": 1205,
+    "wall_s": 132
+  },
+  "L_retrieval_kb": {
+    "row": {
+      "exp_pos": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 47
+      },
+      "sin_cos_sq": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 111
+      },
+      "log_sub_one": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 174
+      },
+      "exp_add_one": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 231
+      },
+      "tanh_sign": {
+        "solved": true,
+        "rounds": 2,
+        "proposer_calls": 2,
+        "critic_calls": 0,
+        "tokens": 612
+      },
+      "log_self_lower": {
+        "solved": false,
+        "rounds": 4,
+        "proposer_calls": 4,
+        "critic_calls": 0,
+        "tokens": 988
+      },
+      "logistic_inv": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 1135
+      }
+    },
+    "solved": 6,
+    "n": 7,
+    "proposer_calls": 11,
+    "critic_calls": 0,
+    "out_tokens": 1135,
+    "wall_s": 126
+  },
+  "M_multi_retrieval": {
+    "row": {
+      "exp_pos": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 47
+      },
+      "sin_cos_sq": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 110
+      },
+      "log_sub_one": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 173
+      },
+      "exp_add_one": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 230
+      },
+      "tanh_sign": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 437
+      },
+      "log_self_lower": {
+        "solved": true,
+        "rounds": 1,
+        "proposer_calls": 1,
+        "critic_calls": 0,
+        "tokens": 546
+      },
+      "logistic_inv": {
+        "solved": true,
+        "rounds": 2,
+        "proposer_calls": 2,
+        "critic_calls": 0,
+        "tokens": 854
+      }
+    },
+    "solved": 7,
+    "n": 7,
+    "proposer_calls": 8,
+    "critic_calls": 0,
+    "out_tokens": 854,
+    "wall_s": 95
+  }
+}

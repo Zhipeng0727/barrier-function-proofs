@@ -1,0 +1,61 @@
+{
+  "system": "bb_linear",
+  "stages": [
+    {
+      "stage": "Proposer",
+      "ts": "18:32:56",
+      "role": "me (LLM substitute)",
+      "output": {
+        "h": "9 - x1**2 - x2**2",
+        "lie_derivative": "10*x1**2 + 10*x1*x2 + 4*x2**2",
+        "invariant_set": "C = {x1**2 + x2**2 <= 9}",
+        "reasoning": "stable linear sys; sublevel set of |x|^2 inside radius-3 safe ball; hdot is a PD quadratic form (matrix [[10,5],[5,4]], det=15>0)."
+      }
+    },
+    {
+      "stage": "local_verify",
+      "ts": "18:32:56",
+      "passed": true,
+      "cond1_ok": true,
+      "cond2_ok": true,
+      "cond1_max_h_in_Xu": -0.0032,
+      "trajectory_valid": true
+    },
+    {
+      "stage": "refuter_gate",
+      "ts": "18:32:56",
+      "auto_accept": true,
+      "meaning": "clean polynomial + local pass -> LLM Refuter skipped (token saver)"
+    },
+    {
+      "stage": "Refuter(manual demo)",
+      "ts": "18:32:56",
+      "role": "me (LLM substitute)",
+      "output": {
+        "verdict": "valid",
+        "reasoning": "Cond1 is definitional: 9-|x|^2<0 ⇔ |x|^2>9 = X_u. Cond2: hdot=10x1²+10x1x2+4x2², form matrix PD (det 15>0) ⇒ ≥0 ∀x, so in particular on ∂C. No counterexample exists.",
+        "flaw": null
+      }
+    },
+    {
+      "stage": "lean_compile_check",
+      "ts": "18:33:06",
+      "attempt": 1,
+      "compile_ok": false,
+      "elapsed_s": 10.1,
+      "sorry_free": true,
+      "diagnostic": "/Users/zhipeng/lean/_check_fullflow_bb_linear.lean:6:26: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  HMul ℤ ℝ ?m.16\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\n/Users/zhipeng/lean/_check_fullflow_bb_linear.lean:6:34: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  HMul ℕ ℝ ?m.17\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\n/Users/zhipeng/lean/_check_fullflow_bb_linear.lean:7:26: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  Neg ℝ\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInsta"
+    },
+    {
+      "stage": "lean_compile_check",
+      "attempt": 2,
+      "compile_ok": true,
+      "elapsed_s": 9.8,
+      "sorry_free": true,
+      "repair": "added Mathlib.Data.Real.Basic + Mathlib.Tactic for ℝ instances",
+      "diagnostic": ""
+    }
+  ],
+  "solved": true,
+  "lean_compile_ok": true
+}

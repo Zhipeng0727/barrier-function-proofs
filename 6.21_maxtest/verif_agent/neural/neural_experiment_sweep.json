@@ -1,0 +1,602 @@
+{
+ "base": {
+  "cfg": {
+   "kind": "structural",
+   "width": 5,
+   "alpha": 0.1,
+   "margin": 0.001,
+   "lr": 0.02,
+   "iters": 400,
+   "n_samples": 500,
+   "verifier": "interval",
+   "max_rounds": 4
+  },
+  "solved": 7,
+  "n": 8,
+  "time": 18.4,
+  "avg_rounds": 1.88,
+  "per": [
+   {
+    "id": "L1-001",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.43,
+    "blocker": null
+   },
+   {
+    "id": "L1-002",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.12,
+    "blocker": null
+   },
+   {
+    "id": "L1-003",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.11,
+    "blocker": null
+   },
+   {
+    "id": "L1-004",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.11,
+    "blocker": null
+   },
+   {
+    "id": "L1-005",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.11,
+    "blocker": null
+   },
+   {
+    "id": "L1-007",
+    "solved": true,
+    "rounds": 2,
+    "time": 1.98,
+    "blocker": null
+   },
+   {
+    "id": "L1-008",
+    "solved": false,
+    "rounds": 4,
+    "time": 1.39,
+    "blocker": "max rounds"
+   },
+   {
+    "id": "L1-009",
+    "solved": true,
+    "rounds": 4,
+    "time": 14.18,
+    "blocker": null
+   }
+  ]
+ },
+ "plain_positivity": {
+  "cfg": {
+   "kind": "plain",
+   "width": 5,
+   "alpha": 0.1,
+   "margin": 0.001,
+   "lr": 0.02,
+   "iters": 400,
+   "n_samples": 500,
+   "verifier": "interval",
+   "max_rounds": 4
+  },
+  "solved": 0,
+  "n": 8,
+  "time": 43.4,
+  "avg_rounds": 1.38,
+  "per": [
+   {
+    "id": "L1-001",
+    "solved": false,
+    "rounds": 1,
+    "time": 0.19,
+    "blocker": "verifier-limited (falsifier found no violation)"
+   },
+   {
+    "id": "L1-002",
+    "solved": false,
+    "rounds": 1,
+    "time": 0.2,
+    "blocker": "verifier-limited (falsifier found no violation)"
+   },
+   {
+    "id": "L1-003",
+    "solved": false,
+    "rounds": 1,
+    "time": 0.18,
+    "blocker": "verifier-limited (falsifier found no violation)"
+   },
+   {
+    "id": "L1-004",
+    "solved": false,
+    "rounds": 1,
+    "time": 0.2,
+    "blocker": "verifier-limited (falsifier found no violation)"
+   },
+   {
+    "id": "L1-005",
+    "solved": false,
+    "rounds": 1,
+    "time": 0.19,
+    "blocker": "verifier-limited (falsifier found no violation)"
+   },
+   {
+    "id": "L1-007",
+    "solved": false,
+    "rounds": 1,
+    "time": 5.91,
+    "blocker": "verifier-limited (falsifier found no violation)"
+   },
+   {
+    "id": "L1-008",
+    "solved": false,
+    "rounds": 4,
+    "time": 31.19,
+    "blocker": "max rounds"
+   },
+   {
+    "id": "L1-009",
+    "solved": false,
+    "rounds": 1,
+    "time": 5.34,
+    "blocker": "verifier-limited (falsifier found no violation)"
+   }
+  ]
+ },
+ "width3": {
+  "cfg": {
+   "kind": "structural",
+   "width": 3,
+   "alpha": 0.1,
+   "margin": 0.001,
+   "lr": 0.02,
+   "iters": 400,
+   "n_samples": 500,
+   "verifier": "interval",
+   "max_rounds": 4
+  },
+  "solved": 7,
+  "n": 8,
+  "time": 29.4,
+  "avg_rounds": 1.38,
+  "per": [
+   {
+    "id": "L1-001",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.12,
+    "blocker": null
+   },
+   {
+    "id": "L1-002",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.11,
+    "blocker": null
+   },
+   {
+    "id": "L1-003",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.1,
+    "blocker": null
+   },
+   {
+    "id": "L1-004",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.1,
+    "blocker": null
+   },
+   {
+    "id": "L1-005",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.1,
+    "blocker": null
+   },
+   {
+    "id": "L1-007",
+    "solved": true,
+    "rounds": 1,
+    "time": 1.07,
+    "blocker": null
+   },
+   {
+    "id": "L1-008",
+    "solved": false,
+    "rounds": 4,
+    "time": 26.16,
+    "blocker": "max rounds"
+   },
+   {
+    "id": "L1-009",
+    "solved": true,
+    "rounds": 1,
+    "time": 1.68,
+    "blocker": null
+   }
+  ]
+ },
+ "width8": {
+  "cfg": {
+   "kind": "structural",
+   "width": 8,
+   "alpha": 0.1,
+   "margin": 0.001,
+   "lr": 0.02,
+   "iters": 400,
+   "n_samples": 500,
+   "verifier": "interval",
+   "max_rounds": 4
+  },
+  "solved": 7,
+  "n": 8,
+  "time": 14.4,
+  "avg_rounds": 1.75,
+  "per": [
+   {
+    "id": "L1-001",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.19,
+    "blocker": null
+   },
+   {
+    "id": "L1-002",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.13,
+    "blocker": null
+   },
+   {
+    "id": "L1-003",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.14,
+    "blocker": null
+   },
+   {
+    "id": "L1-004",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.12,
+    "blocker": null
+   },
+   {
+    "id": "L1-005",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.14,
+    "blocker": null
+   },
+   {
+    "id": "L1-007",
+    "solved": true,
+    "rounds": 1,
+    "time": 1.69,
+    "blocker": null
+   },
+   {
+    "id": "L1-008",
+    "solved": false,
+    "rounds": 4,
+    "time": 1.61,
+    "blocker": "max rounds"
+   },
+   {
+    "id": "L1-009",
+    "solved": true,
+    "rounds": 4,
+    "time": 10.4,
+    "blocker": null
+   }
+  ]
+ },
+ "margin0": {
+  "cfg": {
+   "kind": "structural",
+   "width": 5,
+   "alpha": 0.1,
+   "margin": 0.0,
+   "lr": 0.02,
+   "iters": 400,
+   "n_samples": 500,
+   "verifier": "interval",
+   "max_rounds": 4
+  },
+  "solved": 7,
+  "n": 8,
+  "time": 19.2,
+  "avg_rounds": 1.88,
+  "per": [
+   {
+    "id": "L1-001",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.13,
+    "blocker": null
+   },
+   {
+    "id": "L1-002",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.12,
+    "blocker": null
+   },
+   {
+    "id": "L1-003",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.11,
+    "blocker": null
+   },
+   {
+    "id": "L1-004",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.12,
+    "blocker": null
+   },
+   {
+    "id": "L1-005",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.11,
+    "blocker": null
+   },
+   {
+    "id": "L1-007",
+    "solved": true,
+    "rounds": 2,
+    "time": 1.99,
+    "blocker": null
+   },
+   {
+    "id": "L1-008",
+    "solved": false,
+    "rounds": 4,
+    "time": 1.37,
+    "blocker": "max rounds"
+   },
+   {
+    "id": "L1-009",
+    "solved": true,
+    "rounds": 4,
+    "time": 15.22,
+    "blocker": null
+   }
+  ]
+ },
+ "margin1e-2": {
+  "cfg": {
+   "kind": "structural",
+   "width": 5,
+   "alpha": 0.1,
+   "margin": 0.01,
+   "lr": 0.02,
+   "iters": 400,
+   "n_samples": 500,
+   "verifier": "interval",
+   "max_rounds": 4
+  },
+  "solved": 7,
+  "n": 8,
+  "time": 6.8,
+  "avg_rounds": 1.5,
+  "per": [
+   {
+    "id": "L1-001",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.13,
+    "blocker": null
+   },
+   {
+    "id": "L1-002",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.12,
+    "blocker": null
+   },
+   {
+    "id": "L1-003",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.11,
+    "blocker": null
+   },
+   {
+    "id": "L1-004",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.13,
+    "blocker": null
+   },
+   {
+    "id": "L1-005",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.12,
+    "blocker": null
+   },
+   {
+    "id": "L1-007",
+    "solved": true,
+    "rounds": 2,
+    "time": 1.95,
+    "blocker": null
+   },
+   {
+    "id": "L1-008",
+    "solved": false,
+    "rounds": 4,
+    "time": 1.75,
+    "blocker": "max rounds"
+   },
+   {
+    "id": "L1-009",
+    "solved": true,
+    "rounds": 1,
+    "time": 2.47,
+    "blocker": null
+   }
+  ]
+ },
+ "verifier_dreal": {
+  "cfg": {
+   "kind": "structural",
+   "width": 5,
+   "alpha": 0.1,
+   "margin": 0.001,
+   "lr": 0.02,
+   "iters": 400,
+   "n_samples": 500,
+   "verifier": "dreal",
+   "max_rounds": 2
+  },
+  "solved": 0,
+  "n": 8,
+  "time": 7.7,
+  "avg_rounds": 1.38,
+  "per": [
+   {
+    "id": "L1-001",
+    "solved": false,
+    "rounds": 1,
+    "time": 3.7,
+    "blocker": "verifier-limited (falsifier found no violation)"
+   },
+   {
+    "id": "L1-002",
+    "solved": false,
+    "rounds": 1,
+    "time": 0.37,
+    "blocker": "verifier-limited (falsifier found no violation)"
+   },
+   {
+    "id": "L1-003",
+    "solved": false,
+    "rounds": 1,
+    "time": 0.34,
+    "blocker": "verifier-limited (falsifier found no violation)"
+   },
+   {
+    "id": "L1-004",
+    "solved": false,
+    "rounds": 1,
+    "time": 0.35,
+    "blocker": "verifier-limited (falsifier found no violation)"
+   },
+   {
+    "id": "L1-005",
+    "solved": false,
+    "rounds": 1,
+    "time": 0.38,
+    "blocker": "verifier-limited (falsifier found no violation)"
+   },
+   {
+    "id": "L1-007",
+    "solved": false,
+    "rounds": 2,
+    "time": 0.81,
+    "blocker": "verifier-limited (falsifier found no violation)"
+   },
+   {
+    "id": "L1-008",
+    "solved": false,
+    "rounds": 2,
+    "time": 0.86,
+    "blocker": "max rounds"
+   },
+   {
+    "id": "L1-009",
+    "solved": false,
+    "rounds": 2,
+    "time": 0.84,
+    "blocker": "max rounds"
+   }
+  ]
+ },
+ "iters800": {
+  "cfg": {
+   "kind": "structural",
+   "width": 5,
+   "alpha": 0.1,
+   "margin": 0.001,
+   "lr": 0.02,
+   "iters": 800,
+   "n_samples": 500,
+   "verifier": "interval",
+   "max_rounds": 4
+  },
+  "solved": 7,
+  "n": 8,
+  "time": 20.0,
+  "avg_rounds": 1.88,
+  "per": [
+   {
+    "id": "L1-001",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.24,
+    "blocker": null
+   },
+   {
+    "id": "L1-002",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.23,
+    "blocker": null
+   },
+   {
+    "id": "L1-003",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.24,
+    "blocker": null
+   },
+   {
+    "id": "L1-004",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.24,
+    "blocker": null
+   },
+   {
+    "id": "L1-005",
+    "solved": true,
+    "rounds": 1,
+    "time": 0.23,
+    "blocker": null
+   },
+   {
+    "id": "L1-007",
+    "solved": true,
+    "rounds": 2,
+    "time": 2.14,
+    "blocker": null
+   },
+   {
+    "id": "L1-008",
+    "solved": false,
+    "rounds": 4,
+    "time": 2.14,
+    "blocker": "max rounds"
+   },
+   {
+    "id": "L1-009",
+    "solved": true,
+    "rounds": 4,
+    "time": 14.53,
+    "blocker": null
+   }
+  ]
+ }
+}

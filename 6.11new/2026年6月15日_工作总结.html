@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2026年6月15日 工作总结 — Lean4 Barrier/Lyapunov 验证系统</title>
+<style>
+:root{
+  --bg:#0f1115; --panel:#171a21; --panel2:#1e222b; --ink:#e6e9ef; --muted:#9aa4b2;
+  --line:#2a2f3a; --ok:#39d98a; --bad:#ff6b6b; --warn:#ffd166; --acc:#5b9dff; --acc2:#b48bff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:40px 24px 80px}
+h1{font-size:26px;margin:0 0 4px}
+h2{font-size:19px;margin:36px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line);color:var(--acc)}
+h3{font-size:15px;margin:20px 0 8px;color:var(--acc2)}
+.sub{color:var(--muted);margin:0 0 16px;font-size:14px}
+table{width:100%;border-collapse:collapse;margin:10px 0;background:var(--panel);
+  border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th{background:var(--panel2);font-size:13px;color:var(--muted);text-align:left;padding:8px 12px}
+td{padding:7px 12px;border-top:1px solid var(--line);font-size:13px}
+code{background:var(--panel2);padding:2px 6px;border-radius:4px;font-size:12px;font-family:ui-monospace,Menlo,monospace}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:14px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi{font-size:24px;font-weight:700}
+.kpi.ok{color:var(--ok)} .kpi.acc{color:var(--acc)} .kpi.warn{color:var(--warn)} .kpi.bad{color:var(--bad)}
+.lbl{color:var(--muted);font-size:11px;margin-top:2px}
+.note{background:var(--panel);border-left:3px solid var(--acc);padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0;font-size:13px}
+.warn-note{border-left-color:var(--warn)}
+.ok-note{border-left-color:var(--ok)}
+.path{color:var(--acc2);font-family:ui-monospace,Menlo,monospace;font-size:12px}
+ul{margin:6px 0;padding-left:20px}
+li{margin:3px 0;font-size:13px}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:12px;border:1px solid var(--line);color:var(--muted);margin-right:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>2026年6月15日 工作总结</h1>
+<p class="sub">
+  Lean4 Barrier/Lyapunov 验证系统 — Recipe 挖掘、数据集扩展、自进化流水线<br>
+  项目路径: <span class="path">/Users/zhipeng/Desktop/paper4/6.11new/</span>
+</p>
+
+<!-- ═══ 概述 ═══ -->
+<h2>一、今日工作概述</h2>
+
+<div class="note">
+  <strong>核心目标:</strong> 将 Lean4 形式验证后端从"概念验证"推进到"可扩展系统" — 通过挖掘更多 recipe (验证过的数学桥接引理),
+  提高 Lean gap 覆盖率, 并设计自进化数据集扩展流水线, 使 Lean-necessary 系统占比超过 50%。
+</div>
+
+<div class="card-grid">
+  <div class="card"><div class="kpi ok">22</div><div class="lbl">verified recipes (was 9)</div></div>
+  <div class="card"><div class="kpi ok">10/12</div><div class="lbl">Lean gap closed (was 3/12)</div></div>
+  <div class="card"><div class="kpi acc">+52</div><div class="lbl">new expansion systems</div></div>
+  <div class="card"><div class="kpi ok">51.2%</div><div class="lbl">Lean-necessary ratio</div></div>
+  <div class="card"><div class="kpi warn">8/43</div><div class="lbl">expansion prove rate</div></div>
+</div>
+
+<h3>解决的难点</h3>
+<ol>
+  <li><strong>Recipe 族挖掘:</strong> 从 9 个原始引理扩展到 22 个 (6 个族), 每个引理都必须通过 Lean4 编译器 0 sorry 验证。
+    关键难点: Mathlib 4 的 API 查找、类型类合成错误 (OfNat)、nlinarith 无法处理非线性乘法不等式 (需要手工提供 <code>mul_le_mul_of_nonneg_left</code> witness)。</li>
+  <li><strong>数据泄漏框架:</strong> 定义了三层判定标准 — exact same (泄漏), same-family-different-params (不算), same-lemma-different-system (不算)。
+    核心原则: 换系数 (0.6x→0.7x) 不算不同系统, 必须使用 ∀α 参数化证明。</li>
+  <li><strong>自进化数据集:</strong> 设计 52 个新系统 (14 类), 保证 Lean-necessary by design, 无 (dynamics_class, certificate_form) 重复,
+    recipe store 与 dataset 严格分离。</li>
+  <li><strong>L7-003 Doubly-stochastic contraction:</strong> 86 行 Lean 4 证明, 需要通用 <code>three_weighted_le_max</code> 引理,
+    展示凸组合 max(Wx)≤max(x) 的完整证明链。</li>
+</ol>
+
+<!-- ═══ 系统位置 ═══ -->
+<h2>二、系统位置与架构</h2>
+
+<div class="note">
+  <strong>主目录:</strong> <span class="path">/Users/zhipeng/Desktop/paper4/6.11new/</span><br>
+  <strong>数据集:</strong> <span class="path">/Users/zhipeng/Desktop/paper4/data/</span> (core200 manifest v5)<br>
+  <strong>旧数据:</strong> <span class="path">/Users/zhipeng/lean/data/</span> (older jsonl)<br>
+  <strong>不是 git 仓库</strong> — 通过快照目录手动版本管理
+</div>
+
+<h3>核心系统组件</h3>
+<table>
+<tr><th>文件</th><th>功能</th><th>说明</th></tr>
+<tr><td><code>runtime_state.py</code></td><td>LLM API 调用层</td><td>GLM-5.1 via Aigocode relay; 含 token 计数/重试/多 provider 路由。<strong style="color:var(--warn)">⚠ 含硬编码 API key, push 前必须轮换</strong></td></tr>
+<tr><td><code>barrier_core.py</code></td><td>Barrier/Lyapunov 核心</td><td>67KB, 证书合成+验证条件提取+SOS hints+formalize_certificate()</td></tr>
+<tr><td><code>lean_proof.py</code></td><td>Lean4 编译接口</td><td>extract_lean_code(), lean_compile_check(), strict_sorry 模式</td></tr>
+<tr><td><code>lean_escalation.py</code></td><td>三层升级策略</td><td>L1=原地修复, L2=重写策略, L3=重新生成证书</td></tr>
+<tr><td><code>self_evolve.py</code></td><td>自进化循环</td><td>evaluate → distill → mine → re-evaluate, Oracle 门控学习</td></tr>
+<tr><td><code>recipe_store.json</code></td><td>已验证配方库</td><td>22 个 Lean4 桥接引理, 6 个族 (log/exp/trig/tanh/sqrt/piecewise/rational/convex)</td></tr>
+<tr><td><code>dataset_loader.py</code></td><td>数据集加载器</td><td>core200 manifest 解析, SYSTEMS schema</td></tr>
+<tr><td><code>lean_error_kb.json</code></td><td>错误知识库</td><td>12 条签名匹配规则, 优先级路由</td></tr>
+<tr><td><code>knowledge_base.py</code></td><td>KB 检索</td><td>错误签名 → 修复策略映射</td></tr>
+</table>
+
+<h3>今日新增文件</h3>
+<table>
+<tr><th>文件</th><th>功能</th><th>今日工作</th></tr>
+<tr style="background:rgba(57,217,138,0.08)"><td><code>auto_expand.py</code></td><td>数据集扩展生成器</td><td><strong>新建</strong>: 生成 52 个 Lean-necessary 新系统, 14 个类别, 含 check_no_coefficient_duplicates() 防泄漏</td></tr>
+<tr style="background:rgba(57,217,138,0.08)"><td><code>auto_expand_evolve.py</code></td><td>扩展测试流水线</td><td><strong>新建</strong>: attempt_proof() + analyze_obstructions() + CLI 接口</td></tr>
+<tr style="background:rgba(57,217,138,0.08)"><td><code>lean4_expansion_v1.json</code></td><td>52 个新系统清单</td><td><strong>新建</strong>: transcendental=22, poly=18, piecewise-poly=9, rational=3</td></tr>
+<tr style="background:rgba(57,217,138,0.08)"><td><code>expansion_full_results.json</code></td><td>全量扩展测试结果</td><td><strong>新建</strong>: 43/52 tested, 8 proved, 按类别分析</td></tr>
+<tr style="background:rgba(91,157,255,0.1)"><td><code>recipe_store.json</code></td><td>配方库</td><td><strong>更新</strong>: 9→13→22, +4 rational, +5 convex, +4 piecewise</td></tr>
+<tr style="background:rgba(91,157,255,0.1)"><td><code>lean_gap_results.json</code></td><td>Lean gap 测试结果</td><td><strong>更新</strong>: 3/12→8/12→10/12, 新增 B1-017, L7-003</td></tr>
+<tr style="background:rgba(91,157,255,0.1)"><td><code>paper_results_report.html</code></td><td>主报告</td><td><strong>大幅更新</strong>: §6(22 recipes), §12b(10/12 Round 3), §12d(扩展), §13(结论)</td></tr>
+</table>
+
+<h3>Agent 实验 / 历史文件</h3>
+<table>
+<tr><th>文件</th><th>说明</th></tr>
+<tr><td><code>agent_arena.py / v2 / v3 / v4</code></td><td>13 种架构控制实验 (A_single → M_multi_retrieval), 含结果 json</td></tr>
+<tr><td><code>dual_agent_debate_4.py</code></td><td>Debate 架构 (F_debate_sos) 实现</td></tr>
+<tr><td><code>dataset_arena.py</code></td><td>数据集级别的 Arena 评测</td></tr>
+<tr><td><code>run_benchmark.py</code></td><td>Core200 全量 benchmark 驱动</td></tr>
+<tr><td><code>run_lean_gaps.py</code></td><td>12 个 Lean gap 案例的测试驱动</td></tr>
+<tr><td><code>auto_evolve.py</code></td><td>原始自进化循环 (evaluate → distill → mine)</td></tr>
+<tr><td><code>smoke_v5.py / validate_escalation.py</code></td><td>冒烟测试 / 升级策略验证</td></tr>
+</table>
+
+<h3>子目录</h3>
+<table>
+<tr><th>目录</th><th>说明</th></tr>
+<tr><td><code>verif_agent/</code></td><td>验证方法选择 agent — cheapest-first 路由: sampling→z3→interval→dReal→Lean</td></tr>
+<tr><td><code>webapp/</code></td><td>Web 演示界面</td></tr>
+<tr><td><code>snapshot_v2_20260615/</code></td><td>v2 快照 (今日早期)</td></tr>
+<tr><td><code>snapshot_v3_20260615/</code></td><td>v3 快照 (今日, 含 temp_scripts/)</td></tr>
+<tr><td><code>benchmark_results/</code></td><td>Core200 benchmark 结果</td></tr>
+<tr><td><code>artifacts/</code></td><td>生成的 Lean 文件和中间产物</td></tr>
+<tr><td><code>invariant_plots/</code></td><td>不变量可视化图</td></tr>
+<tr><td><code>darboux/</code></td><td>Darboux 多项式相关</td></tr>
+</table>
+
+<!-- ═══ 数据来源 ═══ -->
+<h2>三、数据来源</h2>
+
+<table>
+<tr><th>数据集</th><th>规模</th><th>来源</th><th>位置</th></tr>
+<tr><td><strong>Core200 v5</strong></td><td>157 系统 (有效)</td><td>手工策划: 标准动力系统教材 + 控制论文例子 + parametric-∀n 合并</td>
+  <td><span class="path">paper4/data/</span> manifest</td></tr>
+<tr><td><strong>Lean gap 测试集</strong></td><td>12 案例</td><td>从 55 个 Lean-necessary 系统中选取的代表性子集 (覆盖所有 verif_cond_class)</td>
+  <td><code>lean_gap_results.json</code></td></tr>
+<tr><td><strong>Expansion v1</strong></td><td>52 系统</td><td><strong>今日生成</strong>: auto_expand.py 基于 14 个类别设计, Lean-necessary by design</td>
+  <td><code>lean4_expansion_v1.json</code></td></tr>
+<tr><td><strong>Recipe store</strong></td><td>22 引理</td><td>三轮挖掘: GLM 自动 (5) + Claude 集成 (4) + gap-mining R2 (4) + gap-mining R3 (9)</td>
+  <td><code>recipe_store.json</code></td></tr>
+</table>
+
+<div class="note">
+  <strong>数据集与 recipe store 严格分离:</strong><br>
+  • Dataset: 动力系统 + 证书 + 验证条件 (问题)<br>
+  • Recipe store: 已验证的数学不等式 (工具)<br>
+  • Recipe 只能通过 Lean4 编译器验证的数学不等式增长, 不能从 dataset 条目反向注入
+</div>
+
+<!-- ═══ 改进详情 ═══ -->
+<h2>四、今日改进详情</h2>
+
+<h3>4.1 Recipe Store 三轮扩展 (9→22)</h3>
+
+<table>
+<tr><th>轮次</th><th>新增</th><th>族</th><th>代表引理</th><th>解锁案例</th></tr>
+<tr><td>原始 (R1)</td><td>9</td><td>log, exp, trig, tanh, sqrt</td><td>log_sub_one, exp_pos, tanh_sign</td><td>L4-014, B1-006, B2-002</td></tr>
+<tr style="background:rgba(91,157,255,0.08)"><td>R2 (+4)</td><td>4</td><td>piecewise</td><td>annulus_barrier, conservation_harmonic</td><td>B3-003, B6-001, B4-018, L4-015, B3-001</td></tr>
+<tr style="background:rgba(180,139,255,0.08)"><td>R3 (+9)</td><td>9</td><td>rational (4), convex (5)</td><td>div_le_one, three_weighted_le_max</td><td>B1-017, L7-003</td></tr>
+</table>
+
+<div class="note ok-note">
+  <strong>关键技术突破:</strong><br>
+  • <code>mul_le_mul_of_nonneg_left</code> 是凸组合证明的核心 witness — nlinarith 自己发现不了<br>
+  • <code>field_simp + ring</code> 处理 rational 除法 (替代容易出错的 div_le_iff)<br>
+  • <code>rwa [div_le_one hb]</code> 直接证明 a/b ≤ 1 (避免 hallucinated div_le_one_of_le)
+</div>
+
+<h3>4.2 Lean Gap 覆盖率提升 (25%→83%)</h3>
+
+<div class="card-grid" style="grid-template-columns:repeat(3,1fr)">
+  <div class="card"><div class="kpi warn">3/12</div><div class="lbl">Round 1 (9 recipes, 25%)</div></div>
+  <div class="card"><div class="kpi acc">8/12</div><div class="lbl">Round 2 (13 recipes, 67%)</div></div>
+  <div class="card"><div class="kpi ok">10/12</div><div class="lbl">Round 3 (22 recipes, 83%)</div></div>
+</div>
+
+<table>
+<tr><th>案例</th><th>系统</th><th>状态</th><th>轮次</th><th>用时</th><th>关键 Recipe</th></tr>
+<tr><td>L4-014</td><td>tanh-damped oscillator</td><td style="color:var(--ok)">PROVED</td><td>R1</td><td>31s</td><td>tanh_sign</td></tr>
+<tr><td>B1-006</td><td>logcosh oscillator safe energy</td><td style="color:var(--ok)">PROVED</td><td>R1</td><td>186s</td><td>log_sub_one</td></tr>
+<tr><td>B2-002</td><td>LV first-integral separator</td><td style="color:var(--ok)">PROVED</td><td>R1</td><td>344s</td><td>log_sub_one</td></tr>
+<tr><td>B3-003</td><td>harmonic oscillator annulus</td><td style="color:var(--ok)">PROVED</td><td>R2</td><td>13s</td><td>annulus_barrier</td></tr>
+<tr><td>B6-001</td><td>annulus as min barrier</td><td style="color:var(--ok)">PROVED</td><td>R2</td><td>20s</td><td>min_nonneg</td></tr>
+<tr><td>B4-018</td><td>Ricker map population-cap</td><td style="color:var(--ok)">PROVED</td><td>R2</td><td>47s</td><td>log_sub_one (Ricker)</td></tr>
+<tr><td>L4-015</td><td>logcosh-damped oscillator</td><td style="color:var(--ok)">PROVED</td><td>R2</td><td>27s</td><td>tanh_sign</td></tr>
+<tr><td>B3-001</td><td>pendulum conservative libration</td><td style="color:var(--ok)">PROVED</td><td>R2</td><td>10s</td><td>conservation_harmonic</td></tr>
+<tr style="background:rgba(180,139,255,0.08)"><td><strong>B1-017</strong></td><td>rational coordinate barrier</td><td style="color:var(--ok)"><strong>PROVED</strong></td><td><strong>R3</strong></td><td>13s</td><td><strong>div_le_one</strong></td></tr>
+<tr style="background:rgba(180,139,255,0.08)"><td><strong>L7-003</strong></td><td>consensus polyhedral Lyapunov</td><td style="color:var(--ok)"><strong>PROVED</strong></td><td><strong>R3</strong></td><td>115s</td><td><strong>three_weighted_le_max (86行)</strong></td></tr>
+<tr><td>L1-006</td><td>rational-coordinate pullback</td><td style="color:var(--bad)">PARTIAL</td><td>—</td><td>—</td><td>需 field_simp 类型修复</td></tr>
+<tr><td>L7-001</td><td>parametric-n KL Lyapunov</td><td style="color:var(--bad)">PARTIAL</td><td>—</td><td>—</td><td>需 Jensen/log-sum-exp recipe</td></tr>
+</table>
+
+<h3>4.3 数据集扩展 (52 新系统)</h3>
+
+<div class="note">
+  <strong>设计原则:</strong><br>
+  • 无系数替换 (0.6x→0.7x 不算新系统) — 使用 ∀α 参数化证明<br>
+  • Lean-necessary by design — 每个含超越函数/分段结构/参数化量化<br>
+  • check_no_coefficient_duplicates() 自动校验 (dynamics_class, certificate_form) 无重复
+</div>
+
+<table>
+<tr><th>类别</th><th>数量</th><th>测试</th><th>通过</th><th>代表系统</th></tr>
+<tr><td>PA: 参数化超越</td><td>5</td><td>5</td><td style="color:var(--ok)">2</td><td>∀α tanh-damped, rotation</td></tr>
+<tr><td>PB: 生态/流行病</td><td>4</td><td>4</td><td style="color:var(--bad)">0</td><td>∀α Holling-II predator-prey</td></tr>
+<tr><td>PC: 分段/非光滑</td><td>4</td><td>3</td><td style="color:var(--bad)">0</td><td>relay feedback, PWA</td></tr>
+<tr><td>PD: 守恒律</td><td>3</td><td>3</td><td style="color:var(--ok)">2</td><td>symplectic Euler, Casimir</td></tr>
+<tr><td>PE: 神经/sigmoid</td><td>2</td><td>2</td><td style="color:var(--bad)">0</td><td>Hopfield, sigmoid tube</td></tr>
+<tr><td>PF: 博弈论</td><td>3</td><td>1</td><td style="color:var(--bad)">0</td><td>replicator dynamics</td></tr>
+<tr><td>PG: 化学反应</td><td>2</td><td>2</td><td style="color:var(--bad)">0</td><td>mass-action CRN</td></tr>
+<tr><td>PH: 混合/切换</td><td>2</td><td>2</td><td style="color:var(--bad)">0</td><td>thermostat, bouncing ball</td></tr>
+<tr><td>PI: 高维结构化</td><td>2</td><td>2</td><td style="color:var(--ok)">1</td><td>∀n chain of integrators</td></tr>
+<tr><td>PJ: 更多超越</td><td>8</td><td>4</td><td style="color:var(--bad)">0</td><td>coupled nonlinear</td></tr>
+<tr><td>PK-PL: 生态/机器人</td><td>6</td><td>5</td><td style="color:var(--warn)">1</td><td>quadrotor altitude barrier</td></tr>
+<tr><td>PM: 信息论/优化</td><td>3</td><td>2</td><td style="color:var(--ok)">1</td><td>natural gradient Fisher</td></tr>
+<tr><td>PN: 其他</td><td>8</td><td>8</td><td style="color:var(--warn)">1</td><td>van der Pol</td></tr>
+<tr style="background:rgba(57,217,138,0.08)"><td><strong>总计</strong></td><td><strong>52</strong></td><td><strong>43</strong></td><td><strong>8</strong></td><td>19% first-pass prove rate</td></tr>
+</table>
+
+<div class="note warn-note">
+  <strong>GLM API 额度耗尽:</strong> 9/52 系统未测试 (PJ×4, PF×2, PK×1, PM×1, PC×1)。充值后可继续。<br>
+  <strong>高价值 recipe 候选 (下一步):</strong> sigmoid_bound, holling_ii, michaelis_menten, switched_common_lyap, pwa_region_bound
+</div>
+
+<!-- ═══ 验证状态 ═══ -->
+<h2>五、当前验证状态</h2>
+
+<h3>5.1 Core200 原始基准</h3>
+<div class="card-grid" style="grid-template-columns:repeat(4,1fr)">
+  <div class="card"><div class="kpi ok">63/157</div><div class="lbl">sound proved (40.1%)</div></div>
+  <div class="card"><div class="kpi warn">55/157</div><div class="lbl">Lean-necessary (35.0%)</div></div>
+  <div class="card"><div class="kpi bad">33/157</div><div class="lbl">refuted (21.0%)</div></div>
+  <div class="card"><div class="kpi acc">6/157</div><div class="lbl">unsupported (3.8%)</div></div>
+</div>
+
+<h3>5.2 Lean 后端验证</h3>
+<div class="card-grid" style="grid-template-columns:repeat(4,1fr)">
+  <div class="card"><div class="kpi ok">10/12</div><div class="lbl">gap test proved (83%)</div></div>
+  <div class="card"><div class="kpi ok">22/22</div><div class="lbl">recipes compiled (0 sorry)</div></div>
+  <div class="card"><div class="kpi acc">7/7</div><div class="lbl">M_multi warm LOO</div></div>
+  <div class="card"><div class="kpi warn">5/7</div><div class="lbl">cold LOO score</div></div>
+</div>
+
+<h3>5.3 扩展集验证 (初始)</h3>
+<div class="card-grid" style="grid-template-columns:repeat(4,1fr)">
+  <div class="card"><div class="kpi warn">8/43</div><div class="lbl">first-pass proved (19%)</div></div>
+  <div class="card"><div class="kpi acc">107/209</div><div class="lbl">projected Lean-necessary (51.2%)</div></div>
+  <div class="card"><div class="kpi warn">9</div><div class="lbl">systems untested (API quota)</div></div>
+  <div class="card"><div class="kpi acc">5</div><div class="lbl">high-value recipe candidates</div></div>
+</div>
+
+<h3>5.4 验证路由 (cheapest-first ladder)</h3>
+<table>
+<tr><th>后端</th><th>能力</th><th>状态</th></tr>
+<tr><td>Sampling falsifier</td><td>快速反例 (unsound gate)</td><td style="color:var(--ok)">✓ 部署</td></tr>
+<tr><td>z3 (NRA)</td><td>多项式/有理式, 任意维</td><td style="color:var(--ok)">✓ 部署, 完备 NRA</td></tr>
+<tr><td>Interval BnB</td><td>超越函数, dim≤4</td><td style="color:var(--ok)">✓ 部署, mpmath 精度</td></tr>
+<tr><td>dReal</td><td>超越函数, 高维, δ-complete</td><td style="color:var(--warn)">Docker only (macOS pip broken)</td></tr>
+<tr><td><strong>Lean4 + Mathlib</strong></td><td>参数化∀n/结构性/超越推理</td><td style="color:var(--ok)">✓ <strong>22 recipes, 83% gap coverage</strong></td></tr>
+<tr><td>CROWN/MILP</td><td>NN certificates</td><td style="color:var(--muted)">Registered, not wired</td></tr>
+</table>
+
+<!-- ═══ 文件清单 ═══ -->
+<h2>六、完整文件清单</h2>
+
+<h3>核心代码 (27 文件)</h3>
+<table>
+<tr><th>文件</th><th>大小</th><th>功能</th><th>今日</th></tr>
+<tr><td><code>runtime_state.py</code></td><td>18KB</td><td>LLM API 层 (GLM relay)</td><td></td></tr>
+<tr><td><code>barrier_core.py</code></td><td>67KB</td><td>核心合成+验证引擎</td><td></td></tr>
+<tr><td><code>lean_proof.py</code></td><td>10KB</td><td>Lean4 编译检查</td><td></td></tr>
+<tr><td><code>lean_escalation.py</code></td><td>15KB</td><td>L1/L2/L3 升级策略</td><td></td></tr>
+<tr><td><code>self_evolve.py</code></td><td>26KB</td><td>自进化循环</td><td></td></tr>
+<tr><td><code>dataset_loader.py</code></td><td>35KB</td><td>数据集加载</td><td></td></tr>
+<tr><td><code>knowledge_base.py</code></td><td>3KB</td><td>错误KB检索</td><td></td></tr>
+<tr><td><code>lean_error_kb.py</code></td><td>4KB</td><td>错误签名匹配</td><td></td></tr>
+<tr style="background:rgba(57,217,138,0.08)"><td><code>auto_expand.py</code></td><td>37KB</td><td>数据集扩展生成器</td><td><strong>新建</strong></td></tr>
+<tr style="background:rgba(57,217,138,0.08)"><td><code>auto_expand_evolve.py</code></td><td>6KB</td><td>扩展测试流水线</td><td><strong>新建</strong></td></tr>
+<tr><td><code>agent_arena.py / v2 / v3 / v4</code></td><td>10-23KB</td><td>架构实验</td><td></td></tr>
+<tr><td><code>run_benchmark.py</code></td><td>7KB</td><td>benchmark 驱动</td><td></td></tr>
+<tr><td><code>run_lean_gaps.py</code></td><td>6KB</td><td>gap 测试驱动</td><td></td></tr>
+<tr><td><code>其他 .py</code></td><td>各异</td><td>辅助/演示/诊断</td><td></td></tr>
+</table>
+
+<h3>数据文件 (17 文件)</h3>
+<table>
+<tr><th>文件</th><th>说明</th><th>今日</th></tr>
+<tr style="background:rgba(91,157,255,0.08)"><td><code>recipe_store.json</code></td><td>22 个已验证 Lean4 桥接引理</td><td><strong>更新 9→22</strong></td></tr>
+<tr style="background:rgba(91,157,255,0.08)"><td><code>lean_gap_results.json</code></td><td>12 个 gap 案例测试结果</td><td><strong>更新 3→10/12</strong></td></tr>
+<tr style="background:rgba(57,217,138,0.08)"><td><code>lean4_expansion_v1.json</code></td><td>52 个新系统清单</td><td><strong>新建</strong></td></tr>
+<tr style="background:rgba(57,217,138,0.08)"><td><code>expansion_full_results.json</code></td><td>扩展测试结果 (43 tested)</td><td><strong>新建</strong></td></tr>
+<tr style="background:rgba(57,217,138,0.08)"><td><code>expansion_test_results.json</code></td><td>最后一批测试结果</td><td><strong>新建</strong></td></tr>
+<tr><td><code>barrier_kb.json</code></td><td>Barrier 知识库</td><td></td></tr>
+<tr><td><code>lean_error_kb.json</code></td><td>错误签名 KB (12条)</td><td></td></tr>
+<tr><td><code>arena_datasets.json</code></td><td>Arena 数据集</td><td></td></tr>
+<tr><td><code>agent_arena_*_results.json</code></td><td>各版本 Arena 结果</td><td></td></tr>
+<tr><td><code>*_backup.json</code></td><td>各种备份</td><td></td></tr>
+</table>
+
+<h3>报告文件 (5 个 HTML)</h3>
+<table>
+<tr><th>文件</th><th>说明</th><th>今日</th></tr>
+<tr style="background:rgba(91,157,255,0.08)"><td><code>paper_results_report.html</code></td><td>主报告 (81KB, 13 sections)</td><td><strong>大幅更新</strong></td></tr>
+<tr style="background:rgba(57,217,138,0.08)"><td><code>2026年6月15日_工作总结.html</code></td><td>今日工作总结 (本文件)</td><td><strong>新建</strong></td></tr>
+<tr><td><code>self_evolve_report.html</code></td><td>自进化实验报告</td><td></td></tr>
+<tr><td><code>lean_feedback_mechanism.html</code></td><td>反馈机制说明</td><td></td></tr>
+<tr><td><code>paper_results_report_v*_backup.html</code></td><td>报告备份</td><td></td></tr>
+</table>
+
+<h3>快照 / 日志 / 子目录</h3>
+<table>
+<tr><th>路径</th><th>说明</th></tr>
+<tr><td><code>snapshot_v3_20260615/</code></td><td>今日 v3 快照 (44 文件 + temp_scripts/)</td></tr>
+<tr><td><code>snapshot_v2_20260615/</code></td><td>今日 v2 快照 (早期)</td></tr>
+<tr><td><code>verif_agent/</code></td><td>验证路由 agent 子包</td></tr>
+<tr><td><code>webapp/</code></td><td>Web 演示</td></tr>
+<tr><td><code>*.log</code> (24 文件)</td><td>各种运行日志</td></tr>
+</table>
+
+<!-- ═══ 时间线 ═══ -->
+<h2>七、今日工作时间线</h2>
+
+<!-- Timeline SVG -->
+<svg viewBox="0 0 920 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;margin:12px 0">
+  <defs>
+    <linearGradient id="tl" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#5b9dff" stop-opacity=".7"/>
+      <stop offset="100%" stop-color="#39d98a" stop-opacity=".7"/>
+    </linearGradient>
+  </defs>
+  <!-- axis -->
+  <line x1="60" y1="160" x2="880" y2="160" stroke="url(#tl)" stroke-width="3" stroke-linecap="round"/>
+  <!-- time marks -->
+  <g font-size="10" fill="#9aa4b2" text-anchor="middle">
+    <text x="80" y="185">18:15</text>
+    <text x="180" y="185">18:16</text>
+    <text x="280" y="185">18:20</text>
+    <text x="380" y="185">18:25</text>
+    <text x="460" y="185">18:30</text>
+    <text x="560" y="185">18:36</text>
+    <text x="680" y="185">18:50</text>
+    <text x="780" y="185">19:14</text>
+    <text x="860" y="185">19:27</text>
+  </g>
+  <!-- dots -->
+  <g>
+    <circle cx="80" cy="160" r="6" fill="#5b9dff"/>
+    <circle cx="180" cy="160" r="6" fill="#5b9dff"/>
+    <circle cx="280" cy="160" r="6" fill="#b48bff"/>
+    <circle cx="380" cy="160" r="6" fill="#b48bff"/>
+    <circle cx="460" cy="160" r="6" fill="#39d98a"/>
+    <circle cx="560" cy="160" r="6" fill="#ffd166"/>
+    <circle cx="680" cy="160" r="8" fill="#ffd166" stroke="#0f1115" stroke-width="2"/>
+    <circle cx="780" cy="160" r="6" fill="#39d98a"/>
+    <circle cx="860" cy="160" r="6" fill="#39d98a"/>
+  </g>
+  <!-- labels (alternating above/below) -->
+  <g font-size="10.5" fill="#e6e9ef">
+    <text x="80" y="135" text-anchor="middle" font-weight="600" fill="#5b9dff">1. 快照 v3</text>
+    <text x="80" y="147" text-anchor="middle" fill="#9aa4b2">44 文件</text>
+
+    <text x="180" y="210" text-anchor="middle" font-weight="600" fill="#5b9dff">2. Rational</text>
+    <text x="180" y="222" text-anchor="middle" fill="#9aa4b2">+4 recipe</text>
+
+    <text x="280" y="135" text-anchor="middle" font-weight="600" fill="#b48bff">3. Convex</text>
+    <text x="280" y="147" text-anchor="middle" fill="#9aa4b2">+5 recipe</text>
+
+    <text x="380" y="210" text-anchor="middle" font-weight="600" fill="#b48bff">4. Gap R3</text>
+    <text x="380" y="222" text-anchor="middle" fill="#9aa4b2">10/12 proved</text>
+
+    <text x="460" y="125" text-anchor="middle" font-weight="600" fill="#39d98a">5. LOO 公平</text>
+    <text x="460" y="137" text-anchor="middle" fill="#9aa4b2">warm7/cold5</text>
+
+    <text x="560" y="210" text-anchor="middle" font-weight="600" fill="#ffd166">6. 扩展设计</text>
+    <text x="560" y="222" text-anchor="middle" fill="#9aa4b2">52 新系统</text>
+
+    <text x="680" y="115" text-anchor="middle" font-weight="700" fill="#ffd166">7. 扩展测试</text>
+    <text x="680" y="127" text-anchor="middle" fill="#9aa4b2">43 tested</text>
+    <text x="680" y="139" text-anchor="middle" fill="#ff6b6b">GLM 额度耗尽</text>
+
+    <text x="780" y="210" text-anchor="middle" font-weight="600" fill="#39d98a">8. 报告</text>
+    <text x="780" y="222" text-anchor="middle" fill="#9aa4b2">§6,§12b,§12d,§13</text>
+
+    <text x="860" y="135" text-anchor="middle" font-weight="600" fill="#39d98a">9. 总结</text>
+    <text x="860" y="147" text-anchor="middle" fill="#9aa4b2">本文件</text>
+  </g>
+  <!-- phase brackets -->
+  <g font-size="9" fill="#9aa4b2" text-anchor="middle">
+    <line x1="80" y1="250" x2="460" y2="250" stroke="#5b9dff" stroke-width="1" stroke-dasharray="4"/>
+    <text x="270" y="265" fill="#5b9dff">Recipe 挖掘 + Gap 验证阶段</text>
+    <line x1="560" y1="250" x2="680" y2="250" stroke="#ffd166" stroke-width="1" stroke-dasharray="4"/>
+    <text x="620" y="265" fill="#ffd166">数据集扩展阶段</text>
+    <line x1="780" y1="250" x2="860" y2="250" stroke="#39d98a" stroke-width="1" stroke-dasharray="4"/>
+    <text x="820" y="265" fill="#39d98a">文档化</text>
+  </g>
+</svg>
+
+<table>
+<tr><th>时间</th><th>阶段</th><th>内容</th><th>产出</th></tr>
+<tr><td><strong>18:15</strong></td><td>1. 快照保存</td><td>保存 v3 snapshot (44 文件)</td><td>snapshot_v3_20260615/</td></tr>
+<tr><td><strong>18:16</strong></td><td>2. Rational recipe 挖掘</td><td>挖掘 4 个 rational 族 recipe (div_pos_of_pos, sq_div_sq, div_le_one, one_sub_div)</td><td>recipe_store: 13→17</td></tr>
+<tr><td><strong>18:20</strong></td><td>3. Convex recipe 挖掘</td><td>挖掘 5 个 convex 族 recipe (weighted_avg_le_max, weighted_avg_ge_min, three_weighted_le_max, log_sum_two_le, exp_sum_bound)</td><td>recipe_store: 17→22</td></tr>
+<tr><td><strong>18:25</strong></td><td>4. Gap 测试 Round 3</td><td>用 22 recipe 重测剩余 4 个 gap 案例</td><td>B1-017✓, L7-003✓ (10/12)</td></tr>
+<tr><td><strong>18:30</strong></td><td>5. 数据泄漏框架</td><td>定义三层判定 + LOO 公平评估</td><td>§12c (warm 7/7, cold 5/7)</td></tr>
+<tr><td><strong>18:36</strong></td><td>6. 数据集扩展设计</td><td>52 新系统, 14 类, ∀α 参数化</td><td>auto_expand.py, lean4_expansion_v1.json</td></tr>
+<tr><td><strong>18:50–19:13</strong></td><td>7. 扩展测试</td><td>43/52 系统测试 (GLM 额度耗尽)</td><td>expansion_full_results.json (8/43 proved)</td></tr>
+<tr><td><strong>19:14</strong></td><td>8. 报告更新</td><td>§6(22 recipes), §12b(10/12), §12d(扩展), §13(结论)</td><td>paper_results_report.html</td></tr>
+<tr><td><strong>19:27</strong></td><td>9. 工作总结</td><td>本文件</td><td>2026年6月15日_工作总结.html</td></tr>
+</table>
+
+<!-- ═══ 系统框架图 ═══ -->
+<h2>八、系统框架总览</h2>
+
+<h3>图 A: 运行时验证流水线 (Cheapest-first Routing Ladder)</h3>
+<svg viewBox="0 0 920 440" xmlns="http://www.w3.org/2000/svg" style="width:100%;margin:10px 0;background:#171a21;border-radius:10px;border:1px solid #2a2f3a">
+  <defs>
+    <marker id="fw" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><path d="M0,0 L7,2.5 L0,5" fill="none" stroke="#9aa4b2" stroke-width="1"/></marker>
+    <marker id="fg" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><path d="M0,0 L7,2.5 L0,5" fill="none" stroke="#39d98a" stroke-width="1"/></marker>
+    <marker id="fr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><path d="M0,0 L7,2.5 L0,5" fill="none" stroke="#ff6b6b" stroke-width="1"/></marker>
+  </defs>
+
+  <!-- Input -->
+  <rect x="310" y="12" width="300" height="36" rx="7" fill="#1e222b" stroke="#5b9dff" stroke-width="1.5"/>
+  <text x="460" y="35" text-anchor="middle" fill="#5b9dff" font-size="12" font-weight="600">输入: 动力系统 f(x) + 候选证书 V/B</text>
+  <line x1="460" y1="48" x2="460" y2="66" stroke="#9aa4b2" stroke-width="1" marker-end="url(#fw)"/>
+
+  <!-- Feature extraction -->
+  <rect x="280" y="68" width="360" height="30" rx="6" fill="#1e222b" stroke="#9aa4b2" stroke-width="1"/>
+  <text x="460" y="88" text-anchor="middle" fill="#b48bff" font-size="11" font-weight="600">features.py: 表达式分类 (poly | transcendental | rational | piecewise)</text>
+  <line x1="460" y1="98" x2="460" y2="116" stroke="#9aa4b2" stroke-width="1" marker-end="url(#fw)"/>
+
+  <!-- Router box -->
+  <rect x="20" y="118" width="880" height="190" rx="10" fill="none" stroke="#5b9dff" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="40" y="138" fill="#5b9dff" font-size="11" font-weight="700">验证路由梯子 — 按代价升序, 首个健全判决即停 (Selection = Acceleration)</text>
+
+  <!-- Backend boxes -->
+  <rect x="35" y="150" width="145" height="65" rx="6" fill="#1e222b" stroke="#ffd166" stroke-width="1"/>
+  <text x="107" y="170" text-anchor="middle" fill="#ffd166" font-size="11" font-weight="600">① Sampling</text>
+  <text x="107" y="185" text-anchor="middle" fill="#9aa4b2" font-size="9">1000 点随机检查</text>
+  <text x="107" y="199" text-anchor="middle" fill="#ff6b6b" font-size="8">unsound (gate only)</text>
+
+  <rect x="200" y="150" width="145" height="65" rx="6" fill="#1e222b" stroke="#39d98a" stroke-width="1.5"/>
+  <text x="272" y="170" text-anchor="middle" fill="#39d98a" font-size="11" font-weight="600">② z3 (NRA)</text>
+  <text x="272" y="185" text-anchor="middle" fill="#9aa4b2" font-size="9">poly/rational, 完备</text>
+  <text x="272" y="199" text-anchor="middle" fill="#39d98a" font-size="8" font-weight="600">SOUND</text>
+
+  <rect x="365" y="150" width="145" height="65" rx="6" fill="#1e222b" stroke="#39d98a" stroke-width="1.5"/>
+  <text x="437" y="170" text-anchor="middle" fill="#39d98a" font-size="11" font-weight="600">③ Interval BnB</text>
+  <text x="437" y="185" text-anchor="middle" fill="#9aa4b2" font-size="9">transcendental, dim≤4</text>
+  <text x="437" y="199" text-anchor="middle" fill="#39d98a" font-size="8" font-weight="600">SOUND (mpmath)</text>
+
+  <rect x="530" y="150" width="145" height="65" rx="6" fill="#1e222b" stroke="#39d98a" stroke-width="1"/>
+  <text x="602" y="170" text-anchor="middle" fill="#39d98a" font-size="11" font-weight="600">④ dReal</text>
+  <text x="602" y="185" text-anchor="middle" fill="#9aa4b2" font-size="9">transcendental, 高维</text>
+  <text x="602" y="199" text-anchor="middle" fill="#ffd166" font-size="8">δ-complete (Docker)</text>
+
+  <rect x="695" y="150" width="190" height="65" rx="6" fill="#1e222b" stroke="#b48bff" stroke-width="2"/>
+  <text x="790" y="170" text-anchor="middle" fill="#b48bff" font-size="11" font-weight="700">⑤ Lean4 + Mathlib</text>
+  <text x="790" y="185" text-anchor="middle" fill="#9aa4b2" font-size="9">∀n parametric, structural</text>
+  <text x="790" y="199" text-anchor="middle" fill="#39d98a" font-size="8" font-weight="600">SOUND (machine-checked)</text>
+
+  <!-- Arrows between backends -->
+  <line x1="180" y1="182" x2="198" y2="182" stroke="#9aa4b2" stroke-width="1" marker-end="url(#fw)"/>
+  <line x1="345" y1="182" x2="363" y2="182" stroke="#9aa4b2" stroke-width="1" marker-end="url(#fw)"/>
+  <line x1="510" y1="182" x2="528" y2="182" stroke="#9aa4b2" stroke-width="1" marker-end="url(#fw)"/>
+  <line x1="675" y1="182" x2="693" y2="182" stroke="#9aa4b2" stroke-width="1" marker-end="url(#fw)"/>
+
+  <!-- Lean detail -->
+  <rect x="695" y="226" width="190" height="70" rx="6" fill="#1e222b" stroke="#b48bff" stroke-width="1" stroke-dasharray="3"/>
+  <text x="790" y="244" text-anchor="middle" fill="#b48bff" font-size="10" font-weight="600">Lean 三层升级</text>
+  <text x="790" y="258" text-anchor="middle" fill="#9aa4b2" font-size="9">L1: 原地修复 → L2: 换策略</text>
+  <text x="790" y="272" text-anchor="middle" fill="#9aa4b2" font-size="9">→ L3: 重新生成证书</text>
+  <text x="790" y="286" text-anchor="middle" fill="#39d98a" font-size="9" font-weight="600">+ Recipe Store (22 引理)</text>
+
+  <!-- Output -->
+  <line x1="460" y1="308" x2="460" y2="330" stroke="#9aa4b2" stroke-width="1" marker-end="url(#fw)"/>
+  <rect x="200" y="332" width="200" height="34" rx="6" fill="#1e222b" stroke="#39d98a" stroke-width="1.5"/>
+  <text x="300" y="354" text-anchor="middle" fill="#39d98a" font-size="11" font-weight="600">PROVED (sound=True)</text>
+  <rect x="520" y="332" width="200" height="34" rx="6" fill="#1e222b" stroke="#ff6b6b" stroke-width="1.5"/>
+  <text x="620" y="354" text-anchor="middle" fill="#ff6b6b" font-size="11" font-weight="600">REFUTED / TIMEOUT</text>
+
+  <line x1="360" y1="332" x2="360" y2="349" stroke="#39d98a" stroke-width="1"/>
+  <line x1="360" y1="349" x2="518" y2="349" stroke="#9aa4b2" stroke-width="0.5" stroke-dasharray="2"/>
+
+  <!-- Stats -->
+  <text x="460" y="395" text-anchor="middle" fill="#9aa4b2" font-size="10">Core200: 63/157 sound proved (40.1%) | 55/157 Lean-necessary (35.0%) | 33/157 refuted</text>
+  <text x="460" y="412" text-anchor="middle" fill="#5b9dff" font-size="10">路由准确率: 100% oracle match on provable cases (63/63)</text>
+  <text x="460" y="428" text-anchor="middle" fill="#9aa4b2" font-size="9">详见 paper_results_report.html §1–§5</text>
+</svg>
+
+<h3>图 B: 离线自进化循环 (Self-Evolution Loop)</h3>
+<svg viewBox="0 0 920 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;margin:10px 0;background:#171a21;border-radius:10px;border:1px solid #2a2f3a">
+  <!-- Circular flow -->
+  <!-- Step 1: Evaluate -->
+  <rect x="310" y="15" width="300" height="50" rx="8" fill="#1e222b" stroke="#5b9dff" stroke-width="1.5"/>
+  <text x="460" y="37" text-anchor="middle" fill="#5b9dff" font-size="12" font-weight="700">① 评测 (evaluate)</text>
+  <text x="460" y="54" text-anchor="middle" fill="#9aa4b2" font-size="10">对 N 系统执行 formalize + Lean 编译</text>
+
+  <!-- Split: proved / failed -->
+  <line x1="380" y1="65" x2="180" y2="95" stroke="#39d98a" stroke-width="1" marker-end="url(#fg)"/>
+  <line x1="540" y1="65" x2="740" y2="95" stroke="#ff6b6b" stroke-width="1" marker-end="url(#fr)"/>
+
+  <rect x="80" y="97" width="200" height="30" rx="6" fill="#1e222b" stroke="#39d98a" stroke-width="1"/>
+  <text x="180" y="117" text-anchor="middle" fill="#39d98a" font-size="10">✓ proved → 跳过</text>
+  <rect x="640" y="97" width="200" height="30" rx="6" fill="#1e222b" stroke="#ff6b6b" stroke-width="1"/>
+  <text x="740" y="117" text-anchor="middle" fill="#ff6b6b" font-size="10">✗ 失败 → 收集 (code, error)</text>
+
+  <!-- Step 2: Distill -->
+  <line x1="740" y1="127" x2="740" y2="148" stroke="#9aa4b2" stroke-width="1" marker-end="url(#fw)"/>
+  <rect x="580" y="150" width="320" height="50" rx="8" fill="#1e222b" stroke="#ffd166" stroke-width="1.5"/>
+  <text x="740" y="172" text-anchor="middle" fill="#ffd166" font-size="12" font-weight="700">② 蒸馏 (distill)</text>
+  <text x="740" y="189" text-anchor="middle" fill="#9aa4b2" font-size="10">分析失败模式 → 提取缺失的数学关系</text>
+
+  <!-- Step 3: Mine -->
+  <line x1="740" y1="200" x2="740" y2="222" stroke="#9aa4b2" stroke-width="1" marker-end="url(#fw)"/>
+  <rect x="540" y="224" width="400" height="60" rx="8" fill="#1e222b" stroke="#b48bff" stroke-width="1.5"/>
+  <text x="740" y="247" text-anchor="middle" fill="#b48bff" font-size="12" font-weight="700">③ 挖掘 (mine)</text>
+  <text x="740" y="264" text-anchor="middle" fill="#9aa4b2" font-size="10">LLM 生成候选 Lean4 引理 → Lean 编译验证</text>
+  <text x="740" y="278" text-anchor="middle" fill="#39d98a" font-size="9">只有编译通过 (0 sorry) 才进入 store</text>
+
+  <!-- Oracle gate -->
+  <line x1="640" y1="284" x2="460" y2="310" stroke="#9aa4b2" stroke-width="1" marker-end="url(#fw)"/>
+  <rect x="320" y="312" width="280" height="50" rx="8" fill="#1e222b" stroke="#39d98a" stroke-width="2"/>
+  <text x="460" y="334" text-anchor="middle" fill="#39d98a" font-size="12" font-weight="700">④ Oracle 门控</text>
+  <text x="460" y="351" text-anchor="middle" fill="#39d98a" font-size="10">Lean 编译器 = 零假阳性 oracle</text>
+
+  <!-- Recipe store -->
+  <rect x="60" y="220" width="200" height="70" rx="8" fill="#1e222b" stroke="#b48bff" stroke-width="2"/>
+  <text x="160" y="245" text-anchor="middle" fill="#b48bff" font-size="13" font-weight="700">Recipe Store</text>
+  <text x="160" y="262" text-anchor="middle" fill="#e6e9ef" font-size="10">22 个已验证引理 (6 族)</text>
+  <text x="160" y="278" text-anchor="middle" fill="#39d98a" font-size="9" font-weight="600">只增不减 (单调增长)</text>
+
+  <!-- Arrow: oracle → store -->
+  <line x1="320" y1="337" x2="262" y2="280" stroke="#39d98a" stroke-width="1.5" marker-end="url(#fg)"/>
+  <text x="278" y="316" fill="#39d98a" font-size="9" font-weight="600">通过</text>
+
+  <!-- Arrow: store → back to evaluate (loop) -->
+  <path d="M60,255 Q20,255 20,150 Q20,30 308,30" fill="none" stroke="#5b9dff" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#fw)"/>
+  <text x="38" y="140" fill="#5b9dff" font-size="10" font-weight="600" transform="rotate(-90 38 140)">ROUND k+1</text>
+
+  <!-- Guarantee -->
+  <rect x="240" y="378" width="440" height="30" rx="6" fill="#1e222b" stroke="#39d98a" stroke-width="1"/>
+  <text x="460" y="398" text-anchor="middle" fill="#39d98a" font-size="11" font-weight="600">保证: recipe_store ↑ 单调 + Oracle 零假阳性 → 评测得分 ↑ 单调不降</text>
+
+  <!-- Round labels -->
+  <text x="460" y="420" text-anchor="middle" fill="#9aa4b2" font-size="9">实际进展: R1(9 recipes, 3/12) → R2(13 recipes, 8/12) → R3(22 recipes, 10/12)</text>
+</svg>
+
+<!-- ═══ 架构实验可视化 ═══ -->
+<h2>九、13 种 Agent 架构控制实验 (可视化)</h2>
+
+<div class="note">
+  <strong>实验设计:</strong> 7 个超越桥接引理 × 13 种架构, Budget B=4 (最多 4 轮修复), GLM-5.1, oracle=strict_sorry。
+  目标: 找到最优的 LLM→Lean 交互架构。下图展示 Solved/7 (效果) vs Tokens (代价) 的 Pareto 前沿。
+</div>
+
+<!-- Chart 1: Solved vs Tokens scatter -->
+<h3>图 1: 效果 vs 代价 (Solved/7 vs Output Tokens)</h3>
+<svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;margin:10px 0;background:var(--panel);border-radius:10px;border:1px solid var(--line)">
+  <!-- grid -->
+  <g stroke="#2a2f3a" stroke-width="0.5">
+    <line x1="100" y1="50" x2="100" y2="360"/><line x1="100" y1="360" x2="760" y2="360"/>
+    <line x1="100" y1="310" x2="760" y2="310" stroke-dasharray="3"/>
+    <line x1="100" y1="260" x2="760" y2="260" stroke-dasharray="3"/>
+    <line x1="100" y1="210" x2="760" y2="210" stroke-dasharray="3"/>
+    <line x1="100" y1="160" x2="760" y2="160" stroke-dasharray="3"/>
+    <line x1="100" y1="110" x2="760" y2="110" stroke-dasharray="3"/>
+    <line x1="100" y1="60" x2="760" y2="60" stroke-dasharray="3"/>
+  </g>
+  <!-- Y axis labels -->
+  <g font-size="11" fill="#9aa4b2" text-anchor="end">
+    <text x="92" y="364">0</text><text x="92" y="314">1</text><text x="92" y="264">2</text>
+    <text x="92" y="214">3</text><text x="92" y="164">4</text><text x="92" y="114">5</text>
+    <text x="92" y="64">6</text><text x="55" y="14" font-size="10" fill="#e6e9ef">7/7</text>
+  </g>
+  <!-- X axis labels -->
+  <g font-size="10" fill="#9aa4b2" text-anchor="middle">
+    <text x="100" y="380">0</text><text x="210" y="380">500</text><text x="320" y="380">1000</text>
+    <text x="430" y="380">1500</text><text x="540" y="380">2000</text><text x="650" y="380">2500</text>
+    <text x="760" y="380">3000</text>
+  </g>
+  <!-- axis titles -->
+  <text x="430" y="405" text-anchor="middle" font-size="12" fill="#9aa4b2">Output Tokens (代价)</text>
+  <text x="30" y="210" text-anchor="middle" font-size="12" fill="#9aa4b2" transform="rotate(-90 30 210)">Solved / 7 (效果)</text>
+
+  <!-- Pareto frontier line (G→K→L→M) -->
+  <polyline points="299,60 343,60 337,60 287,10" fill="none" stroke="#39d98a" stroke-width="1.5" stroke-dasharray="5" opacity=".5"/>
+
+  <!-- Data points -->
+  <!-- A_single: 3/7, 2333 tok -->
+  <circle cx="613" cy="210" r="8" fill="#ff6b6b" opacity=".7"/>
+  <text x="613" y="198" text-anchor="middle" font-size="9" fill="#ff6b6b" font-weight="600">A</text>
+
+  <!-- B_sequential: 4/7, 2718 tok -->
+  <circle cx="697" cy="160" r="8" fill="#ff6b6b" opacity=".7"/>
+  <text x="697" y="148" text-anchor="middle" font-size="9" fill="#ff6b6b" font-weight="600">B</text>
+
+  <!-- C_seq_sos: 5/7, 1627 tok -->
+  <circle cx="458" cy="110" r="9" fill="#5b9dff" opacity=".8"/>
+  <text x="458" y="98" text-anchor="middle" font-size="9" fill="#5b9dff" font-weight="600">C</text>
+
+  <!-- D_parallel: 2/7, 3027 tok -->
+  <circle cx="765" cy="260" r="8" fill="#ff6b6b" opacity=".7"/>
+  <text x="765" y="248" text-anchor="middle" font-size="9" fill="#ff6b6b" font-weight="600">D</text>
+
+  <!-- E_parallel_sos: 4/7, 2038 tok -->
+  <circle cx="548" cy="160" r="8" fill="#9aa4b2" opacity=".6"/>
+  <text x="548" y="148" text-anchor="middle" font-size="9" fill="#9aa4b2">E</text>
+
+  <!-- F_debate_sos: 5/7, 2280 tok -->
+  <circle cx="601" cy="110" r="8" fill="#9aa4b2" opacity=".6"/>
+  <text x="601" y="98" text-anchor="middle" font-size="9" fill="#9aa4b2">F</text>
+
+  <!-- G_retrieval: 6/7, 949 tok -->
+  <circle cx="309" cy="60" r="10" fill="#5b9dff" opacity=".9"/>
+  <text x="309" y="48" text-anchor="middle" font-size="9" fill="#5b9dff" font-weight="700">G</text>
+
+  <!-- H_cot: 1/7, 2337 tok -->
+  <circle cx="614" cy="310" r="8" fill="#ff6b6b" opacity=".8"/>
+  <text x="614" y="298" text-anchor="middle" font-size="9" fill="#ff6b6b" font-weight="600">H</text>
+
+  <!-- I_kb_repair: 1/7, 2214 tok -->
+  <circle cx="587" cy="310" r="8" fill="#ff6b6b" opacity=".8"/>
+  <text x="574" y="298" text-anchor="middle" font-size="9" fill="#ff6b6b" font-weight="600">I</text>
+
+  <!-- J_progressive: 5/7, 1556 tok -->
+  <circle cx="442" cy="110" r="8" fill="#5b9dff" opacity=".7"/>
+  <text x="430" y="98" text-anchor="middle" font-size="9" fill="#5b9dff">J</text>
+
+  <!-- K_sim_retrieval: 6/7, 1205 tok -->
+  <circle cx="365" cy="60" r="9" fill="#5b9dff" opacity=".8"/>
+  <text x="365" y="48" text-anchor="middle" font-size="9" fill="#5b9dff" font-weight="600">K</text>
+
+  <!-- L_retrieval_kb: 6/7, 1135 tok -->
+  <circle cx="350" cy="60" r="9" fill="#5b9dff" opacity=".8"/>
+  <text x="338" y="48" text-anchor="middle" font-size="9" fill="#5b9dff" font-weight="600">L</text>
+
+  <!-- M_multi: 7/7, 854 tok — STAR -->
+  <polygon points="287,0 292,18 312,18 296,28 302,46 287,36 272,46 278,28 262,18 282,18" fill="#39d98a" opacity=".95"/>
+  <text x="287" y="60" text-anchor="middle" font-size="11" fill="#39d98a" font-weight="800">M ★</text>
+
+  <!-- Legend -->
+  <g transform="translate(570,50)">
+    <rect x="0" y="0" width="180" height="100" rx="6" fill="#171a21" stroke="#2a2f3a"/>
+    <circle cx="16" cy="18" r="5" fill="#39d98a"/><text x="28" y="22" font-size="10" fill="#39d98a">M: Multi-recipe (7/7) ★</text>
+    <circle cx="16" cy="38" r="5" fill="#5b9dff"/><text x="28" y="42" font-size="10" fill="#5b9dff">Retrieval 族 (G,K,L)</text>
+    <circle cx="16" cy="58" r="5" fill="#5b9dff" opacity=".6"/><text x="28" y="62" font-size="10" fill="#9aa4b2">Hints 族 (C,J,E,F)</text>
+    <circle cx="16" cy="78" r="5" fill="#ff6b6b"/><text x="28" y="82" font-size="10" fill="#ff6b6b">失败架构 (A,B,D,H,I)</text>
+  </g>
+</svg>
+
+<!-- Chart 2: Bar chart - Solved count by architecture -->
+<h3>图 2: 各架构解题数对比 (Solved/7)</h3>
+<svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;margin:10px 0;background:var(--panel);border-radius:10px;border:1px solid var(--line)">
+  <!-- Y grid -->
+  <g stroke="#2a2f3a" stroke-width="0.5" stroke-dasharray="3">
+    <line x1="50" y1="40" x2="780" y2="40"/>
+    <line x1="50" y1="74" x2="780" y2="74"/>
+    <line x1="50" y1="108" x2="780" y2="108"/>
+    <line x1="50" y1="142" x2="780" y2="142"/>
+    <line x1="50" y1="176" x2="780" y2="176"/>
+    <line x1="50" y1="210" x2="780" y2="210"/>
+    <line x1="50" y1="244" x2="780" y2="244"/>
+  </g>
+  <line x1="50" y1="244" x2="780" y2="244" stroke="#2a2f3a" stroke-width="1"/>
+  <!-- Y labels -->
+  <g font-size="10" fill="#9aa4b2" text-anchor="end">
+    <text x="44" y="44">7</text><text x="44" y="78">6</text><text x="44" y="112">5</text>
+    <text x="44" y="146">4</text><text x="44" y="180">3</text><text x="44" y="214">2</text>
+    <text x="44" y="248">1</text>
+  </g>
+
+  <!-- Bars: 13 architectures, each 42px wide, 14px gap -->
+  <!-- A: 3/7 -->
+  <rect x="62" y="142" width="42" height="102" rx="3" fill="#ff6b6b" opacity=".6"/>
+  <text x="83" y="262" text-anchor="middle" font-size="9" fill="#9aa4b2">A</text>
+  <text x="83" y="138" text-anchor="middle" font-size="10" fill="#ff6b6b" font-weight="600">3</text>
+
+  <!-- B: 4/7 -->
+  <rect x="118" y="108" width="42" height="136" rx="3" fill="#ff6b6b" opacity=".6"/>
+  <text x="139" y="262" text-anchor="middle" font-size="9" fill="#9aa4b2">B</text>
+  <text x="139" y="104" text-anchor="middle" font-size="10" fill="#ff6b6b" font-weight="600">4</text>
+
+  <!-- C: 5/7 -->
+  <rect x="174" y="74" width="42" height="170" rx="3" fill="#5b9dff" opacity=".7"/>
+  <text x="195" y="262" text-anchor="middle" font-size="9" fill="#5b9dff">C</text>
+  <text x="195" y="70" text-anchor="middle" font-size="10" fill="#5b9dff" font-weight="600">5</text>
+
+  <!-- D: 2/7 -->
+  <rect x="230" y="176" width="42" height="68" rx="3" fill="#ff6b6b" opacity=".6"/>
+  <text x="251" y="262" text-anchor="middle" font-size="9" fill="#9aa4b2">D</text>
+  <text x="251" y="172" text-anchor="middle" font-size="10" fill="#ff6b6b" font-weight="600">2</text>
+
+  <!-- E: 4/7 -->
+  <rect x="286" y="108" width="42" height="136" rx="3" fill="#9aa4b2" opacity=".4"/>
+  <text x="307" y="262" text-anchor="middle" font-size="9" fill="#9aa4b2">E</text>
+  <text x="307" y="104" text-anchor="middle" font-size="10" fill="#9aa4b2">4</text>
+
+  <!-- F: 5/7 -->
+  <rect x="342" y="74" width="42" height="170" rx="3" fill="#9aa4b2" opacity=".4"/>
+  <text x="363" y="262" text-anchor="middle" font-size="9" fill="#9aa4b2">F</text>
+  <text x="363" y="70" text-anchor="middle" font-size="10" fill="#9aa4b2">5</text>
+
+  <!-- G: 6/7 -->
+  <rect x="398" y="40" width="42" height="204" rx="3" fill="#5b9dff" opacity=".8"/>
+  <text x="419" y="262" text-anchor="middle" font-size="9" fill="#5b9dff" font-weight="600">G</text>
+  <text x="419" y="36" text-anchor="middle" font-size="10" fill="#5b9dff" font-weight="700">6</text>
+
+  <!-- H: 1/7 -->
+  <rect x="454" y="210" width="42" height="34" rx="3" fill="#ff6b6b" opacity=".8"/>
+  <text x="475" y="262" text-anchor="middle" font-size="9" fill="#ff6b6b">H</text>
+  <text x="475" y="206" text-anchor="middle" font-size="10" fill="#ff6b6b" font-weight="600">1</text>
+
+  <!-- I: 1/7 -->
+  <rect x="510" y="210" width="42" height="34" rx="3" fill="#ff6b6b" opacity=".8"/>
+  <text x="531" y="262" text-anchor="middle" font-size="9" fill="#ff6b6b">I</text>
+  <text x="531" y="206" text-anchor="middle" font-size="10" fill="#ff6b6b" font-weight="600">1</text>
+
+  <!-- J: 5/7 -->
+  <rect x="566" y="74" width="42" height="170" rx="3" fill="#5b9dff" opacity=".6"/>
+  <text x="587" y="262" text-anchor="middle" font-size="9" fill="#5b9dff">J</text>
+  <text x="587" y="70" text-anchor="middle" font-size="10" fill="#5b9dff">5</text>
+
+  <!-- K: 6/7 -->
+  <rect x="622" y="40" width="42" height="204" rx="3" fill="#5b9dff" opacity=".8"/>
+  <text x="643" y="262" text-anchor="middle" font-size="9" fill="#5b9dff" font-weight="600">K</text>
+  <text x="643" y="36" text-anchor="middle" font-size="10" fill="#5b9dff" font-weight="700">6</text>
+
+  <!-- L: 6/7 -->
+  <rect x="678" y="40" width="42" height="204" rx="3" fill="#5b9dff" opacity=".8"/>
+  <text x="699" y="262" text-anchor="middle" font-size="9" fill="#5b9dff" font-weight="600">L</text>
+  <text x="699" y="36" text-anchor="middle" font-size="10" fill="#5b9dff" font-weight="700">6</text>
+
+  <!-- M: 7/7 STAR -->
+  <rect x="734" y="6" width="42" height="238" rx="3" fill="#39d98a" opacity=".85"/>
+  <text x="755" y="262" text-anchor="middle" font-size="9" fill="#39d98a" font-weight="700">M★</text>
+  <text x="755" y="24" text-anchor="middle" font-size="12" fill="#39d98a" font-weight="800">7</text>
+</svg>
+
+<!-- ═══ 4 典型架构流程图 ═══ -->
+<h3>4 个典型架构流程图</h3>
+
+<svg viewBox="0 0 920 700" xmlns="http://www.w3.org/2000/svg" style="width:100%;margin:10px 0">
+  <defs>
+    <marker id="ar" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><path d="M0,0 L7,2.5 L0,5" fill="none" stroke="#9aa4b2" stroke-width="1"/></marker>
+    <marker id="ag" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><path d="M0,0 L7,2.5 L0,5" fill="none" stroke="#39d98a" stroke-width="1"/></marker>
+    <marker id="ab" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><path d="M0,0 L7,2.5 L0,5" fill="none" stroke="#ff6b6b" stroke-width="1"/></marker>
+  </defs>
+
+  <!-- ════ A_single (top-left) ════ -->
+  <rect x="10" y="5" width="430" height="310" rx="10" fill="#171a21" stroke="#ff6b6b" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="225" y="28" text-anchor="middle" fill="#ff6b6b" font-size="13" font-weight="700">A: Single LLM (3/7, baseline)</text>
+
+  <rect x="100" y="42" width="240" height="30" rx="6" fill="#1e222b" stroke="#5b9dff" stroke-width="1"/>
+  <text x="220" y="62" text-anchor="middle" fill="#5b9dff" font-size="11" font-weight="600">输入: 验证条件 (目标 Lean 定理)</text>
+  <line x1="220" y1="72" x2="220" y2="88" stroke="#9aa4b2" stroke-width="1" marker-end="url(#ar)"/>
+
+  <rect x="80" y="90" width="280" height="34" rx="6" fill="#1e222b" stroke="#9aa4b2" stroke-width="1"/>
+  <text x="220" y="112" text-anchor="middle" fill="#e6e9ef" font-size="11">GLM: 直接生成 Lean 代码</text>
+  <line x1="220" y1="124" x2="220" y2="140" stroke="#9aa4b2" stroke-width="1" marker-end="url(#ar)"/>
+
+  <rect x="100" y="142" width="240" height="30" rx="6" fill="#1e222b" stroke="#ffd166" stroke-width="1"/>
+  <text x="220" y="162" text-anchor="middle" fill="#ffd166" font-size="11">Lean 编译器检查</text>
+
+  <line x1="140" y1="172" x2="95" y2="198" stroke="#39d98a" stroke-width="1" marker-end="url(#ag)"/>
+  <line x1="300" y1="172" x2="340" y2="198" stroke="#ff6b6b" stroke-width="1" marker-end="url(#ab)"/>
+
+  <rect x="40" y="200" width="100" height="26" rx="5" fill="#1e222b" stroke="#39d98a" stroke-width="1"/>
+  <text x="90" y="218" text-anchor="middle" fill="#39d98a" font-size="10">PROVED</text>
+  <rect x="290" y="200" width="100" height="26" rx="5" fill="#1e222b" stroke="#ff6b6b" stroke-width="1"/>
+  <text x="340" y="218" text-anchor="middle" fill="#ff6b6b" font-size="10">ERROR</text>
+
+  <!-- retry arrow -->
+  <path d="M390,213 Q420,213 420,130 Q420,105 380,105" fill="none" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="3" marker-end="url(#ab)"/>
+  <text x="425" y="155" fill="#ff6b6b" font-size="9">重试 ×4</text>
+  <text x="425" y="167" fill="#ff6b6b" font-size="9">(无反馈)</text>
+
+  <text x="220" y="260" text-anchor="middle" fill="#ff6b6b" font-size="10" font-weight="600">问题: 模型反复猜错引理名, 无法自修正</text>
+  <text x="220" y="276" text-anchor="middle" fill="#9aa4b2" font-size="10">tanh, log 类问题全部失败</text>
+
+  <!-- ════ C_seq_sos (top-right) ════ -->
+  <rect x="470" y="5" width="440" height="310" rx="10" fill="#171a21" stroke="#5b9dff" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="690" y="28" text-anchor="middle" fill="#5b9dff" font-size="13" font-weight="700">C: Sequential + Mathlib Hints (5/7)</text>
+
+  <rect x="560" y="42" width="260" height="30" rx="6" fill="#1e222b" stroke="#5b9dff" stroke-width="1"/>
+  <text x="690" y="62" text-anchor="middle" fill="#5b9dff" font-size="11" font-weight="600">输入: 验证条件</text>
+  <line x1="690" y1="72" x2="690" y2="88" stroke="#9aa4b2" stroke-width="1" marker-end="url(#ar)"/>
+
+  <rect x="520" y="90" width="340" height="48" rx="6" fill="#1e222b" stroke="#b48bff" stroke-width="1"/>
+  <text x="690" y="109" text-anchor="middle" fill="#b48bff" font-size="11" font-weight="600">+ Mathlib 引理名提示</text>
+  <text x="690" y="125" text-anchor="middle" fill="#9aa4b2" font-size="9.5">「可用: Real.log_le_sub_one_of_pos, Real.add_one_le_exp...」</text>
+  <line x1="690" y1="138" x2="690" y2="152" stroke="#9aa4b2" stroke-width="1" marker-end="url(#ar)"/>
+
+  <rect x="560" y="154" width="260" height="30" rx="6" fill="#1e222b" stroke="#9aa4b2" stroke-width="1"/>
+  <text x="690" y="174" text-anchor="middle" fill="#e6e9ef" font-size="11">GLM: 生成 Lean (带引理名)</text>
+  <line x1="690" y1="184" x2="690" y2="198" stroke="#9aa4b2" stroke-width="1" marker-end="url(#ar)"/>
+
+  <rect x="580" y="200" width="220" height="30" rx="6" fill="#1e222b" stroke="#ffd166" stroke-width="1"/>
+  <text x="690" y="220" text-anchor="middle" fill="#ffd166" font-size="11">Lean 编译 + Error feedback</text>
+
+  <path d="M870,215 Q900,215 900,160 Q900,140 870,140" fill="none" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="3" marker-end="url(#ab)"/>
+  <text x="895" y="178" fill="#ff6b6b" font-size="9">修复 ×4</text>
+
+  <text x="690" y="260" text-anchor="middle" fill="#5b9dff" font-size="10" font-weight="600">改善: 知道引理名 → 减少幻觉</text>
+  <text x="690" y="276" text-anchor="middle" fill="#9aa4b2" font-size="10">但: 知道名字 ≠ 知道如何使用 (tanh_sign 仍失败)</text>
+
+  <!-- ════ G_retrieval (bottom-left) ════ -->
+  <rect x="10" y="330" width="430" height="350" rx="10" fill="#171a21" stroke="#5b9dff" stroke-width="2"/>
+  <text x="225" y="353" text-anchor="middle" fill="#5b9dff" font-size="13" font-weight="700">G: Recipe Retrieval (6/7)</text>
+
+  <rect x="100" y="370" width="240" height="30" rx="6" fill="#1e222b" stroke="#5b9dff" stroke-width="1"/>
+  <text x="220" y="390" text-anchor="middle" fill="#5b9dff" font-size="11" font-weight="600">输入: 验证条件</text>
+  <line x1="220" y1="400" x2="220" y2="414" stroke="#9aa4b2" stroke-width="1" marker-end="url(#ar)"/>
+
+  <rect x="55" y="416" width="140" height="60" rx="6" fill="#1e222b" stroke="#b48bff" stroke-width="1.5"/>
+  <text x="125" y="436" text-anchor="middle" fill="#b48bff" font-size="10" font-weight="600">Recipe Store</text>
+  <text x="125" y="450" text-anchor="middle" fill="#9aa4b2" font-size="9">22 已验证引理</text>
+  <text x="125" y="462" text-anchor="middle" fill="#9aa4b2" font-size="9">完整 Lean 代码</text>
+
+  <rect x="235" y="416" width="170" height="60" rx="6" fill="#1e222b" stroke="#ffd166" stroke-width="1"/>
+  <text x="320" y="436" text-anchor="middle" fill="#ffd166" font-size="10" font-weight="600">Naive 检索</text>
+  <text x="320" y="450" text-anchor="middle" fill="#9aa4b2" font-size="9">keyword match</text>
+  <text x="320" y="462" text-anchor="middle" fill="#9aa4b2" font-size="9">→ top-1 recipe</text>
+
+  <line x1="195" y1="446" x2="233" y2="446" stroke="#b48bff" stroke-width="1" marker-end="url(#ar)"/>
+  <line x1="320" y1="476" x2="320" y2="492" stroke="#9aa4b2" stroke-width="1" marker-end="url(#ar)"/>
+
+  <rect x="80" y="494" width="280" height="50" rx="6" fill="#1e222b" stroke="#39d98a" stroke-width="1.5"/>
+  <text x="220" y="514" text-anchor="middle" fill="#39d98a" font-size="11" font-weight="600">GLM: 生成 Lean + 注入 recipe 代码</text>
+  <text x="220" y="530" text-anchor="middle" fill="#9aa4b2" font-size="9.5">模型可直接模仿已验证的证明模式!</text>
+  <line x1="220" y1="544" x2="220" y2="558" stroke="#9aa4b2" stroke-width="1" marker-end="url(#ar)"/>
+
+  <rect x="120" y="560" width="200" height="30" rx="6" fill="#1e222b" stroke="#ffd166" stroke-width="1"/>
+  <text x="220" y="580" text-anchor="middle" fill="#ffd166" font-size="11">Lean 编译</text>
+
+  <text x="220" y="618" text-anchor="middle" fill="#5b9dff" font-size="10" font-weight="600">跳跃: 注入完整代码 &gt;&gt; 仅给引理名</text>
+  <text x="220" y="634" text-anchor="middle" fill="#9aa4b2" font-size="10">tanh_sign 首试即过! 但 log_self_lower 检索错误</text>
+
+  <!-- ════ M_multi (bottom-right) — CHAMPION ════ -->
+  <rect x="470" y="330" width="440" height="350" rx="10" fill="#171a21" stroke="#39d98a" stroke-width="2.5"/>
+  <text x="690" y="353" text-anchor="middle" fill="#39d98a" font-size="13" font-weight="800">M: Multi-Recipe Injection ★ (7/7 Perfect)</text>
+
+  <rect x="560" y="370" width="260" height="30" rx="6" fill="#1e222b" stroke="#5b9dff" stroke-width="1"/>
+  <text x="690" y="390" text-anchor="middle" fill="#5b9dff" font-size="11" font-weight="600">输入: 验证条件</text>
+  <line x1="690" y1="400" x2="690" y2="414" stroke="#9aa4b2" stroke-width="1" marker-end="url(#ar)"/>
+
+  <rect x="510" y="416" width="140" height="60" rx="6" fill="#1e222b" stroke="#b48bff" stroke-width="1.5"/>
+  <text x="580" y="436" text-anchor="middle" fill="#b48bff" font-size="10" font-weight="600">Recipe Store</text>
+  <text x="580" y="450" text-anchor="middle" fill="#9aa4b2" font-size="9">22 已验证引理</text>
+  <text x="580" y="462" text-anchor="middle" fill="#9aa4b2" font-size="9">6 个族</text>
+
+  <rect x="690" y="416" width="190" height="60" rx="6" fill="#1e222b" stroke="#39d98a" stroke-width="1.5"/>
+  <text x="785" y="436" text-anchor="middle" fill="#39d98a" font-size="10" font-weight="700">Top-2 Multi 检索</text>
+  <text x="785" y="450" text-anchor="middle" fill="#9aa4b2" font-size="9">Jaccard similarity</text>
+  <text x="785" y="462" text-anchor="middle" fill="#39d98a" font-size="9" font-weight="600">→ 注入 2 个 recipe!</text>
+
+  <line x1="650" y1="446" x2="688" y2="446" stroke="#b48bff" stroke-width="1" marker-end="url(#ar)"/>
+  <line x1="785" y1="476" x2="785" y2="492" stroke="#9aa4b2" stroke-width="1" marker-end="url(#ar)"/>
+
+  <rect x="540" y="494" width="300" height="56" rx="6" fill="#1e222b" stroke="#39d98a" stroke-width="2"/>
+  <text x="690" y="514" text-anchor="middle" fill="#39d98a" font-size="11" font-weight="700">GLM: Lean 生成 (2 个 recipe 代码注入)</text>
+  <text x="690" y="530" text-anchor="middle" fill="#9aa4b2" font-size="9.5">两个互补 recipe 覆盖更多证明模式</text>
+  <text x="690" y="543" text-anchor="middle" fill="#39d98a" font-size="9">log_self_lower 首试即过 (G 做不到!)</text>
+  <line x1="690" y1="550" x2="690" y2="564" stroke="#9aa4b2" stroke-width="1" marker-end="url(#ar)"/>
+
+  <rect x="580" y="566" width="220" height="30" rx="6" fill="#1e222b" stroke="#ffd166" stroke-width="1"/>
+  <text x="690" y="586" text-anchor="middle" fill="#ffd166" font-size="11">Lean 编译</text>
+
+  <text x="690" y="624" text-anchor="middle" fill="#39d98a" font-size="11" font-weight="700">7/7 完美, 854 tok, 95s</text>
+  <text x="690" y="642" text-anchor="middle" fill="#39d98a" font-size="10">vs A: -63% tokens, -54% time</text>
+
+  <!-- Evolution arrows between quadrants -->
+  <path d="M438,160 L468,160" fill="none" stroke="#ffd166" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="453" y="152" text-anchor="middle" fill="#ffd166" font-size="9" font-weight="600">+hints</text>
+  <path d="M225,314 L225,328" fill="none" stroke="#ffd166" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="248" y="325" fill="#ffd166" font-size="9" font-weight="600">+recipe code</text>
+  <path d="M448,500 L468,500" fill="none" stroke="#39d98a" stroke-width="2.5" marker-end="url(#ag)"/>
+  <text x="458" y="492" text-anchor="middle" fill="#39d98a" font-size="9" font-weight="700">+top-2</text>
+</svg>
+
+<!-- Architecture evolution narrative -->
+<h3>典型架构演进路线</h3>
+<div class="note ok-note">
+  <strong>核心发现: Recipe 注入 &gt; 所有其他技术</strong><br><br>
+  13 种架构可归为 4 类, 演进路线清晰:
+</div>
+
+<table>
+<tr><th>类别</th><th>代表</th><th>Solved</th><th>Tokens</th><th>关键变量</th><th>评价</th></tr>
+<tr style="background:rgba(255,107,107,0.08)">
+  <td><strong>Baseline</strong></td><td>A (single), B (sequential)</td><td>3–4/7</td><td>2333–2718</td>
+  <td>无 recipe, 无 hints</td><td>Token 浪费严重, 卡在 tanh/log 超越问题</td>
+</tr>
+<tr style="background:rgba(91,157,255,0.08)">
+  <td><strong>Hints 族</strong></td><td>C (seq+SOS), J (progressive), F (debate)</td><td>5/7</td><td>1556–2280</td>
+  <td>Mathlib 引理名提示</td><td>有效但不够: 知道引理名 ≠ 知道证明模式</td>
+</tr>
+<tr style="background:rgba(91,157,255,0.12)">
+  <td><strong>Retrieval 族</strong></td><td>G (naive), K (Jaccard), L (retrieval+KB)</td><td>6/7</td><td>949–1205</td>
+  <td>注入已验证 recipe 代码</td><td>飞跃: 模型可以直接模仿证明模式, token 骤降</td>
+</tr>
+<tr style="background:rgba(57,217,138,0.12)">
+  <td><strong>Multi-recipe</strong></td><td><strong>M ★★</strong></td><td><strong>7/7</strong></td><td><strong>854</strong></td>
+  <td>注入 top-2 相关 recipe</td><td style="color:var(--ok)"><strong>Perfect score, -44% tokens vs C, -54% time</strong></td>
+</tr>
+<tr style="background:rgba(255,107,107,0.08)">
+  <td><strong>失败方向</strong></td><td>H (CoT), I (KB repair), D (parallel)</td><td>1–2/7</td><td>2214–3027</td>
+  <td>复杂推理/并行</td><td style="color:var(--bad)">过度思考反而有害; prompt 污染导致性能崩溃</td>
+</tr>
+</table>
+
+<div class="note">
+  <strong>关键洞察:</strong><br>
+  • <strong>A→B→C:</strong> 加 error feedback (+1), 加 Mathlib hints (+1) — 线性改善<br>
+  • <strong>C→G:</strong> 从"告诉引理名"到"给出完整证明代码" — 非线性跳跃 (+1, token 减半)<br>
+  • <strong>G→M:</strong> 从 top-1 到 top-2 recipe 注入 — 最后一个难题 (log_self_lower) 解决<br>
+  • <strong>H,I 失败:</strong> Chain-of-thought 和 KB-repair 的 prompt 过长导致模型注意力分散, 比 baseline 还差
+</div>
+
+<!-- ═══ 下一步 ═══ -->
+<h2>十、下一步计划</h2>
+
+<ol>
+  <li><strong>充值 GLM API</strong> — 完成剩余 9/52 系统测试</li>
+  <li><strong>挖掘 5 个高价值 recipe</strong> — sigmoid_bound, holling_ii, michaelis_menten, switched_common_lyap, pwa_region_bound → 预期 prove rate 19%→35%+</li>
+  <li><strong>解决最后 2 个 gap 案例</strong> — L1-006 (field_simp 类型修复), L7-001 (Jensen 不等式 recipe)</li>
+  <li><strong>轮换 API key</strong> — runtime_state.py 中硬编码的 Aigocode relay key 必须在 GitHub push 前替换</li>
+  <li><strong>写论文实验章节</strong> — 基于 paper_results_report.html 中的数据</li>
+</ol>
+
+<div class="note warn-note">
+  <strong>安全提醒:</strong> <code>runtime_state.py</code> 中包含硬编码的 API key (Aigocode relay)。
+  推送到 GitHub 之前必须轮换这些 key 并改用环境变量。
+</div>
+
+<!-- footer -->
+<p style="color:var(--muted);font-size:11px;margin-top:40px;border-top:1px solid var(--line);padding-top:10px">
+  生成时间: 2026-06-15 · 项目: paper4/6.11new · 数据集: core200 v5 + expansion v1
+</p>
+
+</div>
+</body>
+</html>

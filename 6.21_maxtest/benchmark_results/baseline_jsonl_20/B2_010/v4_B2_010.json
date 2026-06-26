@@ -1,0 +1,120 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B2-010",
+    "ode": "dx1/dt = -x1 + 0.3*sin(x2), dx2/dt = -x2 - 0.3*sin(x1)",
+    "state_vars": [
+      "x1",
+      "x2"
+    ],
+    "f_expr": [
+      "-x1 + 0.3*sin(x2)",
+      "-x2 - 0.3*sin(x1)"
+    ],
+    "X_domain": "ball",
+    "X_u_desc": "||x|| >= 1.5",
+    "X_u_expr": "x1**2 + x2**2 >= 2.25",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B2-010",
+      "layer": "L2-new",
+      "group": "B2",
+      "task": "barrier",
+      "cert_class": "nonpoly-explicit",
+      "source": "sin-perturbed linear, bounded coupling"
+    }
+  },
+  "timestamp": "2026-06-11T18:19:05.280657",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "2.249999999 - x1**2 - x2**2",
+        "invariant_set": "C = { (x1,x2) : x1**2 + x2**2 <= 2.249999999 }, i.e. the closed disk of radius sqrt(2.249999999), which is just inside the unsafe radius 1.5.",
+        "condition1_check": "The unsafe set is X_u = {x : x1**2 + x2**2 >= 1.5**2 = 2.25}. For any x in X_u, h(x) = 2.249999999 - x1**2 - x2**2 <= 2.249999999 - 2.25 = -0.000000001 < 0. Therefore h(x) < 0 for all x in X_u.",
+        "lie_derivative": "We have h(x) = 2.249999999 - x1**2 - x2**2, so ∇h(x) = (-2*x1, -2*x2). The dynamics are f1 = -x1 + 0.3*sin(x2), f2 = -x2 - 0.3*sin(x1). Hence ḣ(x) = ∇h·f = (-2*x1)*(-x1 + 0.3*sin(x2)) + (-2*x2)*(-x2 - 0.3*sin(x1)) = 2*x1**2 - 0.6*x1*sin(x2) + 2*x2**2 + 0.6*x2*sin(x1). Therefore ḣ(x) = 2*(x1**2 + x2**2) + 0.6*(x2*sin(x1) - x1*sin(x2)).",
+        "condition2_check": "On the boundary ∂C, h(x)=0, so x1**2 + x2**2 = 2.249999999. We verify that ḣ(x) >= 0 on this boundary. Using the standard inequality |sin(z)| <= |z| for all real z, we have x2*sin(x1) >= -|x2|*|sin(x1)| >= -|x2|*|x1| and -x1*sin(x2) >= -|x1|*|sin(x2)| >= -|x1|*|x2|. Therefore x2*sin(x1) - x1*sin(x2) >= -2*|x1*x2|. Thus ḣ(x) = 2*(x1**2 + x2**2) + 0.6*(x2*sin(x1) - x1*sin(x2)) >= 2*(x1**2 + x2**2) - 1.2*|x1*x2|. Since 2*|x1*x2| <= x1**2 + x2**2, we get |x1*x2| <= 0.5*(x1**2 + x2**2). Hence ḣ(x) >= 2*(x1**2 + x2**2) - 1.2*0.5*(x1**2 + x2**2) = 1.4*(x1**2 + x2**2). On ∂C this equals 1.4*2.249999999 = 3.1499999986 > 0. Therefore ḣ(x) >= 0 for all x in ∂C.",
+        "reasoning": "The system has a strongly dissipative linear part, with only bounded sine coupling terms. A nearly maximal radial barrier h = r_safe**2 - ||x||**2 is natural because the unsafe set is radial, ||x|| >= 1.5. The constant 2.249999999 is chosen just below 1.5**2 = 2.25, making C almost the entire safe disk while ensuring the strict condition h < 0 on the unsafe boundary. The Lie derivative is positive on the boundary because the dissipative terms 2*x1**2 + 2*x2**2 dominate the sine cross terms by the inequalities |sin(z)| <= |z| and 2|x1*x2| <= x1**2 + x2**2."
+      },
+      "proposer_elapsed_s": 30.147,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "2*x1*(x1 - 0.3*sin(x2)) + 2*x2*(x2 + 0.3*sin(x1))",
+          "boundary_epsilon": 0.354779,
+          "boundary_pts_found": 161,
+          "cond1_max_h_in_Xu": -0.003011,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 3.747066,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.044
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.007399,
+          "trajectory_valid": true,
+          "elapsed_s": 0.191
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "Valid. Let a = 2.249999999. For any unsafe point with ||x|| >= 1.5, we have x1^2 + x2^2 >= 2.25, hence h(x) = a - x1^2 - x2^2 <= 2.249999999 - 2.25 = -0.000000001 < 0. For example, at x = (1.5, 0), h(x) = -0.000000001; at x = (0, -1.5), h(x) = -0.000000001.",
+        "lie_derivative_computed": "∇h = (-2*x1, -2*x2). Therefore ḣ = (-2*x1)*(-x1 + 0.3*sin(x2)) + (-2*x2)*(-x2 - 0.3*sin(x1)) = 2*x1^2 + 2*x2^2 + 0.6*(x2*sin(x1) - x1*sin(x2)).",
+        "condition2_result": "Valid. On the boundary h(x)=0, we have x1^2 + x2^2 = a = 2.249999999. Using |sin(z)| <= |z|, we get x2*sin(x1) - x1*sin(x2) >= -|x2*sin(x1)| - |x1*sin(x2)| >= -2*|x1*x2| >= -(x1^2 + x2^2). Hence ḣ >= 2*(x1^2 + x2^2) - 0.6*(x1^2 + x2^2) = 1.4*(x1^2 + x2^2) = 1.4*a = 3.1499999986 > 0 on the entire boundary. For example, at x = (sqrt(2.249999999), 0) ≈ (1.4999999996666666, 0), ḣ = 2*a = 4.499999998 > 0.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The invariant disk can be enlarged slightly by replacing 2.249999999 with 2.25 - epsilon for any smaller positive epsilon. For example, h_epsilon(x) = 2.249999999999 - x1^2 - x2^2 would still satisfy Condition 1 because h_epsilon <= -1e-12 on ||x|| >= 1.5, and Condition 2 remains valid since the same proof gives ḣ >= 1.4*(2.25 - epsilon) > 0 on the boundary. The threshold cannot be set exactly to 2.25 under the stated strict Condition 1, because then h(1.5,0)=0, not < 0."
+      },
+      "refuter_elapsed_s": 45.866
+    }
+  ],
+  "final_barrier": {
+    "h": "2.249999999 - x1**2 - x2**2",
+    "invariant_set": "C = { (x1,x2) : x1**2 + x2**2 <= 2.249999999 }, i.e. the closed disk of radius sqrt(2.249999999), which is just inside the unsafe radius 1.5.",
+    "condition1_check": "The unsafe set is X_u = {x : x1**2 + x2**2 >= 1.5**2 = 2.25}. For any x in X_u, h(x) = 2.249999999 - x1**2 - x2**2 <= 2.249999999 - 2.25 = -0.000000001 < 0. Therefore h(x) < 0 for all x in X_u.",
+    "lie_derivative": "We have h(x) = 2.249999999 - x1**2 - x2**2, so ∇h(x) = (-2*x1, -2*x2). The dynamics are f1 = -x1 + 0.3*sin(x2), f2 = -x2 - 0.3*sin(x1). Hence ḣ(x) = ∇h·f = (-2*x1)*(-x1 + 0.3*sin(x2)) + (-2*x2)*(-x2 - 0.3*sin(x1)) = 2*x1**2 - 0.6*x1*sin(x2) + 2*x2**2 + 0.6*x2*sin(x1). Therefore ḣ(x) = 2*(x1**2 + x2**2) + 0.6*(x2*sin(x1) - x1*sin(x2)).",
+    "condition2_check": "On the boundary ∂C, h(x)=0, so x1**2 + x2**2 = 2.249999999. We verify that ḣ(x) >= 0 on this boundary. Using the standard inequality |sin(z)| <= |z| for all real z, we have x2*sin(x1) >= -|x2|*|sin(x1)| >= -|x2|*|x1| and -x1*sin(x2) >= -|x1|*|sin(x2)| >= -|x1|*|x2|. Therefore x2*sin(x1) - x1*sin(x2) >= -2*|x1*x2|. Thus ḣ(x) = 2*(x1**2 + x2**2) + 0.6*(x2*sin(x1) - x1*sin(x2)) >= 2*(x1**2 + x2**2) - 1.2*|x1*x2|. Since 2*|x1*x2| <= x1**2 + x2**2, we get |x1*x2| <= 0.5*(x1**2 + x2**2). Hence ḣ(x) >= 2*(x1**2 + x2**2) - 1.2*0.5*(x1**2 + x2**2) = 1.4*(x1**2 + x2**2). On ∂C this equals 1.4*2.249999999 = 3.1499999986 > 0. Therefore ḣ(x) >= 0 for all x in ∂C.",
+    "reasoning": "The system has a strongly dissipative linear part, with only bounded sine coupling terms. A nearly maximal radial barrier h = r_safe**2 - ||x||**2 is natural because the unsafe set is radial, ||x|| >= 1.5. The constant 2.249999999 is chosen just below 1.5**2 = 2.25, making C almost the entire safe disk while ensuring the strict condition h < 0 on the unsafe boundary. The Lie derivative is positive on the boundary because the dissipative terms 2*x1**2 + 2*x2**2 dominate the sine cross terms by the inequalities |sin(z)| <= |z| and 2|x1*x2| <= x1**2 + x2**2."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 76.257
+  },
+  "tokens": {
+    "input": 2275,
+    "output": 3653,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1456,
+        "output_tokens": 1448,
+        "elapsed_s": 30.147
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 819,
+        "output_tokens": 2205,
+        "elapsed_s": 45.866
+      }
+    ]
+  }
+}

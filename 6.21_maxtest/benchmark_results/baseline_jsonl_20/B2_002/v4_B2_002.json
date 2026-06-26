@@ -1,0 +1,126 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B2-002",
+    "ode": "dx1/dt = -x1 - tanh(x1), dx2/dt = -x2 - tanh(x2), dx3/dt = -x3 - tanh(x3)",
+    "state_vars": [
+      "x1",
+      "x2",
+      "x3"
+    ],
+    "f_expr": [
+      "-x1 - tanh(x1)",
+      "-x2 - tanh(x2)",
+      "-x3 - tanh(x3)"
+    ],
+    "X_domain": "ball",
+    "X_u_desc": "||x|| >= 1.96",
+    "X_u_expr": "x1**2 + x2**2 + x3**2 >= 3.8415999999999997",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B2-002",
+      "layer": "L2-new",
+      "group": "B2",
+      "task": "barrier",
+      "cert_class": "nonpoly-explicit",
+      "source": "tanh-dissipative system"
+    }
+  },
+  "timestamp": "2026-06-11T18:09:42.455398",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "3.841599 - x1**2 - x2**2 - x3**2",
+        "invariant_set": "C = {x in X : x1**2 + x2**2 + x3**2 <= 3.841599}, i.e. the closed ball of radius sqrt(3.841599), which is slightly smaller than the unsafe threshold radius 1.96.",
+        "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 1.96}, equivalently x1**2 + x2**2 + x3**2 >= 1.96**2 = 3.8416. For h(x) = 3.841599 - x1**2 - x2**2 - x3**2, every x in X_u satisfies h(x) <= 3.841599 - 3.8416 = -0.000001 < 0. Therefore h(x) < 0 for all x in X_u.",
+        "lie_derivative": "The gradient is ∇h = (-2*x1, -2*x2, -2*x3). The vector field is f(x) = (-x1 - tanh(x1), -x2 - tanh(x2), -x3 - tanh(x3)). Therefore ḣ(x) = ∇h·f = (-2*x1)*(-x1 - tanh(x1)) + (-2*x2)*(-x2 - tanh(x2)) + (-2*x3)*(-x3 - tanh(x3)) = 2*x1**2 + 2*x1*tanh(x1) + 2*x2**2 + 2*x2*tanh(x2) + 2*x3**2 + 2*x3*tanh(x3).",
+        "condition2_check": "On the boundary ∂C, h(x)=0, so x1**2 + x2**2 + x3**2 = 3.841599. For every real scalar z, z*tanh(z) >= 0 because tanh(z) has the same sign as z and tanh(0)=0. Hence x1*tanh(x1) >= 0, x2*tanh(x2) >= 0, and x3*tanh(x3) >= 0. Therefore on ∂C, ḣ(x) = 2*x1**2 + 2*x2**2 + 2*x3**2 + 2*x1*tanh(x1) + 2*x2*tanh(x2) + 2*x3*tanh(x3) >= 2*(x1**2 + x2**2 + x3**2) = 2*3.841599 = 7.683198 > 0. Thus ḣ(x) >= 0 for all x in ∂C, satisfying Nagumo's condition.",
+        "reasoning": "The dynamics are componentwise contracting toward the origin because each term -xi - tanh(xi) points opposite to xi. Therefore Euclidean balls centered at the origin are forward invariant. To avoid the unsafe set ||x|| >= 1.96 while making C as large as possible, choose a ball with squared radius just below 1.96**2 = 3.8416. The small margin 0.000001 gives h strictly negative on the entire unsafe set, including the boundary ||x|| = 1.96, while retaining an invariant set nearly equal to the full safe ball."
+      },
+      "proposer_elapsed_s": 26.508,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "2*x1*(x1 + tanh(x1)) + 2*x2*(x2 + tanh(x2)) + 2*x3*(x3 + tanh(x3))",
+          "boundary_epsilon": 0.510054,
+          "boundary_pts_found": 162,
+          "cond1_max_h_in_Xu": -0.001834,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 10.27539,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.185
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.028948,
+          "trajectory_valid": true,
+          "elapsed_s": 0.182
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "Condition 1 holds. Since 1.96^2 = 3.8416, for every x in the unsafe set ||x|| >= 1.96, h(x) = 3.841599 - ||x||^2 <= 3.841599 - 3.8416 = -0.000001 < 0. For example, at x = (1.96, 0, 0), h(x) = -0.000001; at x = (2, 0, 0), h(x) = 3.841599 - 4 = -0.158401.",
+        "lie_derivative_computed": "∇h(x) = (-2x1, -2x2, -2x3). With f_i(x) = -x_i - tanh(x_i), the Lie derivative is ḣ(x) = ∇h · f = Σ_i (-2x_i)(-x_i - tanh(x_i)) = 2(x1^2 + x2^2 + x3^2) + 2(x1 tanh(x1) + x2 tanh(x2) + x3 tanh(x3)).",
+        "condition2_result": "Condition 2 holds. On the boundary ∂C, h(x) = 0, so ||x||^2 = 3.841599. Therefore ḣ(x) = 2||x||^2 + 2Σ_i x_i tanh(x_i) = 7.683198 + 2Σ_i x_i tanh(x_i). For every real y, y tanh(y) >= 0 because tanh(y) has the same sign as y. Hence ḣ(x) >= 7.683198 > 0 on the entire boundary. For example, at x = (sqrt(3.841599), 0, 0) ≈ (1.959999745, 0, 0), ḣ(x) = 7.683198 + 2x1 tanh(x1) > 7.683198, numerically about 11.45.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The invariant ball can be enlarged slightly by increasing the constant 3.841599 to any value a satisfying a < 1.96^2 = 3.8416. For h_a(x) = a - ||x||^2, Condition 1 holds iff a < 3.8416, and Condition 2 still holds because on h_a = 0 one has ḣ >= 2a > 0. For example, a = 3.841599999 gives a marginally larger certified invariant ball while preserving the strict unsafe-set separation required here. The exact value a = 3.8416 would fail the stated strict Condition 1 because h(x) = 0 at ||x|| = 1.96, which belongs to the unsafe set."
+      },
+      "refuter_elapsed_s": 43.446
+    }
+  ],
+  "final_barrier": {
+    "h": "3.841599 - x1**2 - x2**2 - x3**2",
+    "invariant_set": "C = {x in X : x1**2 + x2**2 + x3**2 <= 3.841599}, i.e. the closed ball of radius sqrt(3.841599), which is slightly smaller than the unsafe threshold radius 1.96.",
+    "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 1.96}, equivalently x1**2 + x2**2 + x3**2 >= 1.96**2 = 3.8416. For h(x) = 3.841599 - x1**2 - x2**2 - x3**2, every x in X_u satisfies h(x) <= 3.841599 - 3.8416 = -0.000001 < 0. Therefore h(x) < 0 for all x in X_u.",
+    "lie_derivative": "The gradient is ∇h = (-2*x1, -2*x2, -2*x3). The vector field is f(x) = (-x1 - tanh(x1), -x2 - tanh(x2), -x3 - tanh(x3)). Therefore ḣ(x) = ∇h·f = (-2*x1)*(-x1 - tanh(x1)) + (-2*x2)*(-x2 - tanh(x2)) + (-2*x3)*(-x3 - tanh(x3)) = 2*x1**2 + 2*x1*tanh(x1) + 2*x2**2 + 2*x2*tanh(x2) + 2*x3**2 + 2*x3*tanh(x3).",
+    "condition2_check": "On the boundary ∂C, h(x)=0, so x1**2 + x2**2 + x3**2 = 3.841599. For every real scalar z, z*tanh(z) >= 0 because tanh(z) has the same sign as z and tanh(0)=0. Hence x1*tanh(x1) >= 0, x2*tanh(x2) >= 0, and x3*tanh(x3) >= 0. Therefore on ∂C, ḣ(x) = 2*x1**2 + 2*x2**2 + 2*x3**2 + 2*x1*tanh(x1) + 2*x2*tanh(x2) + 2*x3*tanh(x3) >= 2*(x1**2 + x2**2 + x3**2) = 2*3.841599 = 7.683198 > 0. Thus ḣ(x) >= 0 for all x in ∂C, satisfying Nagumo's condition.",
+    "reasoning": "The dynamics are componentwise contracting toward the origin because each term -xi - tanh(xi) points opposite to xi. Therefore Euclidean balls centered at the origin are forward invariant. To avoid the unsafe set ||x|| >= 1.96 while making C as large as possible, choose a ball with squared radius just below 1.96**2 = 3.8416. The small margin 0.000001 gives h strictly negative on the entire unsafe set, including the boundary ||x|| = 1.96, while retaining an invariant set nearly equal to the full safe ball."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 70.331
+  },
+  "tokens": {
+    "input": 2316,
+    "output": 3485,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1472,
+        "output_tokens": 1269,
+        "elapsed_s": 26.508
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 844,
+        "output_tokens": 2216,
+        "elapsed_s": 43.446
+      }
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+ "rows": [
+  {
+   "id": "chang_pendulum_lqr",
+   "dim": 2,
+   "source": "Chang et al. NeurIPS 2019 inverted pendulum, LQR closed loop",
+   "A0_quad": false,
+   "A0_rounds": 0,
+   "A0_time": 0.8,
+   "A0_blocker": "verifier n/a: transcendental \u2014 outside Z3 decidable fragment (use dReal/interval)",
+   "A1_neural": false,
+   "A1_rounds": 1,
+   "A1_time": 1.9,
+   "A1_blocker": "verifier-limited (falsifier found no violation)",
+   "A1_cert": ""
+  }
+ ],
+ "A0": 0,
+ "A1": 0,
+ "exclusive": [],
+ "reverse": []
+}

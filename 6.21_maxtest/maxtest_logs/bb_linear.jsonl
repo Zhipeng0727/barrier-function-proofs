@@ -1,0 +1,1 @@
+{"ts": "2026-06-21T18:24:28", "system": "bb_linear", "h": "9 - x1**2 - x2**2", "note": "round1: Lyapunov sublevel, h=9-|x|^2", "passed": true, "cache_fails": [], "cond1_ok": true, "cond2_ok": true, "cond1_max_h_in_Xu": -0.0032, "cond1_violations": null, "cond2_violations": null, "cond2_viol_ratio": null, "trajectory_valid": true}

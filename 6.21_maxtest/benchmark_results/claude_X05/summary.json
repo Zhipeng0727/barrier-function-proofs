@@ -1,0 +1,29 @@
+{
+  "config": {
+    "dataset": "/Users/zhipeng/lean/data/koopman_nopoly_extension.json",
+    "limit": 1,
+    "start": 4,
+    "turns": 5,
+    "provider": "anthropic",
+    "model": null,
+    "no_kb": false,
+    "lean": false,
+    "name": "claude_X05"
+  },
+  "model": "claude-sonnet-4-6",
+  "rows": [
+    {
+      "id": "X05",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 763,
+      "tokens_out": 6988,
+      "elapsed_s": 152.404,
+      "h": "2.99 - x1**2 * exp(x2**4 / 2) / (1 + x2**2)",
+      "lean_compile_ok": null,
+      "error": null
+    }
+  ],
+  "skipped": []
+}

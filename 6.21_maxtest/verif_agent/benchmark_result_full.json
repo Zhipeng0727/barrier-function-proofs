@@ -1,0 +1,5858 @@
+{
+ "manifest": "/Users/zhipeng/Desktop/paper4/data/lean4_core200_diverse_manifest_v5.json",
+ "limit": 200,
+ "n": 157,
+ "standalone": {
+  "sampling": {
+   "proved_sound": 0,
+   "refuted": 30,
+   "unknown": 0,
+   "unsupported": 0,
+   "unavailable": 0,
+   "error": 10,
+   "time": 54.78900000000002,
+   "proved": 117
+  },
+  "z3": {
+   "proved_sound": 11,
+   "refuted": 4,
+   "unknown": 1,
+   "unsupported": 135,
+   "unavailable": 0,
+   "error": 6,
+   "time": 7.17
+  },
+  "interval": {
+   "proved_sound": 36,
+   "refuted": 8,
+   "unknown": 57,
+   "unsupported": 44,
+   "unavailable": 0,
+   "error": 12,
+   "time": 164.98700000000002
+  },
+  "dreal": {
+   "proved_sound": 46,
+   "refuted": 0,
+   "unknown": 90,
+   "unsupported": 6,
+   "unavailable": 0,
+   "error": 15,
+   "time": 475.16699999999986
+  }
+ },
+ "agent": {
+  "sound": 63,
+  "refuted": 33,
+  "unsound_pass": 55,
+  "unknown": 6,
+  "oracle": 63,
+  "routed_time": 555.024,
+  "runall_time": 702.113
+ },
+ "rows": [
+  {
+   "id": "L1-001",
+   "class": "dim1 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.005,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.001
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.584
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-002",
+   "class": "dim1 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.01,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.001
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.384
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-003",
+   "class": "dim1 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.007,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.42
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-004",
+   "class": "dim1 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.005,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.001
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.402
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-005",
+   "class": "dim1 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.004,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.001
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.346
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-006",
+   "class": "dim1 cont lya ratio",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.613,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.011
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.008
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.431
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L1-007",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.028,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.007
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.013
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.384
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-008",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.249,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.24
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.447
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-009",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.11,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.102
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.431
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-010",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.03,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.031
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.379
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-011",
+   "class": "dim3 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.725,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.759
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.499
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-012",
+   "class": "dim3 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.008,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.624
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L2-001",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.038,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.009
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.008
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.455
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L2-002",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.058,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.011
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.051
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.452
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L2-003",
+   "class": "dim3 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.086,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.027
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.055
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.473
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L2-004",
+   "class": "dim3 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.089,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.022
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.052
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.516
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L2-005",
+   "class": "dim4 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.251,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.019
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.202
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.343
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L2-006",
+   "class": "dim4 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.401,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.015
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.341
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.38
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L2-010",
+   "class": "dim3 cont lya trans ratio",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.099,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.022
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.082
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.372
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L2-011",
+   "class": "dim2 cont lya trans ratio",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.056,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.012
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.032
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.366
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L3-002",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.013,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.006
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "refuted",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.001
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L3-003",
+   "class": "dim5 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.023,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.012
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.003
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L3-005",
+   "class": "dim3 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.021,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.012
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.002
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.001
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L3-010",
+   "class": "dim6 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 7.64,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.024
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 7.802
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L3-011",
+   "class": "dim5 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 2.894,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.007
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.432
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L3-016",
+   "class": "dim4 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.018,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.008
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "refuted",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.002
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L3-017",
+   "class": "dim3 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.012,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.008
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.002
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L4-001",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.523,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.02
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.394
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L4-003",
+   "class": "dim4 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.012,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.009
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.621
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.926
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L4-004",
+   "class": "dim10 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 16.074,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.022
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 15.008
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L4-008",
+   "class": "dim4 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.01,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.006
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 9.296
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.599
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L4-009",
+   "class": "dim6 cont lya polyn",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.045,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.02
+    },
+    "z3": {
+     "status": "refuted",
+     "sound": true,
+     "elapsed_s": 0.02
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.187
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L4-010",
+   "class": "dim5 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.016,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.011
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.628
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L4-011",
+   "class": "dim4 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.008,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.007
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "refuted",
+     "sound": true,
+     "elapsed_s": 0.005
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.361
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L4-013",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.641,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.011
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.299
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.497
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L4-014",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 2.731,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.446
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.46
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L4-015",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 2.511,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.059
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.442
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L5-001",
+   "class": "dim5 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.791,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.01
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.832
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L5-006",
+   "class": "dim7 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 8.263,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.022
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 7.322
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L5-007",
+   "class": "dim10 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 18.702,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.032
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 17.807
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L5-008",
+   "class": "dim12 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.673,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.031
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.435
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L5-009",
+   "class": "dim6 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.415,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.008
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.392
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L5-010",
+   "class": "dim9 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.374,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.011
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.372
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L5-011",
+   "class": "dim8 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.037,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.007
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.003
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L5-012",
+   "class": "dim6 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 30.077,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.033
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 30.018
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L5-013",
+   "class": "dim8 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 9.443,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.007
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 9.196
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L5-014",
+   "class": "dim12 cont lya trans piece",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "unknown",
+   "agent_sound": false,
+   "agent_backend": null,
+   "agent_time": 33.416,
+   "standalone": {
+    "sampling": {
+     "status": "error",
+     "sound": false,
+     "elapsed_s": 32.415
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.318
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L5-015",
+   "class": "dim10 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.016,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.443
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L6-001",
+   "class": "dim1 cont lya piece",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.006,
+   "standalone": {
+    "sampling": {
+     "status": "error",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.463
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L6-002",
+   "class": "dim2 cont lya piece",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.066,
+   "standalone": {
+    "sampling": {
+     "status": "error",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "refuted",
+     "sound": true,
+     "elapsed_s": 0.053
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.563
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L6-003",
+   "class": "dim3 cont lya trans piece",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.014,
+   "standalone": {
+    "sampling": {
+     "status": "error",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "refuted",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.442
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L6-008",
+   "class": "dim4 cont lya trans piece",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "unknown",
+   "agent_sound": false,
+   "agent_backend": null,
+   "agent_time": 0.735,
+   "standalone": {
+    "sampling": {
+     "status": "error",
+     "sound": false,
+     "elapsed_s": 0.009
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.282
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.449
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B1-001",
+   "class": "dim1 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.008,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.002
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.974
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B1-002",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 4.214,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.01
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.718
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.188
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B1-003",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 4.327,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 3.071
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.253
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B1-004",
+   "class": "dim1 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.013,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.728
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B1-005",
+   "class": "dim1 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.015,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.002
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.749
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B1-006",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 4.554,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.005
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 3.252
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.829
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B1-007",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 3.544,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.975
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.412
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B1-008",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 4.603,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.005
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.774
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.516
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B1-009",
+   "class": "dim5 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 60.993,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.018
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 61.161
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B1-010",
+   "class": "dim10 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 6.997,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.014
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 6.886
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B1-011",
+   "class": "dim4 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.07,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.066
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.374
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B1-012",
+   "class": "dim4 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.105,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.03
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.067
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 2.56
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B1-013",
+   "class": "dim2 cont bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.048,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.02
+    },
+    "z3": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.007
+    },
+    "interval": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B1-014",
+   "class": "dim3 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.022,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.012
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B1-015",
+   "class": "dim3 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 6.222,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.005
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 5.587
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.315
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B1-016",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 5.294,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.005
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 3.974
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 2.454
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B1-017",
+   "class": "dim1 cont bar ratio",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 3.003,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.011
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.005
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.206
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.232
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B1-018",
+   "class": "dim1 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.01,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 3.009
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B1-019",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 6.135,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.008
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 4.065
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.427
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B1-020",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 5.08,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 4.115
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.058
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B2-001",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 4.82,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.008
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 3.679
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.157
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B2-002",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 2.487,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.006
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.004
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.354
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B2-003",
+   "class": "dim5 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 1.516,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.005
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.509
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B2-005",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 2.364,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.007
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.768
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B2-006",
+   "class": "dim4 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.047,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.017
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "refuted",
+     "sound": true,
+     "elapsed_s": 0.015
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.683
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B2-007",
+   "class": "dim2 cont bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.21,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.008
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.14
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.934
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.015
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B2-008",
+   "class": "dim2 cont bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.081,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.048
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.012
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.825
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B2-009",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.009,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.002
+    },
+    "dreal": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.001
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B2-011",
+   "class": "dim3 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.005,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B2-012",
+   "class": "dim3 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "unknown",
+   "agent_sound": false,
+   "agent_backend": null,
+   "agent_time": 0.868,
+   "standalone": {
+    "sampling": {
+     "status": "error",
+     "sound": false,
+     "elapsed_s": 0.312
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.472
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B2-013",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.012,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.709
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B2-014",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 4.038,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.006
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.216
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.322
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B2-015",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 3.504,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.296
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.188
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B2-016",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 2.797,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.006
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.02
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.153
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B2-017",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 1.433,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.006
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.926
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B2-018",
+   "class": "dim3 cont bar trans ratio",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 7.184,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.021
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 4.944
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.441
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B3-001",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 4.219,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.008
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 3.72
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.794
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B3-003",
+   "class": "dim2 cont bar piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 6.069,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.018
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 5.65
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.639
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B3-004",
+   "class": "dim3 cont bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.032,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.015
+    },
+    "z3": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "interval": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B3-006",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 3.315,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.01
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.745
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.103
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B3-007",
+   "class": "dim3 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.009,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B3-008",
+   "class": "dim6 cont bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.007,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "refuted",
+     "sound": true,
+     "elapsed_s": 0.029
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.104
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B3-009",
+   "class": "dim4 cont bar",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.007,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.997
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.629
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B3-010",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 7.201,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.009
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 6.268
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.23
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B3-011",
+   "class": "dim3 cont bar piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 3.132,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.014
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.459
+    },
+    "dreal": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.491
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B3-013",
+   "class": "dim4 cont bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.017,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "refuted",
+     "sound": true,
+     "elapsed_s": 0.025
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 4.679
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.783
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B3-014",
+   "class": "dim6 cont bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.023,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B3-015",
+   "class": "dim6 cont bar",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 1.104,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.009
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.915
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B3-016",
+   "class": "dim2 cont bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.037,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.006
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.017
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 3.513
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 2.057
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B4-001",
+   "class": "dim1 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.01,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.006
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.019
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.54
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B4-002",
+   "class": "dim1 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 1.922,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.004
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.821
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B4-003",
+   "class": "dim1 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.015,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.001
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.008
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.394
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B4-005",
+   "class": "dim5 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 1.723,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.011
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.239
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B4-006",
+   "class": "dim3 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 8.37,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.01
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 6.38
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.935
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B4-007",
+   "class": "dim2 disc bar piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.009,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 5.602
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.336
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B4-008",
+   "class": "dim1 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.018,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.005
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.005
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.72
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B4-009",
+   "class": "dim2 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.005,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.005
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.43
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B4-011",
+   "class": "dim6 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 49.272,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.01
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 50.054
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B4-012",
+   "class": "dim4 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.01,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.007
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 10.399
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.511
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B4-013",
+   "class": "dim1 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.005,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "refuted",
+     "sound": true,
+     "elapsed_s": 0.01
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.921
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B4-015",
+   "class": "dim2 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.005,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.695
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.051
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B4-016",
+   "class": "dim3 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.014,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.864
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B5-006",
+   "class": "dim2 cont bar trans piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.007,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.005
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.478
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.896
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B5-007",
+   "class": "dim4 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.005,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B5-009",
+   "class": "dim3 cont bar piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 4.579,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.327
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 3.534
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.608
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B5-013",
+   "class": "dim8 cont bar piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 1.368,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.418
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.763
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B5-014",
+   "class": "dim6 cont bar piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 1.962,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.153
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 2.53
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B5-015",
+   "class": "dim5 cont bar trans piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.01,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.006
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.366
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B5-016",
+   "class": "dim6 cont bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.011,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.006
+    },
+    "z3": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.002
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B5-020",
+   "class": "dim3 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 5.053,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.007
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 4.036
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.909
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B6-001",
+   "class": "dim2 cont bar piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 6.676,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.014
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 5.584
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.047
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B6-002",
+   "class": "dim2 cont bar trans piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.485,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.407
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 6.092
+    },
+    "dreal": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.842
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B6-003",
+   "class": "dim2 cont bar trans piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 8.966,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.02
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 7.664
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.635
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B6-004",
+   "class": "dim3 cont bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.051,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.013
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.035
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 5.179
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.963
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B6-005",
+   "class": "dim8 cont bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "unknown",
+   "agent_sound": false,
+   "agent_backend": null,
+   "agent_time": 1.688,
+   "standalone": {
+    "sampling": {
+     "status": "error",
+     "sound": false,
+     "elapsed_s": 1.667
+    },
+    "z3": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.021
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B6-006",
+   "class": "dim2 cont bar ratio",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.014,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.018
+    },
+    "interval": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.0
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B6-007",
+   "class": "dim2 cont bar ratio",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.204,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.02
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.117
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.494
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 4.289
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B6-009",
+   "class": "dim4 cont bar",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "unknown",
+   "agent_sound": false,
+   "agent_backend": null,
+   "agent_time": 0.006,
+   "standalone": {
+    "sampling": {
+     "status": "error",
+     "sound": false,
+     "elapsed_s": 0.001
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B6-010",
+   "class": "dim2 cont bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.005,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.001
+    },
+    "z3": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "interval": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.0
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B6-011",
+   "class": "dim2 cont bar ratio",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.021,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.011
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.007
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.434
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.437
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B6-012",
+   "class": "dim3 cont bar piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.008,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.76
+    },
+    "dreal": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.88
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B6-013",
+   "class": "dim9 cont bar piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 5.298,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 4.489
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 1.431
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B6-014",
+   "class": "dim2 cont bar ratio",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "refuted",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.023,
+   "standalone": {
+    "sampling": {
+     "status": "refuted",
+     "sound": false,
+     "elapsed_s": 0.016
+    },
+    "z3": {
+     "status": "refuted",
+     "sound": true,
+     "elapsed_s": 0.043
+    },
+    "interval": {
+     "status": "refuted",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.208
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B6-015",
+   "class": "dim2 cont bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.109,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.007
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.053
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.36
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 5.912
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B6-018",
+   "class": "dim1 cont bar ratio",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "unknown",
+   "agent_sound": false,
+   "agent_backend": null,
+   "agent_time": 4.788,
+   "standalone": {
+    "sampling": {
+     "status": "error",
+     "sound": false,
+     "elapsed_s": 3.559
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "interval": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.081
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B6-019",
+   "class": "dim3 cont bar piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.017,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.008
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "dreal": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.002
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B7-001",
+   "class": "dim10 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 1.036,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.019
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.151
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B7-002",
+   "class": "dim12 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 30.087,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.05
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 30.027
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B7-003",
+   "class": "dim8 cont bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 32.801,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.009
+    },
+    "z3": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 6.455
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 28.405
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B7-004",
+   "class": "dim9 cont bar piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.132,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.08
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.014
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B7-005",
+   "class": "dim10 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 30.05,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.015
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 30.021
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B7-006",
+   "class": "dim8 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 3.355,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.017
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 3.385
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B7-007",
+   "class": "dim12 cont bar piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 9.803,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 9.657
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "error",
+     "sound": true,
+     "elapsed_s": 0.005
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B7-008",
+   "class": "dim10 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 30.059,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.032
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 30.019
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B4-017",
+   "class": "dim1 disc bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.019,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.018
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.007
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.916
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B4-018",
+   "class": "dim1 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 2.349,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.036
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.09
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B4-019",
+   "class": "dim1 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.015,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.007
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.006
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.853
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B4-020",
+   "class": "dim1 disc bar ratio",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.06,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.033
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.029
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.353
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B4-021",
+   "class": "dim1 disc bar piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.009,
+   "standalone": {
+    "sampling": {
+     "status": "error",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.011
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 3.651
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B4-022",
+   "class": "dim1 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.023,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 2.918
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L7-001",
+   "class": "dim3 disc lya trans ratio",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 1.492,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.005
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.319
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L7-002",
+   "class": "dim1 disc lya polyn",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.02,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.01
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.008
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.102
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L7-003",
+   "class": "dim3 disc lya piece",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.032,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.007
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.006
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.004
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L7-004",
+   "class": "dim1 disc lya polyn",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.016,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.018
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.007
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.237
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L7-005",
+   "class": "dim2 disc lya polyn",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.038,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.036
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 1.191
+    }
+   },
+   "oracle_sound": true
+  }
+ ]
+}

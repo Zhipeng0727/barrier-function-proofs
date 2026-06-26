@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM ⇄ Lean4 反馈机制</title>
+<style>
+  :root{
+    --bg:#0f1117; --panel:#171a22; --panel2:#1d212b; --ink:#e6e9ef;
+    --muted:#9aa3b2; --line:#2a2f3a; --acc:#7aa2f7; --ok:#9ece6a;
+    --bad:#f7768e; --warn:#e0af68; --code:#c0caf5;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC",sans-serif;}
+  .wrap{max-width:920px;margin:0 auto;padding:40px 24px 80px}
+  h1{font-size:28px;margin:0 0 6px;letter-spacing:.3px}
+  .sub{color:var(--muted);margin:0 0 28px;font-size:14px}
+  h2{font-size:19px;margin:38px 0 12px;padding-top:8px;border-top:1px solid var(--line)}
+  h3{font-size:15px;margin:20px 0 8px;color:var(--acc)}
+  p{margin:10px 0}
+  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+    background:var(--panel2);padding:1px 6px;border-radius:5px;color:var(--code);font-size:13px}
+  pre{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:14px 16px;overflow:auto;font-family:"SF Mono",ui-monospace,Menlo,monospace;
+    font-size:12.5px;line-height:1.55;color:var(--code)}
+  .muted{color:var(--muted)}
+  .pill{display:inline-block;font-size:11px;padding:2px 9px;border-radius:99px;
+    border:1px solid var(--line);color:var(--muted);margin-right:6px}
+  .ok{color:var(--ok)} .bad{color:var(--bad)} .warn{color:var(--warn)} .acc{color:var(--acc)}
+  table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--ink);font-weight:600}
+  td code{font-size:12.5px}
+
+  /* flow diagram */
+  .flow{display:flex;flex-direction:column;gap:0;margin:18px 0}
+  .node{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;position:relative}
+  .node .t{font-weight:600}
+  .node .d{color:var(--muted);font-size:12.5px;margin-top:3px}
+  .node.llm{border-left:3px solid var(--acc)}
+  .node.lean{border-left:3px solid var(--ok)}
+  .node.fb{border-left:3px solid var(--warn)}
+  .arrow{align-self:center;color:var(--muted);font-size:18px;margin:4px 0;line-height:1}
+  .loop-tag{position:absolute;right:14px;top:12px;font-size:11px;color:var(--warn)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .card h3{margin-top:0}
+  .kv{font-size:13px;color:var(--muted)}
+  .kv b{color:var(--ink);font-weight:600}
+  .foot{margin-top:40px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:16px}
+  .tag-bad{color:var(--bad);font-weight:600}
+  .tag-ok{color:var(--ok);font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>LLM ⇄ Lean&nbsp;4 反馈机制</h1>
+  <p class="sub">barrier / Lyapunov 证书的形式化闭环 · <code>lean_proof.py</code> · 演示 <code>lean_feedback_demo.py</code></p>
+
+  <p>大模型擅长<em>猜</em>出一个证书和证明骨架，但它对“这一步 tactic 到底能不能过”只有概率性的直觉。
+  Lean&nbsp;4 编译器是<strong>确定性的真值预言机</strong>：要么 exit&nbsp;0 通过，要么吐出精确的错误类别和当前目标状态。
+  本机制把编译器的诊断<strong>逐字回灌</strong>到下一轮 prompt，让模型基于事实而非猜测去修复——
+  这就是 “generate&nbsp;→ compile&nbsp;→ feed&nbsp;diagnostics&nbsp;back&nbsp;→ repair” 的闭环。</p>
+
+  <h2>1 · 闭环结构</h2>
+  <div class="flow">
+    <div class="node llm">
+      <div class="t"><span class="acc">①</span> LLM 生成 Lean 代码</div>
+      <div class="d">输入：任务目标、系统动力学、已验证的证书 h、证书族骨架模板。输出：单个 <code>```lean</code> 代码块。</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="node">
+      <div class="t"><span class="acc">②</span> 抽取代码 <code>extract_lean_code()</code></div>
+      <div class="d">用正则把 ```lean … ``` 围栏里的源码取出，写到 <code>_check_&lt;tag&gt;.lean</code>。</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="node lean">
+      <div class="t"><span class="ok">③</span> Lean 编译 <code>lake env lean</code></div>
+      <div class="d">在已构建好的工程里跑编译，捕获 <code>stdout+stderr</code> 与退出码。返回 <code>(ok, diagnostics)</code>。</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="node fb">
+      <div class="loop-tag">⟲ 失败则回到 ①</div>
+      <div class="t"><span class="warn">④</span> 构造反馈 <code>build_repair_feedback()</code></div>
+      <div class="d"><span class="tag-ok">ok → 完成</span>，证书已被机器核验。<br>
+        <span class="tag-bad">fail → </span> 把错误类别 + 假设 + 开放目标 <code>⊢ …</code> 包成修复 prompt，append 进对话历史，回到 ①。</div>
+    </div>
+  </div>
+
+  <h2>2 · 三种编译结局</h2>
+  <table>
+    <tr><th>返回值</th><th>含义</th><th>动作</th></tr>
+    <tr><td><code class="ok">True</code></td><td>exit 0，无 error / 无 <code>sorry</code></td><td>接受，证书形式化完成</td></tr>
+    <tr><td><code class="bad">False</code></td><td>编译器报 error（含目标状态）</td><td>诊断回灌，触发修复轮</td></tr>
+    <tr><td><code class="warn">None</code></td><td>找不到 <code>lake</code>（工具链缺失）</td><td>跳过编译检查，不阻塞合成</td></tr>
+  </table>
+
+  <h2>3 · 反馈消息的设计（关键）</h2>
+  <p>回灌给模型的不是“编译失败了”这种空话，而是编译器原样输出。最有信息量的是 <span class="acc">开放目标状态</span>——
+  它告诉模型当前还差什么、有哪些可用假设。</p>
+<pre>The Lean 4 code FAILED to compile. Below are the exact compiler
+diagnostics (error class, hypotheses, and the open goal `⊢ ...`).
+Read the goal state carefully, then output the FULL corrected Lean 4 code block.
+
+----- lean diagnostics -----
+<span class="bad">error: linarith failed to find a contradiction</span>
+case h
+x y : ℝ
+a✝ : x ^ 2 + y ^ 2 &lt; 2 * x * y
+<span class="acc">⊢ False</span>
+----------------------------</pre>
+  <p class="muted">模型读到“<code>linarith failed</code> + 目标是非线性不等式”，立刻知道该换非线性 tactic 并补一个平方提示。</p>
+
+  <h2>4 · 真实运行实录（零 API token）</h2>
+  <p><code>lean_feedback_demo.py</code> 把“LLM”换成两段预置回复，但<strong>编译是真的</strong>——
+  直接命中真实的 <span class="bad">失败</span> → <span class="ok">修复成功</span> 路径，因此不花一个 token 就能验证整条链路。</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3 class="bad">第 1 轮 · 失败</h3>
+<pre>example (x y : ℝ) :
+    x^2 + y^2 ≥ 2*x*y := by
+  <span class="bad">linarith</span></pre>
+      <div class="kv"><b>linarith</b> 是线性 tactic，无法处理二次目标 → <span class="tag-bad">编译 error</span>，诊断回灌。</div>
+    </div>
+    <div class="card">
+      <h3 class="ok">第 2 轮 · 成功</h3>
+<pre>example (x y : ℝ) :
+    x^2 + y^2 ≥ 2*x*y := by
+  <span class="ok">nlinarith [sq_nonneg (x - y)]</span></pre>
+      <div class="kv">读完反馈后换 <b>nlinarith</b> 并补 <code>(x−y)²≥0</code> → <span class="tag-ok">exit 0</span>，证书被核验。</div>
+    </div>
+  </div>
+
+  <h3>终端输出（节选）</h3>
+<pre>┌─ round 1: LLM proposes ─────────────
+│   linarith
+└──────────────────────────────────
+  <span class="bad">❌ Lean rejected it.</span> Feedback that goes back to the model:
+     error: linarith failed to find a contradiction
+     a✝ : x ^ 2 + y ^ 2 &lt; 2 * x * y
+     ⊢ False
+
+┌─ round 2: LLM proposes ─────────────
+│   nlinarith [sq_nonneg (x - y)]
+└──────────────────────────────────
+  <span class="ok">✅ Lean accepted the proof — compile exit 0, no errors.</span></pre>
+
+  <h2>5 · 提升首轮通过率的两个工程要点</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>证书族骨架模板</h3>
+      <p class="kv">自由生成会陷入“Mathlib 引理名轮盘赌”。<code>lean_proof.py</code> 按证书族（log / trig / exp /
+      entropy / piecewise / poly）匹配骨架，预置正确的引理名与证明套路，显著提高<b>首次编译通过率</b>。</p>
+    </div>
+    <div class="card">
+      <h3>精确 import，禁用 umbrella</h3>
+      <p class="kv">本机环境里全量 <code>import Mathlib</code> 不可靠；prompt 强制只 import 需要的具体模块
+      （骨架已给候选），失败的 import 直接丢弃。</p>
+    </div>
+  </div>
+
+  <h2>6 · 本机环境</h2>
+  <table>
+    <tr><th>项目</th><th>路径 / 值</th></tr>
+    <tr><td>工具链管理</td><td><code>~/.elan</code>（elan）</td></tr>
+    <tr><td>已装 Lean</td><td><code>leanprover/lean4 : v4.28.0</code> 与 <code>v4.29.0-rc6</code></td></tr>
+    <tr><td>编译工程（完整构建）</td><td><code>~/lean</code> · mathlib 已构建（7791 oleans）</td></tr>
+    <tr><td>合成工程</td><td><code>~/Desktop/paper4</code>（mathlib 走 path 指向 <code>~/lean</code>）</td></tr>
+    <tr><td>核心代码</td><td><code>6.11new/lean_proof.py</code> · 演示 <code>6.11new/lean_feedback_demo.py</code></td></tr>
+    <tr><td>编译命令</td><td><code>lake env lean &lt;file&gt;</code>（cwd = 工程根）</td></tr>
+  </table>
+  <p class="muted">注：<code>paper4/</code> 自身的 <code>.lake</code> 依赖（aesop 等）当前未构建，故演示与编译以 <code>~/lean</code> 为目标工程。</p>
+
+  <div class="foot">
+    <span class="pill">generate → compile → feedback → repair</span>
+    <span class="pill">编译器 = 真值预言机</span>
+    <span class="pill">诊断逐字回灌</span><br>
+    生成于 2026-06-14 · barrier 合成流水线 v5
+  </div>
+
+</div>
+</body>
+</html>

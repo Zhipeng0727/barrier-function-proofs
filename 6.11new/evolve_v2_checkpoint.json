@@ -1,0 +1,141 @@
+{
+  "last_round": 3,
+  "rounds": [
+    {
+      "round": 1,
+      "proved": [
+        "PC-004"
+      ],
+      "failed": [
+        "PF-002",
+        "PJ-005",
+        "PM-003",
+        "PJ-006",
+        "PK-003",
+        "PF-003",
+        "PJ-007"
+      ],
+      "new_recipe_keys": [
+        "poly.grad_bound_strong_convexity",
+        "poly.sum_squares_nonneg",
+        "poly.ne_zero_lt_abs",
+        "trig.sin_bound_linear",
+        "log.log_inequality_boundary",
+        "poly.repulsive_vector_sq_increase"
+      ],
+      "recipe_count": 35,
+      "tokens_cum": 4048,
+      "ts": "2026-06-17T23:48:58"
+    },
+    {
+      "round": 2,
+      "proved": [
+        "PJ-007"
+      ],
+      "failed": [
+        "PF-002",
+        "PJ-005",
+        "PM-003",
+        "PJ-006",
+        "PK-003",
+        "PF-003",
+        "PJ-008"
+      ],
+      "new_recipe_keys": [
+        "poly.deriv_const_lemma",
+        "poly.sq_pos_nonneg",
+        "poly.ne_of_sq_ne_zero",
+        "trig.sin_derivative_arithmetic",
+        "rational.monod_saturation_diff",
+        "convex.convex_max_bnd",
+        "piecewise.sign_abs_def"
+      ],
+      "recipe_count": 42,
+      "tokens_cum": 12782,
+      "ts": "2026-06-18T00:45:25"
+    },
+    {
+      "round": 3,
+      "proved": [],
+      "failed": [
+        "PF-002",
+        "PJ-005",
+        "PM-003",
+        "PJ-006",
+        "PK-003",
+        "PF-003",
+        "PJ-008"
+      ],
+      "new_recipe_keys": [
+        "poly.grad_step_inequality",
+        "poly.diff_energy_sq",
+        "poly.add_eq_zero_iff",
+        "rational.fin_one_exists",
+        "rational.monod_positive_inequality",
+        "poly.max_eq_arg_le",
+        "poly.abs_pow_le"
+      ],
+      "recipe_count": 49,
+      "tokens_cum": 1996,
+      "ts": "2026-06-18T01:38:50"
+    }
+  ],
+  "system_results": {
+    "PF-002": {
+      "proved": false,
+      "error": "Try this:\n  [apply] ring_nf\n  \n  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.\n    \n  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.\n/",
+      "calls": 3,
+      "tokens": 10835
+    },
+    "PJ-005": {
+      "proved": false,
+      "error": "/Users/zhipeng/lean/_check_PJ-005_v3.lean:12:57: error: Function expected at\n  V ω c x\nbut this term has type\n  ℝ\n\nNote: Expected a function because this term is being applied to the argument\n  y\n/Users/zhipeng/lean/_check_PJ-005_v3.lean:21:10: error: Function expected at\n  V ω c 0\nbut this term has",
+      "calls": 3,
+      "tokens": 1465
+    },
+    "PM-003": {
+      "proved": false,
+      "error": "/Users/zhipeng/lean/_check_PM-003_v3.lean:27:14: error(lean.unknownIdentifier): Unknown identifier `add_eq_zero_iff.mp`\n/Users/zhipeng/lean/_check_PM-003_v3.lean:31:14: error(lean.unknownIdentifier): Unknown identifier `add_eq_zero_iff.mp`\n/Users/zhipeng/lean/_check_PM-003_v3.lean:35:13: warning: `p",
+      "calls": 3,
+      "tokens": 8092
+    },
+    "PJ-006": {
+      "proved": false,
+      "error": "/Users/zhipeng/lean/_check_PJ-006_v3.lean:14:43: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  OfNat (Fin n) 1\nnumerals are polymorphic in Lean, but the numeral `1` cannot be used in a context where the expected type is\n  Fin n\ndue to the absence of the instance abov",
+      "calls": 3,
+      "tokens": 5585
+    },
+    "PK-003": {
+      "proved": false,
+      "error": "/Users/zhipeng/lean/_check_PK-003_v3.lean:24:48: error(lean.unknownIdentifier): Unknown identifier `h_S_star.ne'`\n/Users/zhipeng/lean/_check_PK-003_v3.lean:24:71: error(lean.unknownIdentifier): Unknown identifier `h_X_star.ne'`\n/Users/zhipeng/lean/_check_PK-003_v3.lean:22:65: error: unsolved goals\nS",
+      "calls": 3,
+      "tokens": 5542
+    },
+    "PC-004": {
+      "proved": true,
+      "error": null,
+      "calls": 2,
+      "tokens": 1511
+    },
+    "PF-003": {
+      "proved": false,
+      "error": "/Users/zhipeng/lean/_check_PF-003_v3.lean:45:20: error: Application type mismatch: The argument\n  h3\nhas type\n  x i ≤ x imin\nbut is expected to have type\n  x i ≤ x j\nin the application\n  le_antisymm h3\n/Users/zhipeng/lean/_check_PF-003_v3.lean:49:9: error: don't know how to synthesize implicit argum",
+      "calls": 3,
+      "tokens": 7800
+    },
+    "PJ-007": {
+      "proved": true,
+      "error": null,
+      "calls": 2,
+      "tokens": 1814
+    },
+    "PJ-008": {
+      "proved": false,
+      "error": "/Users/zhipeng/lean/_check_PJ-008_v3.lean:17:16: error(lean.unknownIdentifier): Unknown identifier `h`\n/Users/zhipeng/lean/_check_PJ-008_v3.lean:23:6: error: No goals to be solved\n/Users/zhipeng/lean/_check_PJ-008_v3.lean:26:6: error: No goals to be solved\n/Users/zhipeng/lean/_check_PJ-008_v3.lean:3",
+      "calls": 3,
+      "tokens": 2861
+    }
+  },
+  "dry_streak": 0,
+  "total_tokens": 1996
+}

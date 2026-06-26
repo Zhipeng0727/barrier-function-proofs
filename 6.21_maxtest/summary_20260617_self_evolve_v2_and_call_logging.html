@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-06-17 工作总结 — Self-Evolve V2 Agent + Call Logging</title>
+<style>
+  :root { --bg: #fafafa; --fg: #1a1a2e; --accent: #4361ee; --green: #2d6a4f; --red: #c1121f; --gray: #6c757d; --card: #fff; --border: #dee2e6; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans SC", sans-serif; background: var(--bg); color: var(--fg); line-height: 1.7; padding: 2rem; max-width: 960px; margin: 0 auto; }
+  h1 { font-size: 1.6rem; border-bottom: 3px solid var(--accent); padding-bottom: .5rem; margin-bottom: 1.5rem; }
+  h2 { font-size: 1.2rem; color: var(--accent); margin: 2rem 0 .8rem; border-left: 4px solid var(--accent); padding-left: .6rem; }
+  h3 { font-size: 1rem; margin: 1.2rem 0 .5rem; }
+  .meta { color: var(--gray); font-size: .9rem; margin-bottom: 1.5rem; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; margin: .8rem 0; }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: .8rem; margin: 1rem 0; }
+  .stat { text-align: center; padding: .8rem; background: var(--card); border: 1px solid var(--border); border-radius: 8px; }
+  .stat .num { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .stat .label { font-size: .8rem; color: var(--gray); }
+  table { width: 100%; border-collapse: collapse; margin: .8rem 0; font-size: .9rem; }
+  th, td { padding: .5rem .7rem; border: 1px solid var(--border); text-align: left; }
+  th { background: #f0f0f5; font-weight: 600; }
+  .ok { color: var(--green); font-weight: 600; }
+  .fail { color: var(--red); }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: .8rem; font-weight: 500; }
+  .tag-new { background: #d4edda; color: var(--green); }
+  .tag-mod { background: #fff3cd; color: #856404; }
+  .tag-fix { background: #f8d7da; color: var(--red); }
+  code { background: #eee; padding: 2px 5px; border-radius: 3px; font-size: .85rem; }
+  pre { background: #1a1a2e; color: #e0e0e0; padding: 1rem; border-radius: 6px; overflow-x: auto; font-size: .82rem; line-height: 1.5; margin: .5rem 0; }
+  pre .comment { color: #6c757d; }
+  ul { padding-left: 1.5rem; margin: .5rem 0; }
+  li { margin: .3rem 0; }
+  .timeline { border-left: 3px solid var(--accent); padding-left: 1.2rem; margin: 1rem 0; }
+  .timeline .event { position: relative; margin-bottom: 1rem; }
+  .timeline .event::before { content: ""; position: absolute; left: -1.55rem; top: .5rem; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+  .timeline .time { font-size: .8rem; color: var(--gray); }
+</style>
+</head>
+<body>
+
+<h1>2026-06-17 工作总结</h1>
+<p class="meta">Self-Evolve V2 Agent 构建 + Call Logging 系统 + 9 Untested Systems 测试</p>
+
+<div class="stat-grid">
+  <div class="stat"><div class="num">32</div><div class="label">Verified Recipes (22→32)</div></div>
+  <div class="stat"><div class="num">+10</div><div class="label">新挖 Lean4 引理</div></div>
+  <div class="stat"><div class="num">8/52</div><div class="label">系统证明率 (15.4%)</div></div>
+  <div class="stat"><div class="num">3</div><div class="label">新建核心文件</div></div>
+</div>
+
+<h2>1. 完成的工作</h2>
+
+<h3>1.1 GLM 模型切换</h3>
+<div class="card">
+  <p><code>glm-5.1</code> → <code>glm-4.7</code>（直接用字面 model ID）</p>
+  <ul>
+    <li>测试了 <code>glm-4-plus</code>（429/1113 余额不足）、<code>glm-4-flash</code>（可用，免费层）、<code>glm-4.7</code>（可用）</li>
+    <li>API Key: <code>605f...d7RW</code>，写入 <code>.secrets.env</code></li>
+  </ul>
+</div>
+
+<h3>1.2 Self-Evolve V2 Agent</h3>
+<div class="card">
+  <p><span class="tag tag-new">NEW</span> <code>self_evolve_v2.py</code> — 自我迭代进化代理（~320 行）</p>
+  <p>六步闭环：</p>
+  <pre>
+ROUND N:
+  EXPLORE   → attempt_proof on frontier (按 recipe-gap 优先级排序)
+  ANALYZE   → 分类失败 (hallucinated_lemma / arithmetic_gap / type_class)
+  MINE      → extract_obstruction → mine_recipe (GLM→GPT 自动接力)
+  VERIFY    → lean_compile_check oracle (zero false positive)
+  RE-INJECT → 用新 recipe 重试失败系统
+  CONVERGE  → 连续 K_DRY=3 轮无新 recipe 则停止</pre>
+  <p>关键特性：</p>
+  <ul>
+    <li><b>双 Provider 接力</b>：GLM-4.7 primary → GPT-5.5 fallback（via aigocode relay）</li>
+    <li><b>前沿评分</b>：<code>score = recipe_overlap + 0.3*poly + 0.2*untested + 0.1*transcendental</code></li>
+    <li><b>崩溃恢复</b>：JSON checkpoint + <code>--resume</code> flag</li>
+    <li><b>CLI</b>：<code>--max-rounds</code> / <code>--k-dry</code> / <code>--budget</code> / <code>--untested-only</code> / <code>--no-escalate</code></li>
+  </ul>
+</div>
+
+<h3>1.3 Call Logging 系统</h3>
+<div class="card">
+  <p><span class="tag tag-new">NEW</span> <code>call_log.py</code> — 全量 LLM 输出日志</p>
+  <pre>
+logs/
+  run_{YYYYMMDD}_{HHMMSS}_{tag}/
+    meta.json       <span class="comment"># 运行配置 (provider, model, budget, flags)</span>
+    calls.jsonl     <span class="comment"># 每个 API 调用: label, system_prompt, messages, response, tokens</span>
+    lean.jsonl      <span class="comment"># 每个 Lean 编译: tag, 完整代码, diagnostic, ok, timing</span></pre>
+  <p>改动：</p>
+  <ul>
+    <li><span class="tag tag-mod">MOD</span> <code>runtime_state.py</code> — 加 <code>_CALL_LOG_FN</code> hook，call_api 返回前自动记录</li>
+    <li><span class="tag tag-mod">MOD</span> <code>lean_proof.py</code> — 加 <code>_LEAN_LOG_FN</code> hook + 计时</li>
+    <li>零侵入：不调 <code>init_run()</code> 则无日志，其他脚本不受影响</li>
+  </ul>
+</div>
+
+<h2>2. 运行结果</h2>
+
+<h3>2.1 Run 1：9 Untested Systems（17:30 – 18:26，GPT 接力时挂掉）</h3>
+<div class="card">
+  <p>EXPLORE: 8/9 系统全部 FAILED（PJ-008 被前沿过滤）</p>
+  <p>MINE: 蒸馏 7 个阻塞引理，<b>验证 7 个新 recipe</b>：</p>
+  <table>
+    <tr><th>#</th><th>Recipe</th><th>来源</th><th>方法</th></tr>
+    <tr><td>1</td><td><code>convex.strong_convex_grad_ineq</code></td><td>Smoke test</td><td>GLM r1</td></tr>
+    <tr><td>2</td><td><code>poly.grad_strong_convex_bound</code></td><td>PF-002</td><td>GLM r4</td></tr>
+    <tr><td>3</td><td><code>piecewise.lemma_boundary_case_independence</code></td><td>PJ-006</td><td>GLM r1</td></tr>
+    <tr><td>4</td><td><code>log.log_ge_x_minus_1</code></td><td>PK-003</td><td class="ok">GPT 接力 r5</td></tr>
+    <tr><td>5</td><td><code>trig.eq_zero_of_ge_zero_sin</code></td><td>PC-004</td><td>GLM r1</td></tr>
+    <tr><td>6</td><td><code>convex.doubly_stochastic_max_min_diff_b</code></td><td>PF-003</td><td class="ok">GPT 接力 r6</td></tr>
+    <tr><td>7</td><td><code>rational.half_mul_nonneg</code></td><td>PJ-005</td><td>GLM r4</td></tr>
+  </table>
+  <p class="fail">RE-INJECT 未执行（进程在挖 <code>convex.prox_residual_bound</code> 时 GPT relay 超时挂掉）</p>
+</div>
+
+<h3>2.2 Run 2：9 Untested Systems + Logging（22:12 – 进行中）</h3>
+<div class="card">
+  <p>带完整日志的重跑，<code>--no-escalate</code> 避免 GPT 超时。</p>
+  <p>截至当前：53 API calls, 49 Lean checks, <b>3 个新 recipe</b>：</p>
+  <table>
+    <tr><th>#</th><th>Recipe</th><th>来源</th><th>方法</th></tr>
+    <tr><td>8</td><td><code>poly.grad_bound_strong_convexity</code></td><td>PF-002</td><td>GLM r5</td></tr>
+    <tr><td>9</td><td><code>poly.sum_squares_nonneg</code></td><td>PJ-005</td><td>GLM r1</td></tr>
+    <tr><td>10</td><td><code>poly.ne_zero_lt_abs</code></td><td>PM-003</td><td>GLM r1</td></tr>
+  </table>
+  <p>正在挖: <code>trig.sin_bound_linear</code>（来自 PJ-006）</p>
+</div>
+
+<h3>2.3 Recipe Store 增长</h3>
+<div class="card">
+  <table>
+    <tr><th>Family</th><th>数量</th><th>代表性 Recipe</th></tr>
+    <tr><td>poly</td><td>4</td><td>grad_strong_convex_bound, sum_squares_nonneg, ne_zero_lt_abs, grad_bound_strong_convexity</td></tr>
+    <tr><td>convex</td><td>5</td><td>strong_convex_grad_ineq, doubly_stochastic_max_min_diff_b, exp_sum_bound, log_sum_two_le</td></tr>
+    <tr><td>trig</td><td>3</td><td>sin_cos_sq, one_sub_cos_nonneg, eq_zero_of_ge_zero_sin</td></tr>
+    <tr><td>log</td><td>3</td><td>log_ge_x_minus_1, log_self_lower, log_sub_one</td></tr>
+    <tr><td>exp</td><td>2</td><td>exp_pos, exp_add_one</td></tr>
+    <tr><td>rational</td><td>5</td><td>div_le_one, div_pos_of_pos, half_mul_nonneg, one_sub_div, sq_div_sq</td></tr>
+    <tr><td>tanh</td><td>2</td><td>tanh_bound, tanh_sign</td></tr>
+    <tr><td>piecewise</td><td>4</td><td>annulus_barrier, conservation_harmonic, min_nonneg, lemma_boundary_case_independence</td></tr>
+    <tr><td>sqrt</td><td>1</td><td>sqrt_sq_abs</td></tr>
+    <tr><td><b>合计</b></td><td><b>32</b></td><td></td></tr>
+  </table>
+</div>
+
+<h2>3. 失败模式分析（从日志发现）</h2>
+<div class="card">
+  <p>Run 2 的 49 次 Lean 编译中：</p>
+  <table>
+    <tr><th>失败类型</th><th>次数</th><th>占比</th><th>典型案例</th></tr>
+    <tr><td>语法错误</td><td>5</td><td>33%</td><td>PF-002: 同一个 <code>unexpected token '*'</code> 重复 3 次</td></tr>
+    <tr><td>类型不匹配</td><td>4</td><td>27%</td><td>PM-003: Application type mismatch</td></tr>
+    <tr><td>sorry 放弃</td><td>3</td><td>20%</td><td>PC-004: declaration uses sorry</td></tr>
+    <tr><td>tactic 失败</td><td>2</td><td>13%</td><td>PJ-005: linarith failed</td></tr>
+    <tr><td>其他</td><td>1</td><td>7%</td><td>unknown identifier</td></tr>
+  </table>
+  <p><b>关键发现</b>：修复轮次 (v1→v2→v3) 在重复同样的错误，不是在修复。56% 的 LLM 响应含 sorry。</p>
+</div>
+
+<h2>4. 架构改进方向（待实现）</h2>
+<div class="card">
+  <ol>
+    <li><b>并行多样化</b>：3 个独立 v1（不同 prompt 策略）替代顺序修复（v1→v2→v3）</li>
+    <li><b>预编译过滤</b>：正则检测 Lean3 语法 / sorry → 直接打回，省 10-15s 编译时间</li>
+    <li><b>错误分类路由</b>：语法错→重生成；幻觉引理→注入正确名字；tactic_fail→换策略</li>
+    <li><b>模板填空</b>：给 Lean4 模板只让 LLM 填 tactic，约束搜索空间</li>
+  </ol>
+</div>
+
+<h2>5. 文件变更清单</h2>
+<div class="card">
+  <table>
+    <tr><th>操作</th><th>文件</th><th>说明</th></tr>
+    <tr><td><span class="tag tag-new">NEW</span></td><td><code>self_evolve_v2.py</code></td><td>自我迭代进化代理（~320 行）</td></tr>
+    <tr><td><span class="tag tag-new">NEW</span></td><td><code>call_log.py</code></td><td>全量 LLM 输出日志系统（~95 行）</td></tr>
+    <tr><td><span class="tag tag-new">NEW</span></td><td><code>logs/run_*/</code></td><td>结构化日志目录（meta.json + calls.jsonl + lean.jsonl）</td></tr>
+    <tr><td><span class="tag tag-mod">MOD</span></td><td><code>runtime_state.py</code></td><td>+8 行：_CALL_LOG_FN hook</td></tr>
+    <tr><td><span class="tag tag-mod">MOD</span></td><td><code>lean_proof.py</code></td><td>+15 行：_LEAN_LOG_FN hook + 计时</td></tr>
+    <tr><td><span class="tag tag-mod">MOD</span></td><td><code>.secrets.env</code></td><td>GLM_MODEL=glm-4.7</td></tr>
+    <tr><td><span class="tag tag-mod">MOD</span></td><td><code>recipe_store.json</code></td><td>22→32 recipes</td></tr>
+    <tr><td><span class="tag tag-mod">MOD</span></td><td><code>evolve_v2.log</code></td><td>事件日志（mine_start / recipe_verified）</td></tr>
+    <tr><td><span class="tag tag-mod">MOD</span></td><td><code>evolve_v2_results.json</code></td><td>运行结果（smoke test 版本）</td></tr>
+  </table>
+</div>
+
+<h2>6. 下一步计划</h2>
+<div class="card">
+  <ol>
+    <li>等当前 Run 2 完成，合并 9 untested 结果到 <code>expansion_full_results.json</code></li>
+    <li>实现架构改进：并行多样化 + 预编译过滤</li>
+    <li>用 32 个 recipe 跑全部 52 系统：<code>--max-rounds 15 --k-dry 3 --budget 500000</code></li>
+    <li>目标：prove rate 从 8/52 (15.4%) 提升到 12-15/52 (23-29%)</li>
+    <li>更新论文 §12d 节</li>
+  </ol>
+</div>
+
+<hr style="margin: 2rem 0; border: none; border-top: 1px solid var(--border);">
+<p class="meta">
+  备份位置: <code>backup_20260617_evolve_v2/</code><br>
+  生成时间: 2026-06-17<br>
+  工作目录: <code>/Users/zhipeng/Desktop/paper4/6.11new/</code>
+</p>
+
+</body>
+</html>

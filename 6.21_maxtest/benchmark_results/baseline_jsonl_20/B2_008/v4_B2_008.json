@@ -1,0 +1,120 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B2-008",
+    "ode": "dx1/dt = x2, dx2/dt = -sin(x1) - x2",
+    "state_vars": [
+      "x1",
+      "x2"
+    ],
+    "f_expr": [
+      "x2",
+      "-sin(x1) - x2"
+    ],
+    "X_domain": "ball (|x1|<pi)",
+    "X_u_desc": "(1-cos(x1)) + 0.5 x2^2 >= 1.0",
+    "X_u_expr": "(1-cos(x1)) + 0.5*x2**2 >= 1.0",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B2-008",
+      "layer": "L2-new",
+      "group": "B2",
+      "task": "barrier",
+      "cert_class": "nonpoly-explicit",
+      "source": "pendulum energy barrier"
+    }
+  },
+  "timestamp": "2026-06-11T18:16:54.525439",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "0.999999 - (1 - cos(x1)) - 0.5*x2**2",
+        "invariant_set": "C = {x in X : (1 - cos(x1)) + 0.5*x2**2 <= 0.999999}",
+        "condition1_check": "Let E(x) = (1 - cos(x1)) + 0.5*x2**2. The unsafe set is X_u = {x : E(x) >= 1.0}. The proposed barrier is h(x) = 0.999999 - E(x). For every x in X_u, E(x) >= 1.0, hence h(x) = 0.999999 - E(x) <= 0.999999 - 1.0 = -0.000001 < 0. Therefore h(x) < 0 on the entire unsafe set.",
+        "lie_derivative": "h(x) = 0.999999 - (1 - cos(x1)) - 0.5*x2**2 = cos(x1) - 0.000001 - 0.5*x2**2. Therefore, ∂h/∂x1 = -sin(x1) and ∂h/∂x2 = -x2. The vector field is f(x) = (x2, -sin(x1) - x2). Thus ḣ(x) = ∇h(x)·f(x) = (-sin(x1))*x2 + (-x2)*(-sin(x1) - x2) = -x2*sin(x1) + x2*sin(x1) + x2**2 = x2**2.",
+        "condition2_check": "The boundary ∂C is given by h(x) = 0, equivalently (1 - cos(x1)) + 0.5*x2**2 = 0.999999. On this boundary, the Lie derivative is ḣ(x) = x2**2. Since x2**2 >= 0 for all real x2, we have ḣ(x) >= 0 for every x in ∂C. Therefore Nagumo's condition is satisfied.",
+        "reasoning": "The natural Lyapunov/energy function for the damped pendulum is E(x) = (1 - cos(x1)) + 0.5*x2**2. Along trajectories, Ė(x) = -x2**2 <= 0, so every strict sublevel set of E is forward invariant. The unsafe set is exactly E(x) >= 1.0. Therefore choosing h(x) = c - E(x) with c < 1 gives an invariant safe set contained strictly inside the complement of the unsafe set. To make the invariant set as large as possible while still satisfying the strict requirement h(x) < 0 on all of X_u, we choose c = 0.999999, very close to 1. The resulting set C = {E <= 0.999999} is a large invariant subset of the safe region."
+      },
+      "proposer_elapsed_s": 35.638,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "1.0*x2**2",
+          "boundary_epsilon": 0.129478,
+          "boundary_pts_found": 149,
+          "cond1_max_h_in_Xu": -0.000255,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 1e-05,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.017
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.020972,
+          "trajectory_valid": true,
+          "elapsed_s": 0.17
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "Let V(x) = (1 - cos(x1)) + 0.5*x2^2. The proposed h is h(x) = 0.999999 - V(x). For every unsafe point, V(x) >= 1.0, hence h(x) <= 0.999999 - 1.0 = -0.000001 < 0. For example, at x = (pi/2, 0), V = 1 and h = -0.000001 < 0; at x = (0, sqrt(2)), V = 1 and h = -0.000001 < 0. Thus Condition 1 holds rigorously.",
+        "lie_derivative_computed": "∇h = (-sin(x1), -x2). With f(x) = (x2, -sin(x1) - x2), we get ḣ = (-sin(x1))*x2 + (-x2)*(-sin(x1) - x2) = -x2*sin(x1) + x2*sin(x1) + x2^2 = x2^2.",
+        "condition2_result": "On the boundary ∂C, h(x) = 0, equivalently V(x) = 0.999999. The Lie derivative is ḣ(x) = x2^2 >= 0 for all such boundary points. Degenerate boundary points with x2 = 0 give ḣ = 0, not negative. For instance, when x2 = 0, the boundary requires 1 - cos(x1) = 0.999999, so cos(x1) = 0.000001 and x1 = ± arccos(0.000001); at these points ḣ = 0. This satisfies the Nagumo condition. Therefore Condition 2 holds rigorously.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The set can be enlarged by replacing 0.999999 with any constant c < 1. For h_c(x) = c - (1 - cos(x1)) - 0.5*x2^2, Condition 1 holds whenever c < 1, since h_c <= c - 1 < 0 on the unsafe set, and Condition 2 still holds because ḣ_c = x2^2 >= 0. Thus one can choose, for example, c = 0.999999999 to obtain a strictly larger certified invariant set. However, choosing c = 1 would violate the stated strict Condition 1 because points with V = 1 are included in the unsafe set and would have h = 0 rather than h < 0."
+      },
+      "refuter_elapsed_s": 33.941
+    }
+  ],
+  "final_barrier": {
+    "h": "0.999999 - (1 - cos(x1)) - 0.5*x2**2",
+    "invariant_set": "C = {x in X : (1 - cos(x1)) + 0.5*x2**2 <= 0.999999}",
+    "condition1_check": "Let E(x) = (1 - cos(x1)) + 0.5*x2**2. The unsafe set is X_u = {x : E(x) >= 1.0}. The proposed barrier is h(x) = 0.999999 - E(x). For every x in X_u, E(x) >= 1.0, hence h(x) = 0.999999 - E(x) <= 0.999999 - 1.0 = -0.000001 < 0. Therefore h(x) < 0 on the entire unsafe set.",
+    "lie_derivative": "h(x) = 0.999999 - (1 - cos(x1)) - 0.5*x2**2 = cos(x1) - 0.000001 - 0.5*x2**2. Therefore, ∂h/∂x1 = -sin(x1) and ∂h/∂x2 = -x2. The vector field is f(x) = (x2, -sin(x1) - x2). Thus ḣ(x) = ∇h(x)·f(x) = (-sin(x1))*x2 + (-x2)*(-sin(x1) - x2) = -x2*sin(x1) + x2*sin(x1) + x2**2 = x2**2.",
+    "condition2_check": "The boundary ∂C is given by h(x) = 0, equivalently (1 - cos(x1)) + 0.5*x2**2 = 0.999999. On this boundary, the Lie derivative is ḣ(x) = x2**2. Since x2**2 >= 0 for all real x2, we have ḣ(x) >= 0 for every x in ∂C. Therefore Nagumo's condition is satisfied.",
+    "reasoning": "The natural Lyapunov/energy function for the damped pendulum is E(x) = (1 - cos(x1)) + 0.5*x2**2. Along trajectories, Ė(x) = -x2**2 <= 0, so every strict sublevel set of E is forward invariant. The unsafe set is exactly E(x) >= 1.0. Therefore choosing h(x) = c - E(x) with c < 1 gives an invariant safe set contained strictly inside the complement of the unsafe set. To make the invariant set as large as possible while still satisfying the strict requirement h(x) < 0 on all of X_u, we choose c = 0.999999, very close to 1. The resulting set C = {E <= 0.999999} is a large invariant subset of the safe region."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 69.776
+  },
+  "tokens": {
+    "input": 2371,
+    "output": 3328,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1555,
+        "output_tokens": 1694,
+        "elapsed_s": 35.638
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 816,
+        "output_tokens": 1634,
+        "elapsed_s": 33.941
+      }
+    ]
+  }
+}

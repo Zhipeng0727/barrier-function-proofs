@@ -1,0 +1,124 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "Multiplicative 2-chain: polynomial system with DOUBLY-exponential transient excu",
+    "ode": "dx1/dt = x1*(x2 - 1), dx2/dt = x2*(x3 - 1), dx3/dt = -x3",
+    "state_vars": [
+      "x1",
+      "x2",
+      "x3"
+    ],
+    "f_expr": [
+      "x1*(x2 - 1)",
+      "x2*(x3 - 1)",
+      "-x3"
+    ],
+    "X_domain": "x1 > 0, x2 > 0, x3 in R; forward-invariant positive orthant in the first two coordinates, with equilibrium at boundary corner (0,0,0).",
+    "X_u_desc": "No unsafe set was specified; invented unsafe set representing excessive transient excursion of the first state: x1 >= 10.",
+    "X_u_expr": "x1 >= 10",
+    "X_bounds": [
+      [
+        0,
+        20
+      ],
+      [
+        0,
+        20
+      ],
+      [
+        -5,
+        10
+      ]
+    ],
+    "meta": {
+      "title": "Multiplicative 2-chain: polynomial system with DOUBLY-exponential transient excursion (growth lemma kills all polynomial Lyapunov functions)",
+      "group": "B* — Growth-lemma constructions",
+      "system_class": "polynomial quadratic",
+      "poly_failure_mechanism": "growth-lemma"
+    }
+  },
+  "timestamp": "2026-06-11T19:08:19.580010",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "log(10) - log(x1) - x2*(exp(x3) + 0.125*exp(-x3))",
+        "invariant_set": "C = {x1 > 0, x2 > 0, x3 in R : log(10) - log(x1) - x2*(exp(x3) + 0.125*exp(-x3)) >= 0}. Equivalently, x1*exp(x2*(exp(x3) + 0.125*exp(-x3))) <= 10.",
+        "condition1_check": "On the unsafe set X_u = {x1 >= 10, x2 > 0}, we have log(10) - log(x1) <= 0. Also exp(x3) + 0.125*exp(-x3) > 0 for every real x3, and x2 > 0, hence x2*(exp(x3) + 0.125*exp(-x3)) > 0. Therefore h(x) = log(10) - log(x1) - x2*(exp(x3) + 0.125*exp(-x3)) < 0 on X_u. Thus the unsafe set lies strictly in the negative region of h.",
+        "lie_derivative": "Let E(x3) = exp(x3) + 0.125*exp(-x3). Then h = log(10) - log(x1) - x2*E(x3). The partial derivatives are dh/dx1 = -1/x1, dh/dx2 = -E(x3), and dh/dx3 = -x2*(exp(x3) - 0.125*exp(-x3)). Using f1 = x1*(x2 - 1), f2 = x2*(x3 - 1), f3 = -x3, we get ḣ = (-1/x1)*x1*(x2 - 1) - E(x3)*x2*(x3 - 1) - x2*(exp(x3) - 0.125*exp(-x3))*(-x3). Therefore ḣ = 1 - x2 - x2*(x3 - 1)*(exp(x3) + 0.125*exp(-x3)) + x2*x3*(exp(x3) - 0.125*exp(-x3)). Simplifying, ḣ = 1 + x2*(exp(x3) - 1 + 0.125*(1 - 2*x3)*exp(-x3)).",
+        "condition2_check": "We prove the stronger statement that ḣ >= 1 > 0 for all x1 > 0, x2 > 0, x3 in R, hence in particular on the boundary h = 0. Since x2 > 0, it suffices to prove g(z) := exp(z) - 1 + 0.125*(1 - 2*z)*exp(-z) >= 0 for every real z. Multiplying by exp(z) > 0 gives the equivalent inequality phi(u) >= 0 for u = exp(z) > 0, where phi(u) = u**2 - u - 0.25*log(u) + 0.125. Now phi'(u) = 2*u - 1 - 0.25/u, and phi''(u) = 2 + 0.25/u**2 > 0 for all u > 0. Thus phi is strictly convex and has a unique global minimizer where phi'(u) = 0, i.e. 2*u**2 - u - 0.25 = 0. The positive solution is u_* = (1 + sqrt(3))/4. At this point, phi(u_*) = u_* **2 - u_* - 0.25*log(u_*) + 0.125 = (1 - sqrt(3))/8 - 0.25*log((1 + sqrt(3))/4). Numerically, u_* approximately 0.6830127 and phi(u_*) approximately 0.003502 > 0. Since this is the global minimum, phi(u) >= phi(u_*) > 0 for all u > 0. Therefore g(z) >= 0 for all real z, and hence ḣ = 1 + x2*g(x3) >= 1 > 0 everywhere in X. In particular, ḣ >= 0 on ∂C.",
+        "reasoning": "The dynamics form a multiplicative chain, so logarithmic coordinates expose cancellations: d/dt log(x1) = x2 - 1. The term -x2*(exp(x3) + 0.125*exp(-x3)) is chosen so that its Lie derivative cancels the potentially dangerous x2*x3 coupling and leaves a one-dimensional inequality in x3. The coefficient 0.125 is small, giving a larger certified safe set than larger choices such as 0.13, while still making the key inequality exp(z) - 1 + 0.125*(1 - 2*z)*exp(-z) >= 0 globally true. The resulting invariant set is large and directly excludes x1 >= 10 because h < 0 whenever x1 >= 10."
+      },
+      "proposer_elapsed_s": 61.01,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "-0.25*x2*x3*exp(-x3) + x2*exp(x3) - x2 + 0.125*x2*exp(-x3) + 1",
+          "boundary_epsilon": 8448.871856,
+          "boundary_pts_found": 2450,
+          "cond1_max_h_in_Xu": -0.221873,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 1.000978,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.032
+        },
+        "trajectory": {
+          "n_trajs": 11,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.092075,
+          "trajectory_valid": true,
+          "elapsed_s": 0.069
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "Condition 1 holds on the specified unsafe set within X. Let A(x3)=exp(x3)+0.125*exp(-x3)>0. For any x1>=10 and x2>0, h=log(10/x1)-x2*A(x3)<=-x2*A(x3)<0. Numerical checks: at (x1,x2,x3)=(10,1,0), h=0-1*(1+0.125)=-1.125<0; at (20,0.1,0), h=log(0.5)-0.1125≈-0.805647<0. Note that the strict margin vanishes as x2->0+, but x2=0 is outside the stated domain X.",
+        "lie_derivative_computed": "With A=exp(x3)+0.125*exp(-x3), ∇h=(-1/x1, -A, -x2*(exp(x3)-0.125*exp(-x3))). Therefore L_f h = -(x2-1) - x2*A*(x3-1) + x2*x3*(exp(x3)-0.125*exp(-x3)) = 1 - x2 + x2*(exp(x3)+0.125*exp(-x3)*(1-2*x3)) = 1 + x2*(exp(x3)-1+0.125*exp(-x3)*(1-2*x3)).",
+        "condition2_result": "Condition 2 holds. On the boundary h=0, one has x1=10*exp(-x2*A(x3)), with x2>0 and x3 arbitrary. The Lie derivative is independent of x1, so it suffices to prove S(x3)=exp(x3)-1+0.125*exp(-x3)*(1-2*x3)>=0 for all x3. Multiplying by 8*exp(x3)>0 gives 8*exp(x3)*S(x3)=8*exp(2*x3)-8*exp(x3)+1-2*x3. Let y=exp(x3)>0. This becomes phi(y)=8*y^2-8*y+1-2*log(y). Now phi'(y)=16*y-8-2/y, with the unique positive critical point y0=(1+sqrt(3))/4. Since phi''(y)=16+2/y^2>0, this is the global minimum. At y0, phi(y0)=1-sqrt(3)-2*log((1+sqrt(3))/4)≈0.03043>0. Hence S(x3)>0 for all x3, and therefore L_f h=1+x2*S(x3)>1>0 on the entire boundary h=0. Numerical boundary check near the worst region: for x2=1, x3≈log((1+sqrt(3))/4)≈-0.38124, x1=10*exp(-x2*A) gives L_f h≈1.00557>0; at x2=1, x3=0, L_f h=1.125>0.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The threshold log(10) cannot be increased while preserving Condition 1, because points with x1=10 and very small x2>0 would then have h>=0. However, the coefficient 0.125 in front of exp(-x3) is slightly conservative. For barriers of the same form h=log(10)-log(x1)-x2*(exp(x3)+a*exp(-x3)), the Nagumo condition requires exp(x3)-1+a*exp(-x3)*(1-2*x3)>=0 for all x3. The minimal admissible a is a*=sup_{z<0} exp(z)*(1-exp(z))/(1-2z)≈0.12283. Thus one can slightly enlarge C by reducing 0.125 to any a in [a*,0.125), for example a=0.124, after carrying out the same one-dimensional inequality proof."
+      },
+      "refuter_elapsed_s": 141.7
+    }
+  ],
+  "final_barrier": {
+    "h": "log(10) - log(x1) - x2*(exp(x3) + 0.125*exp(-x3))",
+    "invariant_set": "C = {x1 > 0, x2 > 0, x3 in R : log(10) - log(x1) - x2*(exp(x3) + 0.125*exp(-x3)) >= 0}. Equivalently, x1*exp(x2*(exp(x3) + 0.125*exp(-x3))) <= 10.",
+    "condition1_check": "On the unsafe set X_u = {x1 >= 10, x2 > 0}, we have log(10) - log(x1) <= 0. Also exp(x3) + 0.125*exp(-x3) > 0 for every real x3, and x2 > 0, hence x2*(exp(x3) + 0.125*exp(-x3)) > 0. Therefore h(x) = log(10) - log(x1) - x2*(exp(x3) + 0.125*exp(-x3)) < 0 on X_u. Thus the unsafe set lies strictly in the negative region of h.",
+    "lie_derivative": "Let E(x3) = exp(x3) + 0.125*exp(-x3). Then h = log(10) - log(x1) - x2*E(x3). The partial derivatives are dh/dx1 = -1/x1, dh/dx2 = -E(x3), and dh/dx3 = -x2*(exp(x3) - 0.125*exp(-x3)). Using f1 = x1*(x2 - 1), f2 = x2*(x3 - 1), f3 = -x3, we get ḣ = (-1/x1)*x1*(x2 - 1) - E(x3)*x2*(x3 - 1) - x2*(exp(x3) - 0.125*exp(-x3))*(-x3). Therefore ḣ = 1 - x2 - x2*(x3 - 1)*(exp(x3) + 0.125*exp(-x3)) + x2*x3*(exp(x3) - 0.125*exp(-x3)). Simplifying, ḣ = 1 + x2*(exp(x3) - 1 + 0.125*(1 - 2*x3)*exp(-x3)).",
+    "condition2_check": "We prove the stronger statement that ḣ >= 1 > 0 for all x1 > 0, x2 > 0, x3 in R, hence in particular on the boundary h = 0. Since x2 > 0, it suffices to prove g(z) := exp(z) - 1 + 0.125*(1 - 2*z)*exp(-z) >= 0 for every real z. Multiplying by exp(z) > 0 gives the equivalent inequality phi(u) >= 0 for u = exp(z) > 0, where phi(u) = u**2 - u - 0.25*log(u) + 0.125. Now phi'(u) = 2*u - 1 - 0.25/u, and phi''(u) = 2 + 0.25/u**2 > 0 for all u > 0. Thus phi is strictly convex and has a unique global minimizer where phi'(u) = 0, i.e. 2*u**2 - u - 0.25 = 0. The positive solution is u_* = (1 + sqrt(3))/4. At this point, phi(u_*) = u_* **2 - u_* - 0.25*log(u_*) + 0.125 = (1 - sqrt(3))/8 - 0.25*log((1 + sqrt(3))/4). Numerically, u_* approximately 0.6830127 and phi(u_*) approximately 0.003502 > 0. Since this is the global minimum, phi(u) >= phi(u_*) > 0 for all u > 0. Therefore g(z) >= 0 for all real z, and hence ḣ = 1 + x2*g(x3) >= 1 > 0 everywhere in X. In particular, ḣ >= 0 on ∂C.",
+    "reasoning": "The dynamics form a multiplicative chain, so logarithmic coordinates expose cancellations: d/dt log(x1) = x2 - 1. The term -x2*(exp(x3) + 0.125*exp(-x3)) is chosen so that its Lie derivative cancels the potentially dangerous x2*x3 coupling and leaves a one-dimensional inequality in x3. The coefficient 0.125 is small, giving a larger certified safe set than larger choices such as 0.13, while still making the key inequality exp(z) - 1 + 0.125*(1 - 2*z)*exp(-z) >= 0 globally true. The resulting invariant set is large and directly excludes x1 >= 10 because h < 0 whenever x1 >= 10."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 202.819
+  },
+  "tokens": {
+    "input": 2871,
+    "output": 10340,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1897,
+        "output_tokens": 3213,
+        "elapsed_s": 61.01
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 974,
+        "output_tokens": 7127,
+        "elapsed_s": 141.7
+      }
+    ]
+  }
+}

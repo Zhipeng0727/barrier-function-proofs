@@ -1,0 +1,34 @@
+{
+  "id": "L4-014",
+  "cert": "0.5*x**2+0.5*y**2",
+  "result": {
+    "solved": true,
+    "cert": "0.5*x**2+0.5*y**2",
+    "code": "import Mathlib.Data.Real.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\nimport Mathlib.Tactic\n\nopen Real\n\n-- Condition P0: V(x*) = 0 at the equilibrium x* = [0.0, 0.0]\ntheorem condition_P0 : (0.5 * (0 : \u211d)^2) + (0.5 * (0 : \u211d)^2) = 0 := by\n  norm_num\n\n-- Condition P1: V(x) > 0 for all x in X with x != x*\ntheorem condition_P1 (x y : \u211d) (h : \u00ac(x = 0 \u2227 y = 0)) :\n    0.5 * x^2 + 0.5 * y^2 > 0 := by\n  rcases not_and_or.mp h with hx | hy\n  \u00b7 have : x^2 > 0 := by positivity\n    nlinarith [sq_nonneg y]\n  \u00b7 have : y^2 > 0 := by positivity\n    nlinarith [sq_nonneg x]\n\n-- Bridging Lemma: damping term y\u00b7tanh(y) is nonneg\nlemma y_tanh_y_nonneg (y : \u211d) : 0 \u2264 y * Real.tanh y := by\n  rw [tanh_eq_sinh_div_cosh, \u2190 mul_div_assoc]\n  apply div_nonneg _ (cosh_pos y).le\n  rcases le_total 0 y with hy | hy\n  \u00b7 exact mul_nonneg hy (sinh_nonneg_iff.mpr hy)\n  \u00b7 have hs : sinh y \u2264 0 := by\n      have h := sinh_nonneg_iff (x := -y)\n      rw [sinh_neg] at h\n      linarith [h.mpr (by linarith : (0:\u211d) \u2264 -y)]\n    nlinarith [mul_nonneg (neg_nonneg.2 hy) (neg_nonneg.2 hs)]\n\n-- Condition D: Vdot(x) = \u2207V(x) \u00b7 f(x) <= 0 for all x in the domain X\ntheorem condition_D (x y : \u211d) : x * y + y * (-x - Real.tanh y) \u2264 0 := by\n  have h1 : x * y + y * (-x - Real.tanh y) = -(y * Real.tanh y) := by ring\n  rw [h1]\n  nlinarith [y_tanh_y_nonneg y]\n\n-- Main theorem combining all conditions for Lyapunov stability\ntheorem lyapunov_stability (x y : \u211d) (h : \u00ac(x = 0 \u2227 y = 0)) :\n    0.5 * x^2 + 0.5 * y^2 > 0 \u2227\n    x * y + y * (-x - Real.tanh y) \u2264 0 := by\n  exact \u27e8condition_P1 x y h, condition_D x y\u27e9",
+    "diag": "",
+    "levels": [
+      {
+        "barrier": 0,
+        "inner": 0,
+        "strategy": "fresh",
+        "compile_ok": true,
+        "route": "OK",
+        "err": "compiled"
+      }
+    ],
+    "certs_tried": [
+      "0.5*x**2+0.5*y**2"
+    ],
+    "calls": 1,
+    "final_level": "L1"
+  },
+  "attempts": [
+    {
+      "n": 1,
+      "strategy": "fresh",
+      "path": "/Users/zhipeng/Desktop/paper4/6.11new/artifacts/L4-014_01_fresh.lean",
+      "code_len": 1646,
+      "compile_ok": true
+    }
+  ]
+}

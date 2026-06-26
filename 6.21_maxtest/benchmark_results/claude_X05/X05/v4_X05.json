@@ -1,0 +1,118 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "Two-well multiplicative excursion: xdot = x(y^4 - 1) with a clean log + quartic ",
+    "ode": "dx1/dt = x1*(x2**4 - 1), dx2/dt = -x2",
+    "state_vars": [
+      "x1",
+      "x2"
+    ],
+    "f_expr": [
+      "x1*(x2**4 - 1)",
+      "-x2"
+    ],
+    "X_domain": "R^2",
+    "X_u_desc": "Invented unsafe set for an excursion/safety check: states where the x-coordinate magnitude is at least 2.",
+    "X_u_expr": "Abs(x1) >= 2",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -2,
+        2
+      ]
+    ],
+    "meta": {
+      "title": "Two-well multiplicative excursion: xdot = x(y^4 - 1) with a clean log + quartic certificate",
+      "group": "B* — Growth-lemma constructions",
+      "system_class": "polynomial (degree 5)",
+      "poly_failure_mechanism": "growth-lemma"
+    }
+  },
+  "timestamp": "2026-06-11T19:47:17.259987",
+  "model": "claude-sonnet-4-6",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "2.99 - x1**2 * exp(x2**4 / 2) / (1 + x2**2)",
+        "invariant_set": "C = {(x1, x2) : x1**2 * exp(x2**4 / 2) / (1 + x2**2) <= 2.99}",
+        "condition1_check": "On X_u, |x1| >= 2 so x1**2 >= 4. Define f(x2) = exp(x2**4/2)/(1+x2**2). Setting u = x2**2 >= 0, we minimize F(u) = exp(u**2/2)/(1+u). F'(u) = exp(u**2/2)*(u**2+u-1)/(1+u)**2, which vanishes at u* = (sqrt(5)-1)/2 ≈ 0.6180 (the positive root of u**2+u-1=0). Since F''(u*) > 0 this is a global minimum. At u*: u*^2/2 = (3-sqrt(5))/4 ≈ 0.19098, so F(u*) = exp((3-sqrt(5))/4) / ((sqrt(5)+1)/2) ≈ 1.21065/1.61803 ≈ 0.74822. Therefore min_{x2} f(x2) ≈ 0.74822 and on X_u: h <= 2.99 - 4*0.74822 = 2.99 - 2.99288 = -0.00288 < 0. Condition 1 satisfied.",
+        "lie_derivative": "h = 2.99 - x1**2 * exp(x2**4/2)/(1+x2**2). Let phi(x2) = exp(x2**4/2)/(1+x2**2). Then dh/dx1 = -2*x1*phi, dh/dx2 = -x1**2 * phi'(x2). Compute phi'(x2): phi'(x2) = [2*x2**3 * exp(x2**4/2)*(1+x2**2) - exp(x2**4/2)*2*x2]/(1+x2**2)**2 = exp(x2**4/2)*2*x2*(x2**4+x2**2-1)/(1+x2**2)**2. So: hdot = (-2*x1*phi)*x1*(x2**4-1) + (-x1**2 * phi'(x2))*(-x2) = -2*x1**2*(x2**4-1)*phi + x1**2*x2*phi'(x2) = x1**2 * [2*(1-x2**4)*phi + x2*phi'(x2)]. Substituting: x2*phi'(x2) = exp(x2**4/2)*2*x2**2*(x2**4+x2**2-1)/(1+x2**2)**2. Factor out exp(x2**4/2)/(1+x2**2)**2: hdot = x1**2 * exp(x2**4/2)/(1+x2**2)**2 * [2*(1-x2**4)*(1+x2**2) + 2*x2**2*(x2**4+x2**2-1)]. Expand bracket: 2*(1-x2**4)*(1+x2**2) = 2*(1+x2**2-x2**4-x2**6). Add 2*x2**2*(x2**4+x2**2-1) = 2*(x2**6+x2**4-x2**2). Sum = 2*(1+x2**2-x2**4-x2**6+x2**6+x2**4-x2**2) = 2*1 = 2. Therefore hdot = 2*x1**2 * exp(x2**4/2) / (1+x2**2)**2.",
+        "condition2_check": "On dC (boundary h=0): x1**2 * exp(x2**4/2)/(1+x2**2) = 2.99, so x1**2 = 2.99*(1+x2**2)/exp(x2**4/2) > 0 for all x2 (since 2.99 > 0 and (1+x2**2)/exp(x2**4/2) > 0). In particular x1 != 0 on dC. Substituting into the Lie derivative: hdot = 2*x1**2 * exp(x2**4/2)/(1+x2**2)**2 = 2*[2.99*(1+x2**2)/exp(x2**4/2)] * exp(x2**4/2)/(1+x2**2)**2 = 2*2.99/(1+x2**2) = 5.98/(1+x2**2) > 0 for all x2. Therefore hdot > 0 on dC, which strictly satisfies the Nagumo condition hdot >= 0.",
+        "reasoning": "The key insight is to use a separable form h = A - x1**2 * phi(x2) and choose phi to make the Lie derivative sign-definite. On dC, x1**2 = A/phi(x2), so hdot = x1**2 * [2*(1-x2**4)*phi + x2*phi'] = A * [2*(1-x2**4) + x2*(log phi)']. Setting the bracket equal to 2/(1+x2**2) > 0, we need x2*(log phi)' = 2/(1+x2**2) - 2*(1-x2**4) = 2x2**4/(1+x2**2) + 2/x2**2 ... actually we solve (log phi)' = 2x2**3 - 2x2/(1+x2**2), giving log phi = x2**4/2 - log(1+x2**2), i.e. phi = exp(x2**4/2)/(1+x2**2). This choice makes the bracket collapse to the constant 2, so hdot = 2*A*phi/(1+x2**2)**2 which is always positive on dC. The constant A = 2.99 is chosen strictly below 4*min(phi) ≈ 2.9929 to guarantee h < 0 on the unsafe set {|x1|>=2}."
+      },
+      "proposer_elapsed_s": 81.169,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "2*x1**2*exp(x2**4/2)/(x2**4 + 2*x2**2 + 1)",
+          "boundary_epsilon": 101.193631,
+          "boundary_pts_found": 3761,
+          "cond1_max_h_in_Xu": -0.038101,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 0.0,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.085
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.025856,
+          "trajectory_valid": true,
+          "elapsed_s": 0.15
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "Condition 1 satisfied. For any point in X_u where |x1| >= 2, we have x1^2 >= 4. The function g(x1,x2) = x1^2 * exp(x2^4/2) / (1 + x2^2) achieves its minimum value when exp(x2^4/2)/(1+x2^2) is minimized. Since exp(x2^4/2) >= 1 and (1+x2^2) >= 1, with the minimum occurring at x2=0 giving exp(0)/1 = 1, we have g(x1,x2) >= 4*1 = 4 for all |x1| >= 2. Therefore h(x) = 2.99 - g(x1,x2) <= 2.99 - 4 = -1.01 < 0 throughout X_u.",
+        "lie_derivative_computed": "ḣ(x) = 2*x1^2 * exp(x2^4/2) / (1 + x2^2)^2",
+        "condition2_result": "Condition 2 satisfied. The Lie derivative ḣ(x) = 2*x1^2 * exp(x2^4/2) / (1 + x2^2)^2 >= 0 everywhere since all factors are non-negative. On the boundary ∂C where h(x) = 0, we have x1^2 * exp(x2^4/2) / (1 + x2^2) = 2.99, which implies x1 ≠ 0. Therefore ḣ(x) > 0 strictly on ∂C, satisfying the Nagumo condition with margin.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The invariant set can be enlarged by increasing the threshold from 2.99 toward 4. The critical constraint occurs at x2=0 where the boundary condition becomes x1^2 <= threshold. Since the unsafe set requires |x1| >= 2 (i.e., x1^2 >= 4), any threshold below 4 maintains safety. The current threshold of 2.99 gives |x1| <= 1.729 at x2=0, leaving substantial room for enlargement. Recommend increasing the threshold to approximately 3.9 or 3.95, which would expand the invariant set significantly while maintaining a safety margin from the unsafe boundary."
+      },
+      "refuter_elapsed_s": 70.958
+    }
+  ],
+  "final_barrier": {
+    "h": "2.99 - x1**2 * exp(x2**4 / 2) / (1 + x2**2)",
+    "invariant_set": "C = {(x1, x2) : x1**2 * exp(x2**4 / 2) / (1 + x2**2) <= 2.99}",
+    "condition1_check": "On X_u, |x1| >= 2 so x1**2 >= 4. Define f(x2) = exp(x2**4/2)/(1+x2**2). Setting u = x2**2 >= 0, we minimize F(u) = exp(u**2/2)/(1+u). F'(u) = exp(u**2/2)*(u**2+u-1)/(1+u)**2, which vanishes at u* = (sqrt(5)-1)/2 ≈ 0.6180 (the positive root of u**2+u-1=0). Since F''(u*) > 0 this is a global minimum. At u*: u*^2/2 = (3-sqrt(5))/4 ≈ 0.19098, so F(u*) = exp((3-sqrt(5))/4) / ((sqrt(5)+1)/2) ≈ 1.21065/1.61803 ≈ 0.74822. Therefore min_{x2} f(x2) ≈ 0.74822 and on X_u: h <= 2.99 - 4*0.74822 = 2.99 - 2.99288 = -0.00288 < 0. Condition 1 satisfied.",
+    "lie_derivative": "h = 2.99 - x1**2 * exp(x2**4/2)/(1+x2**2). Let phi(x2) = exp(x2**4/2)/(1+x2**2). Then dh/dx1 = -2*x1*phi, dh/dx2 = -x1**2 * phi'(x2). Compute phi'(x2): phi'(x2) = [2*x2**3 * exp(x2**4/2)*(1+x2**2) - exp(x2**4/2)*2*x2]/(1+x2**2)**2 = exp(x2**4/2)*2*x2*(x2**4+x2**2-1)/(1+x2**2)**2. So: hdot = (-2*x1*phi)*x1*(x2**4-1) + (-x1**2 * phi'(x2))*(-x2) = -2*x1**2*(x2**4-1)*phi + x1**2*x2*phi'(x2) = x1**2 * [2*(1-x2**4)*phi + x2*phi'(x2)]. Substituting: x2*phi'(x2) = exp(x2**4/2)*2*x2**2*(x2**4+x2**2-1)/(1+x2**2)**2. Factor out exp(x2**4/2)/(1+x2**2)**2: hdot = x1**2 * exp(x2**4/2)/(1+x2**2)**2 * [2*(1-x2**4)*(1+x2**2) + 2*x2**2*(x2**4+x2**2-1)]. Expand bracket: 2*(1-x2**4)*(1+x2**2) = 2*(1+x2**2-x2**4-x2**6). Add 2*x2**2*(x2**4+x2**2-1) = 2*(x2**6+x2**4-x2**2). Sum = 2*(1+x2**2-x2**4-x2**6+x2**6+x2**4-x2**2) = 2*1 = 2. Therefore hdot = 2*x1**2 * exp(x2**4/2) / (1+x2**2)**2.",
+    "condition2_check": "On dC (boundary h=0): x1**2 * exp(x2**4/2)/(1+x2**2) = 2.99, so x1**2 = 2.99*(1+x2**2)/exp(x2**4/2) > 0 for all x2 (since 2.99 > 0 and (1+x2**2)/exp(x2**4/2) > 0). In particular x1 != 0 on dC. Substituting into the Lie derivative: hdot = 2*x1**2 * exp(x2**4/2)/(1+x2**2)**2 = 2*[2.99*(1+x2**2)/exp(x2**4/2)] * exp(x2**4/2)/(1+x2**2)**2 = 2*2.99/(1+x2**2) = 5.98/(1+x2**2) > 0 for all x2. Therefore hdot > 0 on dC, which strictly satisfies the Nagumo condition hdot >= 0.",
+    "reasoning": "The key insight is to use a separable form h = A - x1**2 * phi(x2) and choose phi to make the Lie derivative sign-definite. On dC, x1**2 = A/phi(x2), so hdot = x1**2 * [2*(1-x2**4)*phi + x2*phi'] = A * [2*(1-x2**4) + x2*(log phi)']. Setting the bracket equal to 2/(1+x2**2) > 0, we need x2*(log phi)' = 2/(1+x2**2) - 2*(1-x2**4) = 2x2**4/(1+x2**2) + 2/x2**2 ... actually we solve (log phi)' = 2x2**3 - 2x2/(1+x2**2), giving log phi = x2**4/2 - log(1+x2**2), i.e. phi = exp(x2**4/2)/(1+x2**2). This choice makes the bracket collapse to the constant 2, so hdot = 2*A*phi/(1+x2**2)**2 which is always positive on dC. The constant A = 2.99 is chosen strictly below 4*min(phi) ≈ 2.9929 to guarantee h < 0 on the unsafe set {|x1|>=2}."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 152.404
+  },
+  "tokens": {
+    "input": 763,
+    "output": 6988,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 547,
+        "output_tokens": 4270,
+        "elapsed_s": 81.169
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 216,
+        "output_tokens": 2718,
+        "elapsed_s": 70.958
+      }
+    ]
+  }
+}

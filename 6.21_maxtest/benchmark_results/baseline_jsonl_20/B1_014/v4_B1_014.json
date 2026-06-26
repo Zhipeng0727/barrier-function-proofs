@@ -1,0 +1,119 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B1-014",
+    "ode": "dx1/dt = x2 + 2*x1*x2, dx2/dt = -x1 + 2*x1**2 - x2**2",
+    "state_vars": [
+      "x1",
+      "x2"
+    ],
+    "f_expr": [
+      "x2 + 2*x1*x2",
+      "-x1 + 2*x1**2 - x2**2"
+    ],
+    "X_domain": "ball",
+    "X_u_desc": "x1 + x2**2 <= 0",
+    "X_u_expr": "x1 + x2**2 <= 0",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B1-014",
+      "layer": "L1-lit",
+      "group": "B1",
+      "task": "barrier",
+      "cert_class": "poly-explicit",
+      "source": "Prajna & Jadbabaie 2004 (barr1, FOSSIL)"
+    }
+  },
+  "timestamp": "2026-06-11T18:30:15.007275",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "-(0.5 + x1)*x2**2 - 0.5*x1**2 + (2/3)*x1**3 - 0.000001",
+        "invariant_set": "C = {x in X : -(0.5 + x1)*x2**2 - 0.5*x1**2 + (2/3)*x1**3 - 0.000001 >= 0}, equivalently C = {x in X : (0.5 + x1)*x2**2 + 0.5*x1**2 - (2/3)*x1**3 <= -0.000001}",
+        "condition1_check": "Define H(x1,x2) = (0.5 + x1)*x2**2 + 0.5*x1**2 - (2/3)*x1**3, so h = -H - 0.000001. The unsafe set is X_u = {x : x1 + x2**2 <= 0}. Let s = x2**2 >= 0. On X_u, x1 <= -s. For fixed s, consider H as a function of x1: H(x1,s) = (0.5 + x1)*s + 0.5*x1**2 - (2/3)*x1**3. Its derivative with respect to x1 is dH/dx1 = s + x1 - 2*x1**2. Since x1 <= -s, we have s + x1 <= 0 and -2*x1**2 <= 0, hence dH/dx1 <= 0. Therefore, for x1 <= -s, H(x1,s) >= H(-s,s). Now compute H(-s,s) = (0.5 - s)*s + 0.5*s**2 + (2/3)*s**3 = 0.5*s - 0.5*s**2 + (2/3)*s**3 = s*((2/3)*s**2 - 0.5*s + 0.5). The quadratic (2/3)*s**2 - 0.5*s + 0.5 has discriminant (-0.5)**2 - 4*(2/3)*0.5 = 0.25 - 1.3333333333333333 < 0 and positive leading coefficient, so it is strictly positive for all real s. Hence H(-s,s) >= 0 for all s >= 0, with equality only at s = 0. Thus H(x) >= 0 on X_u. Consequently h(x) = -H(x) - 0.000001 <= -0.000001 < 0 for every x in X_u.",
+        "lie_derivative": "For h(x1,x2) = -(0.5 + x1)*x2**2 - 0.5*x1**2 + (2/3)*x1**3 - 0.000001, the gradient is dh/dx1 = -x2**2 - x1 + 2*x1**2 and dh/dx2 = -(1 + 2*x1)*x2. The dynamics are f1 = x2 + 2*x1*x2 = (1 + 2*x1)*x2 and f2 = -x1 + 2*x1**2 - x2**2. Notice that dh/dx1 = f2 and dh/dx2 = -f1. Therefore ḣ = dh/dx1*f1 + dh/dx2*f2 = f2*f1 - f1*f2 = 0.",
+        "condition2_check": "Since the Lie derivative satisfies ḣ(x) = 0 for all x, it is in particular true that ḣ(x) = 0 >= 0 on the boundary ∂C = {x : h(x) = 0}. Therefore Nagumo's boundary condition is satisfied.",
+        "reasoning": "The system is Hamiltonian with conserved quantity H(x1,x2) = (0.5 + x1)*x2**2 + 0.5*x1**2 - (2/3)*x1**3. Indeed, x1_dot = dH/dx2 and x2_dot = -dH/dx1. Hence any sublevel set of H is invariant. The unsafe set satisfies H >= 0 everywhere, so choosing C as a negative sublevel set H <= -0.000001 gives an invariant set that cannot intersect the unsafe set. The small offset 0.000001 enforces the strict requirement h < 0 on the unsafe set, including the origin where H = 0."
+      },
+      "proposer_elapsed_s": 61.186,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "0",
+          "boundary_epsilon": 0.713771,
+          "boundary_pts_found": 1247,
+          "cond1_max_h_in_Xu": -0.002214,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 0.0,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.022
+        },
+        "trajectory": {
+          "n_trajs": 0,
+          "trajectory_valid": null,
+          "note": "All trajectory integrations failed",
+          "elapsed_s": 0.228
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "Condition 1 holds. Numerical checks: at (0,0), x1+x2^2=0 and h=-0.000001<0; at (-1,0), x1+x2^2=-1 and h=-1.1666676666666667<0; at (-0.25,0.5), x1+x2^2=0 and h≈-0.10416766666666667<0. Formal proof: let x=x1, y=x2, epsilon=0.000001, and H=h+epsilon=-(1/2+x)y^2-(1/2)x^2+(2/3)x^3. On the unsafe set x+y^2<=0, set s=-x>=0 and r=y^2, so 0<=r<=s. Then H=(s-1/2)r-(1/2)s^2-(2/3)s^3. If 0<=s<=1/2, then H<=-(1/2)s^2-(2/3)s^3<=0, hence h=H-epsilon<=-epsilon<0. If s>=1/2, then H<=(s-1/2)s-(1/2)s^2-(2/3)s^3=-s*((2/3)s^2-(1/2)s+1/2)<0 because the quadratic has discriminant 1/4-4/3=-13/12<0 and positive leading coefficient. Therefore h<0 throughout the unsafe set.",
+        "lie_derivative_computed": "∇h = (-x2^2 - x1 + 2*x1^2, -(1+2*x1)*x2). Since f = ((1+2*x1)*x2, -x1 + 2*x1^2 - x2^2), we have ∂h/∂x1 = f2 and ∂h/∂x2 = -f1. Therefore ḣ = ∇h·f = (-x2^2 - x1 + 2*x1^2)*(1+2*x1)*x2 - (1+2*x1)*x2*(-x1 + 2*x1^2 - x2^2) = 0 identically.",
+        "condition2_result": "Condition 2 holds globally, hence in particular on the boundary h=0. Numerical boundary check: choose x1=1 and x2=sqrt(1/9 - (2/3)*0.000001)≈0.3333323333318333. Then h=0. At this point, f1=(1+2*x1)*x2≈0.999997, f2=-x1+2*x1^2-x2^2≈0.8888895555555556, ∇h≈(0.8888895555555556,-0.999997), and ∇h·f≈0.8888895555555556*0.999997 - 0.999997*0.8888895555555556 = 0. Since ḣ is identically zero, there are no missed corner or degeneracy cases on h=0.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The invariant set can be enlarged by reducing the constant offset. Since H=-(0.5+x1)*x2^2 - 0.5*x1^2 + (2/3)*x1^3 is an exact first integral and H<=0 on the unsafe set, any barrier h_delta=H-delta with delta>0 satisfies h_delta<0 on the unsafe set and ḣ_delta=0. The proposed choice delta=0.000001 is conservative; taking, for example, delta=1e-9 gives the larger invariant set {H>=1e-9}. One cannot take delta=0 under the stated strict Condition 1, because H(0,0)=0 and (0,0) belongs to the unsafe set."
+      },
+      "refuter_elapsed_s": 75.166
+    }
+  ],
+  "final_barrier": {
+    "h": "-(0.5 + x1)*x2**2 - 0.5*x1**2 + (2/3)*x1**3 - 0.000001",
+    "invariant_set": "C = {x in X : -(0.5 + x1)*x2**2 - 0.5*x1**2 + (2/3)*x1**3 - 0.000001 >= 0}, equivalently C = {x in X : (0.5 + x1)*x2**2 + 0.5*x1**2 - (2/3)*x1**3 <= -0.000001}",
+    "condition1_check": "Define H(x1,x2) = (0.5 + x1)*x2**2 + 0.5*x1**2 - (2/3)*x1**3, so h = -H - 0.000001. The unsafe set is X_u = {x : x1 + x2**2 <= 0}. Let s = x2**2 >= 0. On X_u, x1 <= -s. For fixed s, consider H as a function of x1: H(x1,s) = (0.5 + x1)*s + 0.5*x1**2 - (2/3)*x1**3. Its derivative with respect to x1 is dH/dx1 = s + x1 - 2*x1**2. Since x1 <= -s, we have s + x1 <= 0 and -2*x1**2 <= 0, hence dH/dx1 <= 0. Therefore, for x1 <= -s, H(x1,s) >= H(-s,s). Now compute H(-s,s) = (0.5 - s)*s + 0.5*s**2 + (2/3)*s**3 = 0.5*s - 0.5*s**2 + (2/3)*s**3 = s*((2/3)*s**2 - 0.5*s + 0.5). The quadratic (2/3)*s**2 - 0.5*s + 0.5 has discriminant (-0.5)**2 - 4*(2/3)*0.5 = 0.25 - 1.3333333333333333 < 0 and positive leading coefficient, so it is strictly positive for all real s. Hence H(-s,s) >= 0 for all s >= 0, with equality only at s = 0. Thus H(x) >= 0 on X_u. Consequently h(x) = -H(x) - 0.000001 <= -0.000001 < 0 for every x in X_u.",
+    "lie_derivative": "For h(x1,x2) = -(0.5 + x1)*x2**2 - 0.5*x1**2 + (2/3)*x1**3 - 0.000001, the gradient is dh/dx1 = -x2**2 - x1 + 2*x1**2 and dh/dx2 = -(1 + 2*x1)*x2. The dynamics are f1 = x2 + 2*x1*x2 = (1 + 2*x1)*x2 and f2 = -x1 + 2*x1**2 - x2**2. Notice that dh/dx1 = f2 and dh/dx2 = -f1. Therefore ḣ = dh/dx1*f1 + dh/dx2*f2 = f2*f1 - f1*f2 = 0.",
+    "condition2_check": "Since the Lie derivative satisfies ḣ(x) = 0 for all x, it is in particular true that ḣ(x) = 0 >= 0 on the boundary ∂C = {x : h(x) = 0}. Therefore Nagumo's boundary condition is satisfied.",
+    "reasoning": "The system is Hamiltonian with conserved quantity H(x1,x2) = (0.5 + x1)*x2**2 + 0.5*x1**2 - (2/3)*x1**3. Indeed, x1_dot = dH/dx2 and x2_dot = -dH/dx1. Hence any sublevel set of H is invariant. The unsafe set satisfies H >= 0 everywhere, so choosing C as a negative sublevel set H <= -0.000001 gives an invariant set that cannot intersect the unsafe set. The small offset 0.000001 enforces the strict requirement h < 0 on the unsafe set, including the origin where H = 0."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 136.614
+  },
+  "tokens": {
+    "input": 2435,
+    "output": 7082,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1547,
+        "output_tokens": 3085,
+        "elapsed_s": 61.186
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 888,
+        "output_tokens": 3997,
+        "elapsed_s": 75.166
+      }
+    ]
+  }
+}

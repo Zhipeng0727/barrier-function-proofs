@@ -1,0 +1,2027 @@
+{
+ "manifest": "/Users/zhipeng/Desktop/paper4/data/lean4_core200_diverse_manifest_v5.json",
+ "limit": 200,
+ "n": 53,
+ "standalone": {
+  "sampling": {
+   "proved_sound": 0,
+   "refuted": 0,
+   "unknown": 0,
+   "unsupported": 0,
+   "unavailable": 0,
+   "error": 1,
+   "time": 0.2610000000000001,
+   "proved": 52
+  },
+  "z3": {
+   "proved_sound": 9,
+   "refuted": 0,
+   "unknown": 0,
+   "unsupported": 44,
+   "unavailable": 0,
+   "error": 0,
+   "time": 0.09500000000000003
+  },
+  "interval": {
+   "proved_sound": 27,
+   "refuted": 0,
+   "unknown": 25,
+   "unsupported": 1,
+   "unavailable": 0,
+   "error": 0,
+   "time": 37.714
+  },
+  "dreal": {
+   "proved_sound": 27,
+   "refuted": 0,
+   "unknown": 26,
+   "unsupported": 0,
+   "unavailable": 0,
+   "error": 0,
+   "time": 20.48
+  }
+ },
+ "agent": {
+  "sound": 41,
+  "refuted": 0,
+  "unsound_pass": 12,
+  "unknown": 0,
+  "oracle": 41,
+  "routed_time": 42.004,
+  "runall_time": 58.55
+ },
+ "rows": [
+  {
+   "id": "L1-001",
+   "class": "dim1 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.003,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.001
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.334
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-002",
+   "class": "dim1 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.004,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.001
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.233
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-003",
+   "class": "dim1 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.005,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.001
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.199
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-004",
+   "class": "dim1 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.004,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.001
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.213
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-005",
+   "class": "dim1 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.003,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.001
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.225
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-006",
+   "class": "dim1 cont lya ratio",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.279,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.006
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.002
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.211
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L1-007",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.015,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.011
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.229
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-008",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.143,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.138
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.229
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-009",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.086,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.067
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.215
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-010",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.032,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.023
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.217
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L1-011",
+   "class": "dim3 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.432,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.408
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.232
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L2-001",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.03,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.01
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.008
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.204
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L2-002",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.059,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.007
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.035
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.215
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L2-003",
+   "class": "dim3 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.069,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.011
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.035
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.222
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L2-004",
+   "class": "dim3 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.063,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.012
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.032
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.226
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L2-005",
+   "class": "dim4 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.203,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.013
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.168
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.221
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L2-006",
+   "class": "dim4 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.311,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.013
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.278
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.232
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L2-010",
+   "class": "dim3 cont lya trans ratio",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.094,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.012
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.059
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.23
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L2-011",
+   "class": "dim2 cont lya trans ratio",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.06,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.011
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.028
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.212
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L4-014",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 1.931,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.757
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.22
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L4-015",
+   "class": "dim2 cont lya trans",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 1.591,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.355
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.244
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B1-001",
+   "class": "dim1 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.005,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.001
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.412
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B1-003",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 3.069,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.006
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.297
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.666
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B1-004",
+   "class": "dim1 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.008,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.454
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B1-005",
+   "class": "dim1 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.007,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.002
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.436
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B1-006",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 3.323,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.005
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.377
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.896
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B1-016",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 3.305,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.006
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.733
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.66
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B1-017",
+   "class": "dim1 cont bar ratio",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 1.092,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.009
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.004
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.159
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.892
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B1-020",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 3.397,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.006
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.883
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.45
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B2-001",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 2.805,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.409
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.426
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B2-002",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.897,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.005
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.875
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B2-007",
+   "class": "dim2 cont bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.043,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.005
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.017
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.294
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.905
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B2-008",
+   "class": "dim2 cont bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.015,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.006
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.719
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.869
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B2-014",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 2.339,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.005
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.684
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.696
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B2-015",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 2.083,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.634
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.454
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B2-016",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 1.793,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.356
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.431
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B2-017",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "dreal",
+   "agent_time": 0.412,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.456
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B3-001",
+   "class": "dim2 cont bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 2.828,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.613
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.246
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B3-003",
+   "class": "dim2 cont bar piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 4.085,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.008
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 3.855
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.235
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B3-016",
+   "class": "dim2 cont bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.027,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.006
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.006
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 2.302
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.441
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B6-001",
+   "class": "dim2 cont bar piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 4.104,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.013
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 3.877
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.227
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B6-007",
+   "class": "dim2 cont bar ratio",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.09,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.016
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.033
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 1.007
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.918
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B4-017",
+   "class": "dim1 disc bar polyn",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.014,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.005
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.007
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.45
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B4-018",
+   "class": "dim1 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.495,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.029
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.454
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "B4-019",
+   "class": "dim1 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.014,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.007
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.451
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B4-020",
+   "class": "dim1 disc bar ratio",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.011,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.007
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.032
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.468
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B4-021",
+   "class": "dim1 disc bar piece",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.012,
+   "standalone": {
+    "sampling": {
+     "status": "error",
+     "sound": false,
+     "elapsed_s": 0.003
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.006
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.454
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "B4-022",
+   "class": "dim1 disc bar trans",
+   "task": "barrier",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "interval",
+   "agent_time": 0.008,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.004
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.465
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L7-001",
+   "class": "dim3 disc lya trans ratio",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.249,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.004
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.002
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.228
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L7-002",
+   "class": "dim1 disc lya polyn",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.007,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.003
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.239
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L7-003",
+   "class": "dim3 disc lya piece",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": false,
+   "agent_backend": "sampling",
+   "agent_time": 0.026,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.007
+    },
+    "z3": {
+     "status": "unsupported",
+     "sound": true,
+     "elapsed_s": 0.0
+    },
+    "interval": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.004
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.004
+    }
+   },
+   "oracle_sound": false
+  },
+  {
+   "id": "L7-004",
+   "class": "dim1 disc lya polyn",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.011,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.001
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.006
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.005
+    },
+    "dreal": {
+     "status": "unknown",
+     "sound": true,
+     "elapsed_s": 0.229
+    }
+   },
+   "oracle_sound": true
+  },
+  {
+   "id": "L7-005",
+   "class": "dim2 disc lya polyn",
+   "task": "lyapunov",
+   "ladder": [
+    "sampling",
+    "z3",
+    "interval",
+    "dreal"
+   ],
+   "agent_status": "proved",
+   "agent_sound": true,
+   "agent_backend": "z3",
+   "agent_time": 0.013,
+   "standalone": {
+    "sampling": {
+     "status": "proved",
+     "sound": false,
+     "elapsed_s": 0.002
+    },
+    "z3": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.006
+    },
+    "interval": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.001
+    },
+    "dreal": {
+     "status": "proved",
+     "sound": true,
+     "elapsed_s": 0.23
+    }
+   },
+   "oracle_sound": true
+  }
+ ]
+}

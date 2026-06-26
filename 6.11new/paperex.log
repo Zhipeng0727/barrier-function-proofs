@@ -1,0 +1,15 @@
+system       class                  chosen     verdict   sound     time
+----------------------------------------------------------------------------
+darboux      dim2 cont bar polyn    z3         proved    True     0.12s
+      - sampling  proved      (0.079s)
+      - z3        proved      (0.044s)  {'cond1_h_neg_on_Xu': 'proved', 'cond2_nagumo': 'proved'}
+bb_linear    dim2 cont bar polyn    z3         proved    True     0.02s
+      - sampling  proved      (0.015s)
+      - z3        proved      (0.008s)  {'cond1_h_neg_on_Xu': 'proved', 'cond2_nagumo': 'proved'}
+coupled      dim2 cont bar polyn    z3         proved    True     0.04s
+      - sampling  proved      (0.025s)
+      - z3        proved      (0.01s)  {'cond1_h_neg_on_Xu': 'proved', 'cond2_nagumo': 'proved'}
+vanderpol    dim2 cont bar trans    sampling   refuted   False    0.01s
+      - sampling  refuted     (0.014s)
+ex5          dim2 cont bar trans    sampling   refuted   False    0.01s
+      - sampling  refuted     (0.007s)

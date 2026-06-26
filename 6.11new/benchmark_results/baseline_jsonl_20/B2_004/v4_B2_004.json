@@ -1,0 +1,120 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B2-004",
+    "ode": "dx1/dt = -x1*(1 + sin(x1)**2), dx2/dt = -x2*(1 + sin(x2)**2)",
+    "state_vars": [
+      "x1",
+      "x2"
+    ],
+    "f_expr": [
+      "-x1*(1 + sin(x1)**2)",
+      "-x2*(1 + sin(x2)**2)"
+    ],
+    "X_domain": "ball",
+    "X_u_desc": "||x|| >= 1.7",
+    "X_u_expr": "x1**2 + x2**2 >= 2.8899999999999997",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B2-004",
+      "layer": "L2-new",
+      "group": "B2",
+      "task": "barrier",
+      "cert_class": "nonpoly-explicit",
+      "source": "sin^2-damped dissipation"
+    }
+  },
+  "timestamp": "2026-06-11T18:12:05.451470",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "2.889999 - x1**2 - x2**2",
+        "invariant_set": "C = { (x1,x2) in X : x1**2 + x2**2 <= 2.889999 }, i.e. the closed ball of radius sqrt(2.889999) ≈ 1.6999997059, just inside the unsafe radius 1.7.",
+        "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 1.7}, equivalently x1**2 + x2**2 >= 1.7**2 = 2.89. For any x in X_u, h(x) = 2.889999 - x1**2 - x2**2 <= 2.889999 - 2.89 = -0.000001 < 0. Hence h(x) < 0 on the entire unsafe set.",
+        "lie_derivative": "h(x) = 2.889999 - x1**2 - x2**2, so ∇h(x) = (-2*x1, -2*x2). The dynamics are f1(x) = -x1*(1 + sin(x1)**2), f2(x) = -x2*(1 + sin(x2)**2). Therefore ḣ(x) = ∇h·f = (-2*x1)*(-x1*(1 + sin(x1)**2)) + (-2*x2)*(-x2*(1 + sin(x2)**2)) = 2*x1**2*(1 + sin(x1)**2) + 2*x2**2*(1 + sin(x2)**2).",
+        "condition2_check": "On the boundary ∂C, h(x)=0, hence x1**2 + x2**2 = 2.889999. Since sin(z)**2 >= 0 for every real z, we have 1 + sin(z)**2 >= 1. Thus 2*x1**2*(1 + sin(x1)**2) >= 2*x1**2 and 2*x2**2*(1 + sin(x2)**2) >= 2*x2**2. Therefore, on ∂C, ḣ(x) >= 2*x1**2 + 2*x2**2 = 2*(x1**2 + x2**2) = 2*2.889999 = 5.779998 > 0. Hence ḣ(x) >= 0 for all x in ∂C, satisfying Nagumo's condition.",
+        "reasoning": "The dynamics are componentwise contracting toward the origin because each component satisfies dx_i/dt = -x_i*(1 + sin(x_i)**2), where the multiplier 1 + sin(x_i)**2 is always at least 1. Therefore the squared radius x1**2 + x2**2 strictly decreases along all nonzero trajectories. A natural maximal safe invariant set is therefore a Euclidean ball centered at the origin. Because the unsafe set includes the boundary ||x|| = 1.7 and the requirement is h < 0 on all unsafe states, the barrier must use a radius strictly smaller than 1.7. The choice h = 2.889999 - x1**2 - x2**2 gives a ball extremely close to the safe radius 1.7 while maintaining strict negativity on the unsafe set and a strictly positive Lie derivative on the barrier boundary."
+      },
+      "proposer_elapsed_s": 28.298,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "2*x1**2*(sin(x1)**2 + 1) + 2*x2**2*(sin(x2)**2 + 1)",
+          "boundary_epsilon": 0.354779,
+          "boundary_pts_found": 183,
+          "cond1_max_h_in_Xu": -0.001356,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 9.223628,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.06
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.032582,
+          "trajectory_valid": true,
+          "elapsed_s": 0.167
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "For h(x)=2.889999-x1^2-x2^2 and unsafe set X_u={x: ||x||>=1.7}, any x in X_u satisfies x1^2+x2^2 >= 1.7^2 = 2.89. Therefore h(x) <= 2.889999 - 2.89 = -0.000001 < 0. For example, at x=(1.7,0), h=-0.000001; at x=(0,1.7), h=-0.000001; at x=(1.2,1.3), ||x||≈1.76918 and h=2.889999-3.13=-0.240001. Thus Condition 1 holds rigorously.",
+        "lie_derivative_computed": "∇h=(-2x1,-2x2). The vector field is f=(-x1(1+sin(x1)^2), -x2(1+sin(x2)^2)). Hence ḣ=∇h·f = 2x1^2(1+sin(x1)^2) + 2x2^2(1+sin(x2)^2).",
+        "condition2_result": "On the boundary ∂C, h(x)=0, so x1^2+x2^2=2.889999. Since sin(t)^2 >= 0 for all real t, each factor 1+sin(xi)^2 >= 1. Therefore ḣ >= 2x1^2 + 2x2^2 = 2(2.889999)=5.779998 > 0 on ∂C. For example, at x=(sqrt(2.889999),0)≈(1.6999997059,0), ḣ=2(2.889999)(1+sin(1.6999997059)^2) > 5.779998. Thus the Nagumo condition ḣ>=0 on ∂C holds strictly.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The invariant set can be enlarged slightly by replacing h(x)=2.889999-x1^2-x2^2 with h_epsilon(x)=2.89-ε-x1^2-x2^2 for any ε>0. Condition 1 remains true because on ||x||>=1.7, h_epsilon <= -ε < 0, and Condition 2 remains true because on h_epsilon=0, ḣ >= 2(2.89-ε)>0 provided ε<2.89. This gives an invariant ball of radius sqrt(2.89-ε), which can be made arbitrarily close to 1.7 from below. However, under the strict requirement h<0 on the unsafe set ||x||>=1.7, the certified set cannot include the radius-1.7 boundary itself."
+      },
+      "refuter_elapsed_s": 110.175
+    }
+  ],
+  "final_barrier": {
+    "h": "2.889999 - x1**2 - x2**2",
+    "invariant_set": "C = { (x1,x2) in X : x1**2 + x2**2 <= 2.889999 }, i.e. the closed ball of radius sqrt(2.889999) ≈ 1.6999997059, just inside the unsafe radius 1.7.",
+    "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 1.7}, equivalently x1**2 + x2**2 >= 1.7**2 = 2.89. For any x in X_u, h(x) = 2.889999 - x1**2 - x2**2 <= 2.889999 - 2.89 = -0.000001 < 0. Hence h(x) < 0 on the entire unsafe set.",
+    "lie_derivative": "h(x) = 2.889999 - x1**2 - x2**2, so ∇h(x) = (-2*x1, -2*x2). The dynamics are f1(x) = -x1*(1 + sin(x1)**2), f2(x) = -x2*(1 + sin(x2)**2). Therefore ḣ(x) = ∇h·f = (-2*x1)*(-x1*(1 + sin(x1)**2)) + (-2*x2)*(-x2*(1 + sin(x2)**2)) = 2*x1**2*(1 + sin(x1)**2) + 2*x2**2*(1 + sin(x2)**2).",
+    "condition2_check": "On the boundary ∂C, h(x)=0, hence x1**2 + x2**2 = 2.889999. Since sin(z)**2 >= 0 for every real z, we have 1 + sin(z)**2 >= 1. Thus 2*x1**2*(1 + sin(x1)**2) >= 2*x1**2 and 2*x2**2*(1 + sin(x2)**2) >= 2*x2**2. Therefore, on ∂C, ḣ(x) >= 2*x1**2 + 2*x2**2 = 2*(x1**2 + x2**2) = 2*2.889999 = 5.779998 > 0. Hence ḣ(x) >= 0 for all x in ∂C, satisfying Nagumo's condition.",
+    "reasoning": "The dynamics are componentwise contracting toward the origin because each component satisfies dx_i/dt = -x_i*(1 + sin(x_i)**2), where the multiplier 1 + sin(x_i)**2 is always at least 1. Therefore the squared radius x1**2 + x2**2 strictly decreases along all nonzero trajectories. A natural maximal safe invariant set is therefore a Euclidean ball centered at the origin. Because the unsafe set includes the boundary ||x|| = 1.7 and the requirement is h < 0 on all unsafe states, the barrier must use a radius strictly smaller than 1.7. The choice h = 2.889999 - x1**2 - x2**2 gives a ball extremely close to the safe radius 1.7 while maintaining strict negativity on the unsafe set and a strictly positive Lie derivative on the barrier boundary."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 138.712
+  },
+  "tokens": {
+    "input": 2270,
+    "output": 2434,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1444,
+        "output_tokens": 1261,
+        "elapsed_s": 28.298
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 826,
+        "output_tokens": 1173,
+        "elapsed_s": 110.175
+      }
+    ]
+  }
+}

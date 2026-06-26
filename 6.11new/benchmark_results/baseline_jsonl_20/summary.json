@@ -1,0 +1,749 @@
+{
+  "config": {
+    "dataset": "/Users/zhipeng/lean/data/invariant_dataset.jsonl",
+    "limit": 20,
+    "start": 0,
+    "turns": 5,
+    "model": null,
+    "no_kb": false,
+    "lean": false,
+    "name": "baseline_jsonl_20"
+  },
+  "model": "gpt-5.5",
+  "rows": [
+    {
+      "id": "B2-001",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2002,
+      "tokens_out": 3470,
+      "elapsed_s": 71.195,
+      "h": "2.559999 - x1**2 - x2**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B2-002",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2316,
+      "tokens_out": 3485,
+      "elapsed_s": 70.331,
+      "h": "3.841599 - x1**2 - x2**2 - x3**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B2-003",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2545,
+      "tokens_out": 3450,
+      "elapsed_s": 72.659,
+      "h": "5.121168 - x1**2 - x2**2 - x3**2 - x4**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B2-004",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2270,
+      "tokens_out": 2434,
+      "elapsed_s": 138.712,
+      "h": "2.889999 - x1**2 - x2**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B2-005",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2509,
+      "tokens_out": 2443,
+      "elapsed_s": 53.306,
+      "h": "4.334723999999 - x1**2 - x2**2 - x3**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B2-006",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2303,
+      "tokens_out": 2184,
+      "elapsed_s": 47.811,
+      "h": "0.999999999 - x1**2 - x2**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B2-007",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2463,
+      "tokens_out": 2302,
+      "elapsed_s": 49.234,
+      "h": "2.249999999999 - x1**2 - x2**2 - x3**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B2-008",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2371,
+      "tokens_out": 3328,
+      "elapsed_s": 69.776,
+      "h": "0.999999 - (1 - cos(x1)) - 0.5*x2**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B2-009",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2413,
+      "tokens_out": 2809,
+      "elapsed_s": 60.974,
+      "h": "0.249999999 - log(x1)**2 - log(x2)**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B2-010",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2275,
+      "tokens_out": 3653,
+      "elapsed_s": 76.257,
+      "h": "2.249999999 - x1**2 - x2**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B2-011",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2348,
+      "tokens_out": 5767,
+      "elapsed_s": 113.766,
+      "h": "2.249999 - x1**2 - x2**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B2-012",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2297,
+      "tokens_out": 2341,
+      "elapsed_s": 52.678,
+      "h": "0.999999 - x1**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B2-013",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2508,
+      "tokens_out": 5231,
+      "elapsed_s": 100.842,
+      "h": "1.279160999 - x1**2 - x2**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B2-014",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2512,
+      "tokens_out": 4544,
+      "elapsed_s": 93.612,
+      "h": "5.121168 - x1**2 - x2**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B2-015",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2509,
+      "tokens_out": 3363,
+      "elapsed_s": 67.852,
+      "h": "7.67844 - x1**2 - x2**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B2-016",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2348,
+      "tokens_out": 3326,
+      "elapsed_s": 67.164,
+      "h": "2.889999 - x1**2 - x2**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B2-017",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2346,
+      "tokens_out": 2277,
+      "elapsed_s": 48.44,
+      "h": "5.779215999 - x1**2 - x2**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B2-018",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2458,
+      "tokens_out": 2319,
+      "elapsed_s": 49.09,
+      "h": "0.999999999999 - x1**2 - x2**2 - x3**2",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B1-014",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2435,
+      "tokens_out": 7082,
+      "elapsed_s": 136.614,
+      "h": "-(0.5 + x1)*x2**2 - 0.5*x1**2 + (2/3)*x1**3 - 0.000001",
+      "lean_compile_ok": null,
+      "error": null
+    },
+    {
+      "id": "B1-015",
+      "solved": true,
+      "turns": 1,
+      "refuter_calls": 1,
+      "tokens_in": 2331,
+      "tokens_out": 13561,
+      "elapsed_s": 313.98,
+      "h": "0.4849 - 0.5*x2**2 - 0.5*x1**2 + x1**4/12",
+      "lean_compile_ok": null,
+      "error": null
+    }
+  ],
+  "skipped": [
+    [
+      "L1-001",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-002",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-003",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-004",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-005",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-006",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-007",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-008",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-009",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-010",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-011",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-012",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-013",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-014",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-015",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-016",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-017",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-018",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-019",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L1-020",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L2-001",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L2-002",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L2-003",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L2-004",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L2-005",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L2-006",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L2-007",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L2-008",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L2-009",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L2-010",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L2-011",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L2-012",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L2-013",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L2-014",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L3-001",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L3-002",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L3-003",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L3-004",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L3-005",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L3-006",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L3-007",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L3-008",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L3-009",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L3-010",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L3-011",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L3-012",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L3-013",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L4-001",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L4-002",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L4-003",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L4-004",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L4-005",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L4-006",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L4-007",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L4-008",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L4-009",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L4-010",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L4-011",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L4-012",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L5-001",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L5-002",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L5-003",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L5-004",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L5-005",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L5-006",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L5-007",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L5-008",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L5-009",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L5-010",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L6-001",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L6-002",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L6-003",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L6-004",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L6-005",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "B1-001",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = x2'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B1-002",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = -0.1*x1 + 0.05*x2'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B1-003",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = -0.2*x1'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B1-004",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = -0.1*x1 - x2'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B1-005",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = -0.5*x1'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B1-006",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = -0.4*x1 + 0.1*x2'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B1-007",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = -x1 + x2*x3'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B1-008",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = x2 - x1**3'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B1-009",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = -0.1*x1 + 0.05*x2'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B1-010",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = -0.4*x1 + 0.25*x2*x3 - 0.15*x1**3'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B1-011",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = -0.3*x1 + 0.2*x2*x4 - 0.15*x3**2'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B1-012",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = x2'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B1-013",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = -0.3*x1 + 0.1*x2'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B3-001",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = -2.5*x1 + x2*x3 + u0'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B3-002",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = x2 + u0'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B3-003",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = 0.02*x1 - 0.1*x2 + u0'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B3-004",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = 10*(x2 - x1) + u0'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B3-005",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = -0.1*x1 + 0.17*x2 + u0'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B3-006",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = x2 + u0'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B3-007",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = 7*(x2 - x1 - 0.5*(x1**3 - x1)) + u0'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B3-008",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = -0.2*x1 + 0.3*x2*sin(x1) + u0'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B3-009",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = x2 + 0.2*sin(x2) + u0'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B3-010",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = -x1 + 0.3*sin(x2) + u0'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B3-011",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = x2 + u0'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B3-012",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = x2 - x1**3 + u0'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B3-013",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = -0.5*x1 + 0.1*x2 + u0'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B3-014",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = -1*x1 + 4.5 + u0'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B3-015",
+      "unparseable dynamics: Sympify of expression 'could not parse 'dx1/dt = x2 + u0'' failed, because of exception being raised:\nSyntaxError: invalid syntax (<string>, line 1)"
+    ],
+    [
+      "B4-007",
+      "unparseable Xu: energy >= 1.0"
+    ],
+    [
+      "B6-001",
+      "discrete-time system (pipeline is continuous-time)"
+    ],
+    [
+      "B6-002",
+      "discrete-time system (pipeline is continuous-time)"
+    ],
+    [
+      "B6-003",
+      "discrete-time system (pipeline is continuous-time)"
+    ],
+    [
+      "B6-004",
+      "discrete-time system (pipeline is continuous-time)"
+    ],
+    [
+      "B6-005",
+      "discrete-time system (pipeline is continuous-time)"
+    ],
+    [
+      "B6-006",
+      "discrete-time system (pipeline is continuous-time)"
+    ],
+    [
+      "B6-007",
+      "discrete-time system (pipeline is continuous-time)"
+    ],
+    [
+      "B6-008",
+      "discrete-time system (pipeline is continuous-time)"
+    ],
+    [
+      "B6-009",
+      "discrete-time system (pipeline is continuous-time)"
+    ],
+    [
+      "B6-010",
+      "discrete-time system (pipeline is continuous-time)"
+    ],
+    [
+      "B7-007",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "B7-008",
+      "discrete-time system (pipeline is continuous-time)"
+    ],
+    [
+      "B7-009",
+      "dynamics has 2 components, dim=10"
+    ],
+    [
+      "L2-015",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L3-014",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L3-015",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L4-013",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L4-014",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "L4-015",
+      "no unsafe set Xu (barrier task needs one)"
+    ],
+    [
+      "B4-014",
+      "unparseable Xu: energy >= 1.2"
+    ]
+  ]
+}

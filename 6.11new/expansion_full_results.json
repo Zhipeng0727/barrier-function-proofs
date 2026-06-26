@@ -1,0 +1,53 @@
+{
+  "summary": "Full expansion pipeline test results (2026-06-15)",
+  "note": "GLM API credits exhausted mid-run; 43/52 systems tested",
+  "recipe_store_version": "22 recipes (6 families)",
+  "overall": {
+    "proved": 8,
+    "tested": 43,
+    "untested": 9,
+    "prove_rate_tested": "18.6%",
+    "prove_rate_total_est": "15-19%"
+  },
+  "by_category": {
+    "PA": {"proved": 2, "tested": 5, "total": 5, "rate": "40%", "proved_ids": ["PA-001", "PA-005"]},
+    "PB": {"proved": 0, "tested": 4, "total": 4, "rate": "0%"},
+    "PC": {"proved": 0, "tested": 3, "total": 4, "rate": "0%", "note": "1 untested (credit exhaustion)"},
+    "PD": {"proved": 2, "tested": 3, "total": 3, "rate": "67%", "proved_ids": ["PD-001", "PD-003"]},
+    "PE": {"proved": 0, "tested": 2, "total": 2, "rate": "0%"},
+    "PF": {"proved": 0, "tested": 1, "total": 3, "rate": "0%", "note": "2 untested"},
+    "PG": {"proved": 0, "tested": 2, "total": 2, "rate": "0%"},
+    "PH": {"proved": 0, "tested": 2, "total": 2, "rate": "0%"},
+    "PI": {"proved": 1, "tested": 2, "total": 2, "rate": "50%", "proved_ids": ["PI-001"]},
+    "PJ": {"proved": 0, "tested": 4, "total": 8, "rate": "0%", "note": "4 untested"},
+    "PK": {"proved": 0, "tested": 2, "total": 3, "rate": "0%", "note": "1 untested"},
+    "PL": {"proved": 1, "tested": 3, "total": 3, "rate": "33%", "proved_ids": ["PL-003"]},
+    "PM": {"proved": 1, "tested": 2, "total": 3, "rate": "50%", "proved_ids": ["PM-002"], "note": "1 untested"},
+    "PN": {"proved": 1, "tested": 8, "total": 8, "rate": "12%", "proved_ids": ["PN-001"]}
+  },
+  "proved_systems": [
+    {"id": "PA-001", "title": "∀α tanh-damped oscillator", "calls": 1, "time_s": 15.2, "tokens": 424},
+    {"id": "PA-005", "title": "rotation with nonlinear damping", "calls": 2, "time_s": 30.1, "tokens": 889},
+    {"id": "PD-001", "title": "symplectic Euler energy conservation", "calls": 1, "time_s": 12.8, "tokens": 312},
+    {"id": "PD-003", "title": "vortex strength Casimir", "calls": 1, "time_s": 14.5, "tokens": 287},
+    {"id": "PI-001", "title": "∀n chain of integrators with feedback", "calls": 3, "time_s": 52.8, "tokens": 1932},
+    {"id": "PL-003", "title": "quadrotor altitude safety barrier", "calls": 1, "time_s": 12.8, "tokens": 222},
+    {"id": "PM-002", "title": "natural gradient descent Fisher metric", "calls": 1, "time_s": 26.5, "tokens": 758},
+    {"id": "PN-001", "title": "van der Pol oscillator energy dissipation", "calls": 2, "time_s": 34.8, "tokens": 1292}
+  ],
+  "obstruction_patterns": {
+    "hallucinated_lemma": "Most common — model generates nonexistent Mathlib names",
+    "arithmetic_gap": "nlinarith can't close nonlinear chains without explicit witnesses",
+    "type_class_issue": "OfNat/Decidable instance synthesis failures",
+    "other": "Proof strategy mismatch (correct math, wrong Lean encoding)"
+  },
+  "recipe_gap_analysis": {
+    "high_impact_candidates": [
+      "sigmoid_bound: |σ(x)| ≤ 1, σ'(x) = σ(x)(1-σ(x)) — would unlock PE-001, PE-002",
+      "holling_ii: x/(a+x) ≤ 1 for x,a>0 — would unlock PB ecology family",
+      "michaelis_menten: v*x/(K+x) ≤ v — would unlock PG chemical rxn",
+      "switched_common_lyap: P≻0 + A'P+PA≼0 for each mode — would unlock PH hybrid",
+      "pwa_region_bound: conditional inequality over polytopic regions — would unlock PC piecewise"
+    ]
+  }
+}

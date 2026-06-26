@@ -1,0 +1,526 @@
+[Dataset] 77 usable entries, 123 skipped
+  skipped L1-001: no unsafe set Xu (barrier task needs one)
+  skipped L1-002: no unsafe set Xu (barrier task needs one)
+  skipped L1-003: no unsafe set Xu (barrier task needs one)
+  skipped L1-004: no unsafe set Xu (barrier task needs one)
+  skipped L1-005: no unsafe set Xu (barrier task needs one)
+  skipped L1-006: no unsafe set Xu (barrier task needs one)
+  skipped L1-007: no unsafe set Xu (barrier task needs one)
+  skipped L1-008: no unsafe set Xu (barrier task needs one)
+  skipped L1-009: no unsafe set Xu (barrier task needs one)
+  skipped L1-010: no unsafe set Xu (barrier task needs one)
+
+######## [1/20] B2-001 ########
+[KB] injected 1 reference case(s)
+
+============================================================
+System: B2-001
+Dynamics: dx1/dt = -x1 - tanh(x1), dx2/dt = -x2 - tanh(x2)
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1189 out=1209
+  h = 2.559999 - x1**2 - x2**2
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=813 out=2261
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2002/3470 | total: 71.195s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_001/v4_B2_001.json
+
+######## [2/20] B2-002 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B2-002
+Dynamics: dx1/dt = -x1 - tanh(x1), dx2/dt = -x2 - tanh(x2), dx3/dt = -x3 - tanh(x3)
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1472 out=1269
+  h = 3.841599 - x1**2 - x2**2 - x3**2
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=844 out=2216
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2316/3485 | total: 70.331s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_002/v4_B2_002.json
+
+######## [3/20] B2-003 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B2-003
+Dynamics: dx1/dt = -x1 - tanh(x1), dx2/dt = -x2 - tanh(x2), dx3/dt = -x3 - tanh(x3), dx4/dt = -x4 - tanh(x4)
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1661 out=1238
+  h = 5.121168 - x1**2 - x2**2 - x3**2 - x4**2
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=884 out=2212
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2545/3450 | total: 72.659s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_003/v4_B2_003.json
+
+######## [4/20] B2-004 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B2-004
+Dynamics: dx1/dt = -x1*(1 + sin(x1)**2), dx2/dt = -x2*(1 + sin(x2)**2)
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1444 out=1261
+  h = 2.889999 - x1**2 - x2**2
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Retry 1/5] ChunkedEncodingError (provider aigocode), retrying in 12s...
+  [Tokens] refuter#1 (high): in=826 out=1173
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2270/2434 | total: 138.712s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_004/v4_B2_004.json
+
+######## [5/20] B2-005 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B2-005
+Dynamics: dx1/dt = -x1*(1 + sin(x1)**2), dx2/dt = -x2*(1 + sin(x2)**2), dx3/dt = -x3*(1 + sin(x3)**2)
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1645 out=1285
+  h = 4.334723999999 - x1**2 - x2**2 - x3**2
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=864 out=1158
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2509/2443 | total: 53.306s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_005/v4_B2_005.json
+
+######## [6/20] B2-006 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B2-006
+Dynamics: dx1/dt = -x1, dx2/dt = -x2
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1511 out=1091
+  h = 0.999999999 - x1**2 - x2**2
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=792 out=1093
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2303/2184 | total: 47.811s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_006/v4_B2_006.json
+
+######## [7/20] B2-007 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B2-007
+Dynamics: dx1/dt = -x1, dx2/dt = -x2, dx3/dt = -x3
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1637 out=1168
+  h = 2.249999999999 - x1**2 - x2**2 - x3**2
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=826 out=1134
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2463/2302 | total: 49.234s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_007/v4_B2_007.json
+
+######## [8/20] B2-008 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B2-008
+Dynamics: dx1/dt = x2, dx2/dt = -sin(x1) - x2
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1555 out=1694
+  h = 0.999999 - (1 - cos(x1)) - 0.5*x2**2
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=816 out=1634
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2371/3328 | total: 69.776s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_008/v4_B2_008.json
+
+######## [9/20] B2-009 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B2-009
+Dynamics: dx1/dt = -x1*log(x1), dx2/dt = -x2*log(x2)
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1555 out=1197
+  h = 0.249999999 - log(x1)**2 - log(x2)**2
+[Local verification] cache + symbolic + trajectory...
+<lambdifygenerated-64>:2: RuntimeWarning: invalid value encountered in log
+  return -log(x1)**2 - log(x2)**2 + 0.249999999
+<lambdifygenerated-63>:2: RuntimeWarning: invalid value encountered in log
+  return 2*log(x1)**2 + 2*log(x2)**2
+<lambdifygenerated-65>:2: RuntimeWarning: invalid value encountered in log
+  return log(x1)**2 + log(x2)**2 - 0.25
+<lambdifygenerated-66>:2: RuntimeWarning: invalid value encountered in log
+  return -log(x1)**2 - log(x2)**2 + 0.249999999
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=858 out=1612
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2413/2809 | total: 60.974s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_009/v4_B2_009.json
+
+######## [10/20] B2-010 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B2-010
+Dynamics: dx1/dt = -x1 + 0.3*sin(x2), dx2/dt = -x2 - 0.3*sin(x1)
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1456 out=1448
+  h = 2.249999999 - x1**2 - x2**2
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=819 out=2205
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2275/3653 | total: 76.257s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_010/v4_B2_010.json
+
+######## [11/20] B2-011 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B2-011
+Dynamics: dx1/dt = -2*x1 + tanh(x2), dx2/dt = -2*x2 - tanh(x1)
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1531 out=1474
+  h = 2.249999 - x1**2 - x2**2
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=817 out=4293
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2348/5767 | total: 113.766s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_011/v4_B2_011.json
+
+######## [12/20] B2-012 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B2-012
+Dynamics: dx1/dt = -x1
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1537 out=998
+  h = 0.999999 - x1**2
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=760 out=1343
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2297/2341 | total: 52.678s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_012/v4_B2_012.json
+
+######## [13/20] B2-013 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B2-013
+Dynamics: dx1/dt = -x1 - tanh(x1), dx2/dt = -x2 - tanh(x2)
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1700 out=1244
+  h = 1.279160999 - x1**2 - x2**2
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=808 out=3987
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2508/5231 | total: 100.842s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_013/v4_B2_013.json
+
+######## [14/20] B2-014 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B2-014
+Dynamics: dx1/dt = -x1 - tanh(x1), dx2/dt = -x2 - tanh(x2)
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1700 out=1231
+  h = 5.121168 - x1**2 - x2**2
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=812 out=3313
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2512/4544 | total: 93.612s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_014/v4_B2_014.json
+
+######## [15/20] B2-015 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B2-015
+Dynamics: dx1/dt = -x1 - tanh(x1), dx2/dt = -x2 - tanh(x2)
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1700 out=1195
+  h = 7.67844 - x1**2 - x2**2
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=809 out=2168
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2509/3363 | total: 67.852s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_015/v4_B2_015.json
+
+######## [16/20] B2-016 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B2-016
+Dynamics: dx1/dt = -x1*(1+cos(x1)**2), dx2/dt = -x2*(1+cos(x2)**2)
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1539 out=1106
+  h = 2.889999 - x1**2 - x2**2
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=809 out=2220
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2348/3326 | total: 67.164s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_016/v4_B2_016.json
+
+######## [17/20] B2-017 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B2-017
+Dynamics: dx1/dt = -x1*(1+cos(x1)**2), dx2/dt = -x2*(1+cos(x2)**2)
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1532 out=1137
+  h = 5.779215999 - x1**2 - x2**2
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=814 out=1140
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2346/2277 | total: 48.44s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_017/v4_B2_017.json
+
+######## [18/20] B2-018 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B2-018
+Dynamics: dx1/dt = -x1, dx2/dt = -x2, dx3/dt = -x3
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1637 out=1156
+  h = 0.999999999999 - x1**2 - x2**2 - x3**2
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=821 out=1163
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2458/2319 | total: 49.09s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B2_018/v4_B2_018.json
+
+######## [19/20] B1-014 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B1-014
+Dynamics: dx1/dt = x2 + 2*x1*x2, dx2/dt = -x1 + 2*x1**2 - x2**2
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1547 out=3085
+  h = -(0.5 + x1)*x2**2 - 0.5*x1**2 + (2/3)*x1**3 - 0.000001
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=888 out=3997
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2435/7082 | total: 136.614s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B1_014/v4_B1_014.json
+
+######## [20/20] B1-015 ########
+[KB] injected 2 reference case(s)
+
+============================================================
+System: B1-015
+Dynamics: dx1/dt = x2, dx2/dt = -x1 - x2 + x1**3/3
+Model: gpt-5.5 | max turns: 5
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1527 out=4597
+  h = 0.4849 - 0.5*x2**2 - 0.5*x1**2 + x1**4/12
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=804 out=8964
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 2331/13561 | total: 313.98s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/B1_015/v4_B1_015.json
+
+============================================================
+Run: baseline_jsonl_20
+Solved 20/20; avg turns (solved): 1.00
+Total tokens in/out: 47559/79369
+Summary: /Users/zhipeng/Desktop/paper4/6.11new/benchmark_results/baseline_jsonl_20/summary.csv

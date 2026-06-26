@@ -1,0 +1,54 @@
+provider=glm model=glm-5.1  ARENA family=log pool N=6
+
+[propose] firing 6 GLM proposals in parallel…
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] propose-log-4 (high): in=161 out=146
+  [Tokens] propose-log-5 (high): in=162 out=111
+  [Tokens] propose-log-0 (high): in=161 out=118
+  [Tokens] propose-log-2 (high): in=163 out=101
+  [Tokens] propose-log-3 (high): in=162 out=135
+  [Tokens] propose-log-1 (high): in=162 out=147
+  got 6 non-empty proposals
+
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] adversary (high): in=219 out=153
+  cand  0 h=1 + x * x + y * y - log(1 + x * x + y * y)   A=✓ B=✓ C=✓  adv:survived (6pts)
+<lambdifygenerated-8>:2: RuntimeWarning: divide by zero encountered in log
+  return 0.5*x**2 + 0.5*y**2 - 0.5*log(x**2 + y**2)
+  cand  1 h=0.5*x**2 + 0.5*y**2 - 0.5*log(x**2 + y**2)   A=✓ B=· C=·  adv:—
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] adversary (high): in=203 out=135
+  cand  2 h=log(1 + x**2 + y**2)                         A=✓ B=✓ C=✓  adv:survived (6pts)
+  cand  3 h=log(1 + x**2 + y**2)                         A=✓ B=· C=·  adv:—
+<lambdifygenerated-24>:2: RuntimeWarning: divide by zero encountered in log
+  return exp(-x**2 - y**2) + 0.5*log(x**2 + y**2)
+  cand  4 h=0.5 * log(x**2 + y**2) + exp(-(x**2 + y**2   A=✓ B=· C=·  adv:—
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] adversary (high): in=205 out=135
+  cand  5 h=log(1 + x**2 + y**2)                         A=✓ B=✓ C=✓  adv:survived (6pts)
+
+[audit] dense held-out violation-rate per kept set (lower = more accurate)…
+  A_naive      : kept= 6  mean_viol_rate=0.3154  clean(≤1%)=3
+  B_strict     : kept= 3  mean_viol_rate=0.0  clean(≤1%)=3
+  C_strict_adv : kept= 3  mean_viol_rate=0.0  clean(≤1%)=3
+
+############################################################
+ARENA VERDICT (family=log)
+############################################################
+  pool 6 → A_naive 6 | B_strict 3 | C_strict_adv 3
+  mean held-out violation rate: A=0.3154 B=0.0 C=0.0
+  → saved /Users/zhipeng/Desktop/paper4/6.11new/arena_datasets.json  (out_tokens=1181)

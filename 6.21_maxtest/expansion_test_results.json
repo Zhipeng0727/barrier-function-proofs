@@ -1,0 +1,24 @@
+[
+  {
+    "id": "PG-001",
+    "title": "mass-action CRN deficiency-zero",
+    "proved": false,
+    "calls": 3,
+    "time_s": 142.4,
+    "tokens": 6564,
+    "code": null,
+    "error": "/Users/zhipeng/lean/_check_PG-001_v3.lean:18:39: error: linarith failed to find a contradiction\ncase h\nx xs : ℝ\nhxs : 0 < xs\nh : x * (log (x / xs) - 1) + xs = 0\nhx0 : x ≤ 0\nh_xs_pos : 0 < xs\na✝ : -x * 1 < xs\n⊢ False\nfailed\n/Users/zhipeng/lean/_check_PG-001_v3.lean:19:35: error: linarith failed to fi",
+    "verif_cond_class": "transcendental"
+  },
+  {
+    "id": "PG-002",
+    "title": "Michaelis-Menten enzyme saturation bound",
+    "proved": false,
+    "calls": 3,
+    "time_s": 64.1,
+    "tokens": 2292,
+    "code": null,
+    "error": "/Users/zhipeng/lean/_check_PG-002_v3.lean:15:25: error: Application type mismatch: The argument\n  h_frac\nhas type\n  0 ≤ Vmax * S / (Km + S)\nbut is expected to have type\n  ?m.150 ≤ 0\nin the application\n  neg_nonneg.mpr h_frac\n/Users/zhipeng/lean/_check_PG-002_v3.lean:32:25: error: Application type mi",
+    "verif_cond_class": "rational"
+  }
+]

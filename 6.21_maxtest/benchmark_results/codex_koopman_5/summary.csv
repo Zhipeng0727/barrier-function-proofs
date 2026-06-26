@@ -1,0 +1,7 @@
+id,solved,turns,refuter_calls,tokens_in,tokens_out,elapsed_s,h,lean_compile_ok,error
+X01,True,1,1,2735,14243,347.467,log(10) - log(x1) - x2*(exp(x3) + 0.13*exp(-x3)),,
+X02,True,1,1,2871,10340,202.819,log(10) - log(x1) - x2*(exp(x3) + 0.125*exp(-x3)),,
+X03,True,2,1,4159,25787,566.041,-1,,
+X04,True,1,1,2433,3709,143.973,4 - x1**2 - x2**2,,
+X05,False,,,,,,,,"PrintMethodNotImplementedError: Unsupported by <class 'sympy.printing.numpy.NumPyPrinter'>: <class 'sympy.core.function.Derivative'>
+Set the printer option 'strict' to False in order to generate partially printed code."

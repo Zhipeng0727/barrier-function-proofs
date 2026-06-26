@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barrier 合成 · 使用说明</title>
+<style>
+  :root{
+    --bg:#0f1117;--panel:#171a22;--panel2:#1d212b;--ink:#e6e9ef;--muted:#9aa3b2;
+    --line:#2a2f3a;--acc:#7aa2f7;--ok:#9ece6a;--bad:#f7768e;--warn:#e0af68;--code:#c0caf5;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15.5px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif}
+  .wrap{max-width:860px;margin:0 auto;padding:34px 22px 90px}
+  h1{font-size:26px;margin:0 0 6px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 28px}
+  h2{font-size:19px;margin:34px 0 6px;padding-top:18px;border-top:1px solid var(--line)}
+  h2 .tag{font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;vertical-align:middle;margin-left:8px}
+  .tag.host{background:#1b2440;color:var(--acc);border:1px solid var(--acc)}
+  .tag.user{background:#1d2b1a;color:var(--ok);border:1px solid var(--ok)}
+  h3{font-size:15.5px;margin:20px 0 4px;color:var(--ink)}
+  p{margin:8px 0}
+  ol,ul{margin:8px 0;padding-left:22px}
+  li{margin:6px 0}
+  code{background:var(--panel2);border:1px solid var(--line);border-radius:5px;
+    padding:1px 6px;font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13px;color:var(--code)}
+  pre{position:relative;background:#0a0c11;border:1px solid var(--line);border-radius:10px;
+    padding:14px 14px;overflow:auto;font-family:"SF Mono",ui-monospace,Menlo,monospace;
+    font-size:13px;line-height:1.6;color:var(--code);margin:12px 0}
+  pre .cmt{color:var(--muted)}
+  .copy{position:absolute;top:8px;right:8px;background:var(--panel2);color:var(--muted);
+    border:1px solid var(--line);border-radius:6px;padding:3px 9px;font-size:11.5px;cursor:pointer}
+  .copy:hover{color:var(--ink)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .note{border-left:3px solid var(--acc);background:#141a2b;border-radius:0 10px 10px 0;
+    padding:10px 16px;margin:14px 0;font-size:14px}
+  .warn{border-left:3px solid var(--warn);background:#241f12;border-radius:0 10px 10px 0;
+    padding:10px 16px;margin:14px 0;font-size:14px}
+  .bad{border-left:3px solid var(--bad);background:#2a1620;border-radius:0 10px 10px 0;
+    padding:10px 16px;margin:14px 0;font-size:14px}
+  b{color:#fff}
+  .kbd{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12.5px;background:var(--panel2);
+    border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 6px}
+  table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+  th{background:var(--panel2);color:var(--muted);font-weight:600}
+  .toc{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 10px}
+  .toc a{color:var(--acc);text-decoration:none;font-size:13.5px;border:1px solid var(--line);
+    border-radius:8px;padding:5px 11px;background:var(--panel2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Barrier / Lyapunov 证书合成 · 使用说明</h1>
+  <p class="sub">一个让小组在浏览器里试用「LLM 提议证书 → 本地符号/轨迹验证 → Refuter 反驳 → Lean 4 形式化(编译反馈闭环)」流水线的内部工具。</p>
+
+  <div class="toc">
+    <a href="#how">这个文档怎么打开</a>
+    <a href="#host">我(主机)怎么启动分享</a>
+    <a href="#user">同学怎么用</a>
+    <a href="#faq">常见问题</a>
+  </div>
+
+  <div class="note">
+    <b>一句话原理:</b> 网站跑在<b>我的电脑</b>上。大模型(GLM)在智谱云端,用<b>我的</b> API key 计费;
+    Lean 证明编译用<b>我电脑本地</b>已经 build 好的 mathlib。同学只拿到一个网址 + 口令,在浏览器里点几下就能跑,
+    <b>消耗的是我的 token 和我的电脑算力</b>。
+  </div>
+
+  <!-- ───────────────────────── 怎么打开本文档 ───────────────────────── -->
+  <h2 id="how">这个文档怎么打开</h2>
+  <p>直接<b>双击</b> <code>使用说明.html</code> 这个文件,会用浏览器打开(不需要联网、不需要后端)。
+  这一页只是说明书;真正的工具是下面要启动的那个网站。</p>
+
+  <!-- ───────────────────────── 主机:启动分享 ───────────────────────── -->
+  <h2 id="host">我(主机)怎么启动分享 <span class="tag host">给我自己</span></h2>
+  <p>目标:把本机的网站变成一个公网地址,发给同学。<b>电脑保持开机联网</b>即在线,关机/断网就下线。</p>
+
+  <h3>① 打开终端,跑一条命令</h3>
+  <pre><button class="copy" onclick="cp(this)">复制</button><span class="cmt"># 进入项目目录,带上你的智谱 key 和模型,起服务 + 开隧道</span>
+cd /Users/zhipeng/Desktop/paper4/6.11new
+GLM_API_KEY=你的智谱key GLM_MODEL=glm-5.1 ./webapp/share.sh</pre>
+
+  <p>脚本会自动:生成一个<b>访问口令</b>(终端会打印)→ <b>自动挑一个空闲端口</b>(从 8001 起,避开 8000 上的测试服务器)→ 需要时安装 cloudflared → 起网站 → 开公网隧道。两个服务各占一个端口,互不影响。想固定端口就在命令前加 <code>PORT=8005</code>。</p>
+
+  <h3>② 从终端里拿两样东西发给同学</h3>
+  <table>
+    <tr><th>发什么</th><th>在终端哪里看</th></tr>
+    <tr><td><b>公网网址</b></td><td>形如 <code>https://xxxx.trycloudflare.com</code> 的那一行</td></tr>
+    <tr><td><b>访问口令</b></td><td>脚本打印的 <code>访问口令 (发给同学): ……</code></td></tr>
+  </table>
+  <div class="note">想自己指定口令,而不是随机生成:在命令前加 <code>APP_PASSWORD=你定的口令</code>。</div>
+
+  <h3>③ 想结束分享</h3>
+  <p>在那个终端窗口按 <span class="kbd">Ctrl + C</span>,网站和隧道一起关闭,网址立即失效。</p>
+
+  <div class="warn">
+    <b>护栏(默认值,可在命令前加环境变量调):</b>
+    <ul style="margin:6px 0">
+      <li>同时真正运行 <b>4 个</b>作业(<code>MAX_CONCURRENT=4</code>),其余排队 —— 因为 Lean 编译吃 CPU,4 个最稳;扛得住可调高。</li>
+      <li>排队上限 <b>6 个</b>(<code>MAX_QUEUE=6</code>)→ 系统里同时最多 ~10 人。</li>
+      <li>每天总运行上限 <b>60 次</b>(<code>DAILY_RUN_CAP=60</code>)→ 万一口令泄露也烧不爆账户。</li>
+    </ul>
+  </div>
+
+  <div class="bad">
+    <b>⚠️ 安全红线:</b> 隧道分享<b>只暴露网页、不暴露 key</b>,是安全的。但<b>不要</b>把这个 git 仓库
+    push 到 GitHub 或整包发给别人 —— <code>runtime_state.py</code> 里有写死的 API key,push 出去就泄露。
+    要发代码请先轮换 key、改成只走环境变量。
+  </div>
+
+  <!-- ───────────────────────── 同学:怎么用 ───────────────────────── -->
+  <h2 id="user">同学怎么用 <span class="tag user">给使用者</span></h2>
+  <p>不用装任何东西,有浏览器就行。</p>
+  <ol>
+    <li><b>打开网址</b>:把主机发你的 <code>https://xxxx.trycloudflare.com</code> 粘到浏览器地址栏。</li>
+    <li><b>输入口令</b>:进页面会弹出口令框,填主机给的口令,点「进入」。(口令会记在本浏览器,下次免输。)</li>
+    <li><b>选一个系统</b>:
+      <ul>
+        <li><b>选已有系统</b>:从下拉框挑一个内置动力系统(推荐,成功率高)。</li>
+        <li><b>自定义系统(受限)</b>:按 JSON 模板填你自己的系统(最多 4 个状态变量,轮数上限更低,更费 token)。</li>
+      </ul>
+    </li>
+    <li><b>调参数</b>:拖「最大 debate 轮数」滑块(越大越可能成功,但更费 token);是否勾「生成 Lean 4 形式化证明」。</li>
+    <li><b>点「▶ 运行合成」</b>。右侧会:
+      <ul>
+        <li>如果有人在跑,先显示 <b>「排队中 · 前面还有 N 个」</b>,轮到你自动开始;</li>
+        <li>然后<b>实时滚动</b>流水线日志(Proposer / Refuter / Lean4 各阶段);</li>
+        <li>结束后给出结果卡片:是否求解、用了几轮、Lean 是否编译通过、以及生成的 Lean 证明代码。</li>
+      </ul>
+    </li>
+  </ol>
+  <div class="note"><b>请按需试用:</b> 每次运行都在花主机的 GLM token(= 钱)和电脑算力。别空跑、别刷。</div>
+  <div class="warn"><b>如果点了没反应 / 报「需要访问口令」:</b> 口令填错了,刷新页面重输;或主机的电脑已关机/隧道已停,找主机确认。</div>
+
+  <!-- ───────────────────────── FAQ ───────────────────────── -->
+  <h2 id="faq">常见问题</h2>
+
+  <h3>Q:同学是用我的电脑算力,还是他们自己的?</h3>
+  <p>大模型推理在<b>智谱云端</b>(花我的 key),Lean 编译在<b>我的电脑</b>。同学那端只是个浏览器,几乎不耗他们的资源。</p>
+
+  <h3>Q:我电脑关机了会怎样?</h3>
+  <p>网址立即失效,同学打不开。要长期在线得放服务器,但那需要在服务器上重新 build mathlib(几小时、占几十 G),比较折腾。短期试用就保持电脑开机联网最省事。</p>
+
+  <h3>Q:能不能换模型?</h3>
+  <p>能。启动命令里改 <code>GLM_MODEL=…</code>(确认是智谱 API 里的准确型号名)。</p>
+
+  <h3>Q:同时能几个人用?</h3>
+  <p>默认 4 个一起跑、再排 6 个,合计同时约 10 人;再多的人点运行会被提示「排队已满,稍后再试」。想放宽改 <code>MAX_CONCURRENT</code> / <code>MAX_QUEUE</code>。</p>
+
+  <p class="sub" style="margin-top:36px">完整技术细节见同目录的 <code>README.md</code>。</p>
+</div>
+
+<script>
+  function cp(btn){
+    const pre = btn.parentElement;
+    const text = pre.innerText.replace(/^复制\n?/, '').trim();
+    navigator.clipboard.writeText(text).then(()=>{ btn.textContent='已复制'; setTimeout(()=>btn.textContent='复制',1500); });
+  }
+</script>
+</body>
+</html>

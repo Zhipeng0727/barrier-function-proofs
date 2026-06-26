@@ -1,0 +1,120 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B2-015",
+    "ode": "dx1/dt = -x1 - tanh(x1), dx2/dt = -x2 - tanh(x2)",
+    "state_vars": [
+      "x1",
+      "x2"
+    ],
+    "f_expr": [
+      "-x1 - tanh(x1)",
+      "-x2 - tanh(x2)"
+    ],
+    "X_domain": "ball",
+    "X_u_desc": "||x|| >= 2.771",
+    "X_u_expr": "x1**2 + x2**2 >= 7.678440999999999",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B2-015",
+      "layer": "L2-new",
+      "group": "B2",
+      "task": "barrier",
+      "cert_class": "nonpoly-explicit",
+      "source": "tanh-dissipative (c=3)"
+    }
+  },
+  "timestamp": "2026-06-11T18:26:22.449383",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "7.67844 - x1**2 - x2**2",
+        "invariant_set": "C = {x in X : x1**2 + x2**2 <= 7.67844}, i.e. the closed disk of radius sqrt(7.67844) ≈ 2.7709998196, just inside the unsafe radius 2.771.",
+        "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 2.771}, equivalently x1**2 + x2**2 >= 2.771**2 = 7.678441. For h(x) = 7.67844 - x1**2 - x2**2, every x in X_u satisfies h(x) <= 7.67844 - 7.678441 = -0.000001 < 0. Therefore h(x) < 0 on the entire unsafe set.",
+        "lie_derivative": "We have ∇h(x) = (-2*x1, -2*x2). The vector field is f(x) = (-x1 - tanh(x1), -x2 - tanh(x2)). Therefore ḣ(x) = ∇h·f = (-2*x1)*(-x1 - tanh(x1)) + (-2*x2)*(-x2 - tanh(x2)) = 2*x1**2 + 2*x1*tanh(x1) + 2*x2**2 + 2*x2*tanh(x2).",
+        "condition2_check": "On the boundary ∂C, h(x)=0, so x1**2 + x2**2 = 7.67844. For every real scalar z, tanh(z) has the same sign as z and tanh(0)=0, hence z*tanh(z) >= 0. Therefore x1*tanh(x1) >= 0 and x2*tanh(x2) >= 0. Thus on ∂C, ḣ(x) = 2*x1**2 + 2*x1*tanh(x1) + 2*x2**2 + 2*x2*tanh(x2) >= 2*x1**2 + 2*x2**2 = 2*(7.67844) = 15.35688 > 0. Hence ḣ(x) >= 0 on ∂C, satisfying Nagumo's condition.",
+        "reasoning": "The dynamics are componentwise dissipative: each term -x_i - tanh(x_i) points toward the origin, and x_i*tanh(x_i) >= 0 ensures the squared radius decreases along trajectories. Therefore Euclidean balls centered at the origin are forward invariant when used as superlevel sets of h = r**2 - ||x||**2. To maximize the invariant safe set while maintaining the strict condition h < 0 on the unsafe set ||x|| >= 2.771, choose r**2 slightly below 2.771**2 = 7.678441. The choice r**2 = 7.67844 leaves only a 0.000001 margin in squared radius, giving an invariant set nearly as large as the full safe ball."
+      },
+      "proposer_elapsed_s": 24.595,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "2*x1*(x1 + tanh(x1)) + 2*x2*(x2 + tanh(x2))",
+          "boundary_epsilon": 0.354779,
+          "boundary_pts_found": 200,
+          "cond1_max_h_in_Xu": -0.000738,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 20.031343,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.105
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.338558,
+          "trajectory_valid": true,
+          "elapsed_s": 0.162
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "Valid. The unsafe threshold is ||x|| >= 2.771, so ||x||^2 >= 2.771^2 = 7.678441. For h(x) = 7.67844 - x1^2 - x2^2, any unsafe point satisfies h(x) <= 7.67844 - 7.678441 = -0.000001 < 0. For example, at x = (2.771, 0), h(x) = -0.000001.",
+        "lie_derivative_computed": "∇h = (-2x1, -2x2). With f1 = -x1 - tanh(x1), f2 = -x2 - tanh(x2), the Lie derivative is ḣ(x) = (-2x1)(-x1 - tanh(x1)) + (-2x2)(-x2 - tanh(x2)) = 2x1^2 + 2x1 tanh(x1) + 2x2^2 + 2x2 tanh(x2).",
+        "condition2_result": "Valid. On the boundary h(x) = 0, we have x1^2 + x2^2 = 7.67844. Since x tanh(x) >= 0 for all real x, ḣ(x) = 2(x1^2 + x2^2) + 2x1 tanh(x1) + 2x2 tanh(x2) >= 2(7.67844) = 15.35688 > 0. Thus the Nagumo condition ḣ >= 0 holds strictly everywhere on ∂C. For example, at x = (sqrt(7.67844), 0) ≈ (2.7709998196, 0), ḣ ≈ 20.8556 > 0.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The set can be enlarged slightly while preserving both conditions. For the same quadratic form h_a(x) = a - x1^2 - x2^2, Condition 1 requires a < 2.771^2 = 7.678441. Condition 2 remains valid for any a > 0 because on h_a = 0, ḣ >= 2a > 0. The proposed value a = 7.67844 is already only 0.000001 below the maximal unsafe threshold. A concrete enlargement is h(x) = 7.678440999 - x1^2 - x2^2, giving a slightly larger invariant disk while still having h <= -0.000000001 on the unsafe boundary ||x|| = 2.771."
+      },
+      "refuter_elapsed_s": 42.983
+    }
+  ],
+  "final_barrier": {
+    "h": "7.67844 - x1**2 - x2**2",
+    "invariant_set": "C = {x in X : x1**2 + x2**2 <= 7.67844}, i.e. the closed disk of radius sqrt(7.67844) ≈ 2.7709998196, just inside the unsafe radius 2.771.",
+    "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 2.771}, equivalently x1**2 + x2**2 >= 2.771**2 = 7.678441. For h(x) = 7.67844 - x1**2 - x2**2, every x in X_u satisfies h(x) <= 7.67844 - 7.678441 = -0.000001 < 0. Therefore h(x) < 0 on the entire unsafe set.",
+    "lie_derivative": "We have ∇h(x) = (-2*x1, -2*x2). The vector field is f(x) = (-x1 - tanh(x1), -x2 - tanh(x2)). Therefore ḣ(x) = ∇h·f = (-2*x1)*(-x1 - tanh(x1)) + (-2*x2)*(-x2 - tanh(x2)) = 2*x1**2 + 2*x1*tanh(x1) + 2*x2**2 + 2*x2*tanh(x2).",
+    "condition2_check": "On the boundary ∂C, h(x)=0, so x1**2 + x2**2 = 7.67844. For every real scalar z, tanh(z) has the same sign as z and tanh(0)=0, hence z*tanh(z) >= 0. Therefore x1*tanh(x1) >= 0 and x2*tanh(x2) >= 0. Thus on ∂C, ḣ(x) = 2*x1**2 + 2*x1*tanh(x1) + 2*x2**2 + 2*x2*tanh(x2) >= 2*x1**2 + 2*x2**2 = 2*(7.67844) = 15.35688 > 0. Hence ḣ(x) >= 0 on ∂C, satisfying Nagumo's condition.",
+    "reasoning": "The dynamics are componentwise dissipative: each term -x_i - tanh(x_i) points toward the origin, and x_i*tanh(x_i) >= 0 ensures the squared radius decreases along trajectories. Therefore Euclidean balls centered at the origin are forward invariant when used as superlevel sets of h = r**2 - ||x||**2. To maximize the invariant safe set while maintaining the strict condition h < 0 on the unsafe set ||x|| >= 2.771, choose r**2 slightly below 2.771**2 = 7.678441. The choice r**2 = 7.67844 leaves only a 0.000001 margin in squared radius, giving an invariant set nearly as large as the full safe ball."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 67.852
+  },
+  "tokens": {
+    "input": 2509,
+    "output": 3363,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1700,
+        "output_tokens": 1195,
+        "elapsed_s": 24.595
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 809,
+        "output_tokens": 2168,
+        "elapsed_s": 42.983
+      }
+    ]
+  }
+}

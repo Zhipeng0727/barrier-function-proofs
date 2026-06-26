@@ -1,0 +1,118 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "Two-well multiplicative excursion: xdot = x(y^4 - 1) with a clean log + quartic ",
+    "ode": "dx1/dt = x1*(x2**4 - 1), dx2/dt = -x2",
+    "state_vars": [
+      "x1",
+      "x2"
+    ],
+    "f_expr": [
+      "x1*(x2**4 - 1)",
+      "-x2"
+    ],
+    "X_domain": "R^2",
+    "X_u_desc": "Invented unsafe set for an excursion/safety check: states where the x-coordinate magnitude is at least 2.",
+    "X_u_expr": "Abs(x1) >= 2",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -2,
+        2
+      ]
+    ],
+    "meta": {
+      "title": "Two-well multiplicative excursion: xdot = x(y^4 - 1) with a clean log + quartic certificate",
+      "group": "B* — Growth-lemma constructions",
+      "system_class": "polynomial (degree 5)",
+      "poly_failure_mechanism": "growth-lemma"
+    }
+  },
+  "timestamp": "2026-06-11T20:31:25.598165",
+  "model": "claude-sonnet-4-6",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "high",
+      "proposal": {
+        "h": "1.8852944 - log(x1**2) - x2**4/2 + log(x2**2)",
+        "invariant_set": "C = {(x1,x2) : log(x1**2) + x2**4/2 - log(x2**2) <= 1.8852944}, i.e. the sublevel set of the conserved quantity, excluding x2=0",
+        "condition1_check": "On X_u, |x1| >= 2, so log(x1**2) >= log(4) ≈ 1.3863. The function g(x2) = -x2**4/2 + log(x2**2) is maximized at x2**2 = 1 (set derivative -2x2**3 + 2/x2 = 0 → x2**2 = 1), giving g(x2) = -1/2 + 0 = -1/2. Therefore on X_u: h = 1.8852944 - log(x1**2) + g(x2) <= 1.8852944 - log(4) + (-1/2) = 1.8852944 - 1.3862944 - 0.5 = -0.001 < 0. Condition 1 satisfied.",
+        "lie_derivative": "h = A - log(x1**2) - x2**4/2 + log(x2**2) with A = 1.8852944. ∂h/∂x1 = -2/x1, ∂h/∂x2 = -2*x2**3 + 2/x2. Lie derivative: ḣ = (-2/x1)*x1*(x2**4-1) + (-2*x2**3 + 2/x2)*(-x2) = -2*(x2**4-1) + (2*x2**4 - 2) = -2*x2**4 + 2 + 2*x2**4 - 2 = 0. Therefore ḣ = 0 identically on all of R^2 \\ {x1=0, x2=0}.",
+        "condition2_check": "Since ḣ = 0 everywhere (h is a conserved quantity of the system), in particular ḣ = 0 >= 0 on ∂C = {h(x)=0}. Condition 2 is trivially satisfied. The level sets of h are exactly the flow-invariant curves of the system, so C is strictly invariant.",
+        "reasoning": "The key insight is that h = A - log(x1**2) - x2**4/2 + log(x2**2) is a conserved quantity (first integral) of the system. This follows from integrating the equation dh/dt = 0: the term log(x1**2) grows at rate 2*(x2**4-1), and we need -log(x1**2) to cancel, while log(x2**2) shrinks at rate -2 and x2**4/2 shrinks at rate 2*x2**4; these exactly cancel. Because h is conserved, every sublevel set C = {h>=0} is automatically invariant. The constant A = log(4) + 0.499 ≈ 1.8852944 is chosen just below log(4) + 0.5, the minimum value of log(x1**2) + x2**4/2 - log(x2**2) on X_u (achieved at |x1|=2, x2**2=1), ensuring h < 0 on all of X_u while making C as large as possible."
+      },
+      "proposer_elapsed_s": 37.842,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "0",
+          "boundary_epsilon": 0.633921,
+          "boundary_pts_found": 1048,
+          "cond1_max_h_in_Xu": -0.009141,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 0.0,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.01
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.003285,
+          "trajectory_valid": true,
+          "elapsed_s": 0.161
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "Condition 1 verified. For |x1| >= 2 (unsafe set), we have h(x) < 0. At the critical boundary |x1| = 2, h = 0.4990 + log(x2^2) - x2^4/2. The function g(x2) = log(x2^2) - x2^4/2 achieves its maximum at |x2| = 1 where g(1) = -0.5. Therefore h(2, x2) <= 0.4990 - 0.5 = -0.001 < 0 for all x2, confirming strict negativity throughout X_u. Checked points: h(2,1) ≈ -0.0007, h(2,0.1) ≈ -4.106, all negative as required.",
+        "lie_derivative_computed": "ḣ = (∂h/∂x1)·f1 + (∂h/∂x2)·f2 = (-2/x1)·[x1(x2^4-1)] + [2(1-x2^4)/x2]·(-x2) = -2(x2^4-1) - 2(1-x2^4) = -2x2^4 + 2 - 2 + 2x2^4 = 0",
+        "condition2_result": "Condition 2 verified. The Lie derivative ḣ = 0 everywhere, including on the boundary ∂C where h(x) = 0. Since 0 >= 0, the Nagumo condition is satisfied. This barrier function is actually a conserved quantity of the system - trajectories follow level sets exactly and cannot cross from C into the unsafe region.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The threshold 1.8852944 could be increased slightly to approximately 1.886. At the unsafe boundary |x1|=2, the conserved quantity E = log(x1^2) + x2^4/2 - log(x2^2) reaches maximum 1.8863 (at |x2|=1). The current threshold leaves a safety margin of ~0.001. Increasing to 1.886 would enlarge the invariant set while maintaining a small safety buffer from the unsafe region."
+      },
+      "refuter_elapsed_s": 42.888
+    }
+  ],
+  "final_barrier": {
+    "h": "1.8852944 - log(x1**2) - x2**4/2 + log(x2**2)",
+    "invariant_set": "C = {(x1,x2) : log(x1**2) + x2**4/2 - log(x2**2) <= 1.8852944}, i.e. the sublevel set of the conserved quantity, excluding x2=0",
+    "condition1_check": "On X_u, |x1| >= 2, so log(x1**2) >= log(4) ≈ 1.3863. The function g(x2) = -x2**4/2 + log(x2**2) is maximized at x2**2 = 1 (set derivative -2x2**3 + 2/x2 = 0 → x2**2 = 1), giving g(x2) = -1/2 + 0 = -1/2. Therefore on X_u: h = 1.8852944 - log(x1**2) + g(x2) <= 1.8852944 - log(4) + (-1/2) = 1.8852944 - 1.3862944 - 0.5 = -0.001 < 0. Condition 1 satisfied.",
+    "lie_derivative": "h = A - log(x1**2) - x2**4/2 + log(x2**2) with A = 1.8852944. ∂h/∂x1 = -2/x1, ∂h/∂x2 = -2*x2**3 + 2/x2. Lie derivative: ḣ = (-2/x1)*x1*(x2**4-1) + (-2*x2**3 + 2/x2)*(-x2) = -2*(x2**4-1) + (2*x2**4 - 2) = -2*x2**4 + 2 + 2*x2**4 - 2 = 0. Therefore ḣ = 0 identically on all of R^2 \\ {x1=0, x2=0}.",
+    "condition2_check": "Since ḣ = 0 everywhere (h is a conserved quantity of the system), in particular ḣ = 0 >= 0 on ∂C = {h(x)=0}. Condition 2 is trivially satisfied. The level sets of h are exactly the flow-invariant curves of the system, so C is strictly invariant.",
+    "reasoning": "The key insight is that h = A - log(x1**2) - x2**4/2 + log(x2**2) is a conserved quantity (first integral) of the system. This follows from integrating the equation dh/dt = 0: the term log(x1**2) grows at rate 2*(x2**4-1), and we need -log(x1**2) to cancel, while log(x2**2) shrinks at rate -2 and x2**4/2 shrinks at rate 2*x2**4; these exactly cancel. Because h is conserved, every sublevel set C = {h>=0} is automatically invariant. The constant A = log(4) + 0.499 ≈ 1.8852944 is chosen just below log(4) + 0.5, the minimum value of log(x1**2) + x2**4/2 - log(x2**2) on X_u (achieved at |x1|=2, x2**2=1), ensuring h < 0 on all of X_u while making C as large as possible."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 80.917
+  },
+  "tokens": {
+    "input": 796,
+    "output": 4533,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "high",
+        "input_tokens": 559,
+        "output_tokens": 1976,
+        "elapsed_s": 37.842
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 237,
+        "output_tokens": 2557,
+        "elapsed_s": 42.888
+      }
+    ]
+  }
+}

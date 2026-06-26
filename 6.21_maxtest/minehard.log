@@ -1,0 +1,31 @@
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] mine-poly-logistic_invariant-glmr1c1 (high): in=419 out=133
+  [Tokens] mine-poly-logistic_invariant-glmr1c2 (high): in=418 out=228
+  [Tokens] mine-poly-logistic_invariant-glmr1c0 (high): in=402 out=386
+    [glm] round 1: ✗ (/Users/zhipeng/lean/_check_mine_poly_logistic_invariant_glmr1c2.lean:1)
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] mine-poly-logistic_invariant-glmr2c0 (high): in=992 out=153
+  [Tokens] mine-poly-logistic_invariant-glmr2c2 (high): in=1008 out=228
+  [Tokens] mine-poly-logistic_invariant-glmr2c1 (high): in=1009 out=145
+    [glm] round 2: ✅ VERIFIED (3 parallel)
+RESULT: SOLVED in round 2
+----- verified recipe -----
+import Mathlib.Tactic
+open Real
+
+example : ∀ x : ℝ, x ∈ Set.Icc (0:ℝ) 1 → 0 ≤ (38/10)*x*(1-x) ∧ (38/10)*x*(1-x) ≤ 1 := by
+  intro x hx
+  obtain ⟨hx0, hx1⟩ := hx
+  constructor
+  · nlinarith [mul_nonneg hx0 (by linarith : (0:ℝ) ≤ 1 - x)]
+  · nlinarith [sq_nonneg (x - 1 / 2), sq_nonneg x, sq_nonneg (x - 1), mul_nonneg hx0 hx0]

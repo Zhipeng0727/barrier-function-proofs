@@ -1,0 +1,50 @@
+{
+  "system": "ex5",
+  "note": "transcendental (exp+sin) -> refuter gate always False",
+  "rounds": [
+    {
+      "round": 1,
+      "role": "Proposer",
+      "h": "1.5 - (1/2*(x2 + exp(-x1) - 1)**2 + 1/2*x1 - 1/4*sin(2*x1))",
+      "local_passed": false,
+      "cond1_ok": false,
+      "cond1_max_h_in_Xu": 1.047216,
+      "cond1_violations": [
+        {
+          "x1": 0.73,
+          "x2": -0.9354
+        },
+        {
+          "x1": 0.5389,
+          "x2": -0.6703
+        },
+        {
+          "x1": 0.6477,
+          "x2": -0.5691
+        }
+      ],
+      "action": "local reject Cond1 -> lower level"
+    },
+    {
+      "round": 2,
+      "role": "Proposer+Refuter",
+      "h": "0.41 - (1/2*(x2 + exp(-x1) - 1)**2 + 1/2*x1 - 1/4*sin(2*x1))",
+      "local_passed": true,
+      "cond1_ok": true,
+      "cond2_ok": true,
+      "trajectory_valid": true,
+      "refuter_gate": false,
+      "refuter_verdict": "valid",
+      "refuter": {
+        "verdict": "valid",
+        "checked": {
+          "Cond1 (h<0 on X_u)": "X_u is the disk (x1-0.7)^2+(x2+0.7)^2<=0.09; on it max h = -0.0428 < 0. Margin thin but strictly negative; no unsafe point has h>=0.",
+          "Cond2 (Nagumo, hdot>=0 on dC)": "hdot = -dH/dt. Along f: dH/dt = gradH . f = (-exp(-x1) z + sin(x1)^2)*z + z*(-sin(x1)^2) = -exp(-x1) z^2.  So hdot = exp(-x1)*z^2. Since exp(-x1)>0 and z^2>=0, hdot>=0 GLOBALLY (not just on the sampled boundary) -> Nagumo holds everywhere. This is the key fact pure sampling cannot certify; the algebraic cancellation is why the Refuter ring matters here."
+        },
+        "counterexample_search": "none found; both conditions hold symbolically.",
+        "flaw": null
+      }
+    }
+  ],
+  "solved": true
+}

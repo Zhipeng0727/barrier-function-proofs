@@ -1,0 +1,120 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B2-009",
+    "ode": "dx1/dt = -x1*log(x1), dx2/dt = -x2*log(x2)",
+    "state_vars": [
+      "x1",
+      "x2"
+    ],
+    "f_expr": [
+      "-x1*log(x1)",
+      "-x2*log(x2)"
+    ],
+    "X_domain": "R^n (x_i>0)",
+    "X_u_desc": "(log x1)^2+(log x2)^2 >= 0.25",
+    "X_u_expr": "(log(x1))**2+(log(x2))**2 >= 0.25",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B2-009",
+      "layer": "L2-new",
+      "group": "B2",
+      "task": "barrier",
+      "cert_class": "nonpoly-explicit",
+      "source": "Gompertz log-barrier"
+    }
+  },
+  "timestamp": "2026-06-11T18:18:04.302699",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "0.249999999 - log(x1)**2 - log(x2)**2",
+        "invariant_set": "C = {x1 > 0, x2 > 0 : log(x1)**2 + log(x2)**2 <= 0.249999999}. This is a logarithmic disk centered at (x1,x2)=(1,1), with radius sqrt(0.249999999) in the coordinates (log(x1), log(x2)).",
+        "condition1_check": "The unsafe set is X_u = {x1 > 0, x2 > 0 : log(x1)**2 + log(x2)**2 >= 0.25}. For any x in X_u, we have log(x1)**2 + log(x2)**2 >= 0.25. Therefore h(x) = 0.249999999 - log(x1)**2 - log(x2)**2 <= 0.249999999 - 0.25 = -0.000000001 < 0. Hence h(x) < 0 for every x in X_u.",
+        "lie_derivative": "Compute the gradient: ∂h/∂x1 = -2*log(x1)/x1 and ∂h/∂x2 = -2*log(x2)/x2. The dynamics are dx1/dt = -x1*log(x1), dx2/dt = -x2*log(x2). Thus ḣ(x) = (-2*log(x1)/x1)*(-x1*log(x1)) + (-2*log(x2)/x2)*(-x2*log(x2)) = 2*log(x1)**2 + 2*log(x2)**2.",
+        "condition2_check": "On the boundary ∂C, h(x)=0, so log(x1)**2 + log(x2)**2 = 0.249999999. Substituting this into the Lie derivative gives ḣ(x) = 2*(log(x1)**2 + log(x2)**2) = 2*0.249999999 = 0.499999998 > 0. Therefore ḣ(x) >= 0 on ∂C, satisfying Nagumo's invariance condition.",
+        "reasoning": "Use logarithmic coordinates y1 = log(x1), y2 = log(x2). Since x_i > 0, these coordinates are well defined. In these coordinates, y_i_dot = (1/x_i)*x_i_dot = -log(x_i) = -y_i, so the system is simply y_dot = -y, a radial contraction toward the origin. The unsafe set is the exterior of the closed disk y1**2 + y2**2 >= 0.25. Therefore any smaller closed disk y1**2 + y2**2 <= r**2 with r**2 < 0.25 is forward invariant and avoids the unsafe set. Choosing r**2 = 0.249999999 gives a set extremely close to the maximal safe disk while preserving the strict requirement h(x) < 0 on the entire unsafe set, including its boundary."
+      },
+      "proposer_elapsed_s": 25.018,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "2*log(x1)**2 + 2*log(x2)**2",
+          "boundary_epsilon": 1.440676,
+          "boundary_pts_found": 144,
+          "cond1_max_h_in_Xu": -0.00155,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 0.002259,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.038
+        },
+        "trajectory": {
+          "n_trajs": 25,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.023698,
+          "trajectory_valid": true,
+          "elapsed_s": 0.14
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "Let y1=log(x1), y2=log(x2), and r^2=y1^2+y2^2. The proposed barrier is h=0.249999999-r^2. On the unsafe set, r^2>=0.25, so h<=0.249999999-0.25=-0.000000001<0. For example, at x=(e^{0.5},1), r^2=0.25 and h=-0.000000001. At x=(e,1), r^2=1 and h=-0.750000001. Thus Condition 1 holds strictly on the entire unsafe set.",
+        "lie_derivative_computed": "∂h/∂x1=-2 log(x1)/x1 and ∂h/∂x2=-2 log(x2)/x2. With f1=-x1 log(x1), f2=-x2 log(x2), the Lie derivative is ḣ = (-2 log(x1)/x1)(-x1 log(x1)) + (-2 log(x2)/x2)(-x2 log(x2)) = 2(log(x1))^2 + 2(log(x2))^2.",
+        "condition2_result": "On the boundary ∂C, h=0, hence (log(x1))^2+(log(x2))^2=0.249999999. Therefore ḣ=2((log(x1))^2+(log(x2))^2)=2*0.249999999=0.499999998>0. For example, at x=(e^{sqrt(0.249999999)},1), h=0 and ḣ=0.499999998. Thus the Nagumo condition ḣ>=0 holds strictly everywhere on ∂C.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The invariant logarithmic disk can be enlarged slightly. For the same functional form h_b(x)=b-(log(x1))^2-(log(x2))^2, both conditions hold for any constant b with 0<b<0.25. Condition 1 requires strict negativity on the unsafe set, so b must remain strictly below 0.25. The current choice b=0.249999999 is valid but not maximal within this family; one could choose, for example, b=0.2499999999 to obtain a larger certified invariant set while preserving h<0 on the unsafe set and ḣ=2b>0 on the boundary."
+      },
+      "refuter_elapsed_s": 35.77
+    }
+  ],
+  "final_barrier": {
+    "h": "0.249999999 - log(x1)**2 - log(x2)**2",
+    "invariant_set": "C = {x1 > 0, x2 > 0 : log(x1)**2 + log(x2)**2 <= 0.249999999}. This is a logarithmic disk centered at (x1,x2)=(1,1), with radius sqrt(0.249999999) in the coordinates (log(x1), log(x2)).",
+    "condition1_check": "The unsafe set is X_u = {x1 > 0, x2 > 0 : log(x1)**2 + log(x2)**2 >= 0.25}. For any x in X_u, we have log(x1)**2 + log(x2)**2 >= 0.25. Therefore h(x) = 0.249999999 - log(x1)**2 - log(x2)**2 <= 0.249999999 - 0.25 = -0.000000001 < 0. Hence h(x) < 0 for every x in X_u.",
+    "lie_derivative": "Compute the gradient: ∂h/∂x1 = -2*log(x1)/x1 and ∂h/∂x2 = -2*log(x2)/x2. The dynamics are dx1/dt = -x1*log(x1), dx2/dt = -x2*log(x2). Thus ḣ(x) = (-2*log(x1)/x1)*(-x1*log(x1)) + (-2*log(x2)/x2)*(-x2*log(x2)) = 2*log(x1)**2 + 2*log(x2)**2.",
+    "condition2_check": "On the boundary ∂C, h(x)=0, so log(x1)**2 + log(x2)**2 = 0.249999999. Substituting this into the Lie derivative gives ḣ(x) = 2*(log(x1)**2 + log(x2)**2) = 2*0.249999999 = 0.499999998 > 0. Therefore ḣ(x) >= 0 on ∂C, satisfying Nagumo's invariance condition.",
+    "reasoning": "Use logarithmic coordinates y1 = log(x1), y2 = log(x2). Since x_i > 0, these coordinates are well defined. In these coordinates, y_i_dot = (1/x_i)*x_i_dot = -log(x_i) = -y_i, so the system is simply y_dot = -y, a radial contraction toward the origin. The unsafe set is the exterior of the closed disk y1**2 + y2**2 >= 0.25. Therefore any smaller closed disk y1**2 + y2**2 <= r**2 with r**2 < 0.25 is forward invariant and avoids the unsafe set. Choosing r**2 = 0.249999999 gives a set extremely close to the maximal safe disk while preserving the strict requirement h(x) < 0 on the entire unsafe set, including its boundary."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 60.974
+  },
+  "tokens": {
+    "input": 2413,
+    "output": 2809,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1555,
+        "output_tokens": 1197,
+        "elapsed_s": 25.018
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 858,
+        "output_tokens": 1612,
+        "elapsed_s": 35.77
+      }
+    ]
+  }
+}

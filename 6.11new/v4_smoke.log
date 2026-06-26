@@ -1,0 +1,33 @@
+[KB] injected 1 reference case(s)
+
+============================================================
+System: Darboux System (Paper Example 4)
+Dynamics: ẋ₁ = x₂ + 2x₁x₂,  ẋ₂ = -x₁ - x₂² + 2x₁²
+Model: gpt-5.5 | max turns: 3
+============================================================
+
+──────────────────────────────────────────────────
+Turn 1  (reasoning effort: medium)
+──────────────────────────────────────────────────
+[Proposer] generating...
+  [Tokens] proposer#1 (medium): in=1244 out=2070
+  h = -(1 + 2*x1)*x2**2 - x1**2 + (4/3)*x1**3 - 0.000001
+[Local verification] cache + symbolic + trajectory...
+  local PASS — escalating to LLM Refuter
+  [Tokens] refuter#1 (high): in=901 out=2956
+
+Turn 1: Refuter confirmed VALID — stopping.
+[KB] solved case recorded
+
+──────────────────────────────────────────────────
+[Lean4 Writer] generate + compile loop
+──────────────────────────────────────────────────
+  [Tokens] lean4-writer#1 (high): in=907 out=11387
+  [Lean4] attempt 1: compile FAILED
+  [Tokens] lean4-writer#2 (high): in=3262 out=11422
+  [Lean4] attempt 2: compile FAILED
+  [Tokens] lean4-writer#3 (high): in=7221 out=3871
+  [Lean4] attempt 3: compile FAILED
+
+Solved: True | turns used: 1 | refuter calls: 1 | tokens in/out: 13535/31706 | total: 607.087s
+Results saved: /Users/zhipeng/Desktop/paper4/6.11new/darboux/v4_darboux.json

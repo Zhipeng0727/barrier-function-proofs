@@ -1,0 +1,472 @@
+{
+  "tanh": {
+    "family": "tanh",
+    "pool": 6,
+    "summary": {
+      "A_naive": {
+        "kept": 5,
+        "audited": 5,
+        "mean_violation_rate": 0.2664,
+        "clean_entries(≤1%viol)": 3
+      },
+      "B_strict": {
+        "kept": 3,
+        "audited": 3,
+        "mean_violation_rate": 0.0,
+        "clean_entries(≤1%viol)": 3
+      },
+      "C_strict_adv": {
+        "kept": 3,
+        "audited": 3,
+        "mean_violation_rate": 0.0,
+        "clean_entries(≤1%viol)": 3
+      }
+    },
+    "rows": [
+      {
+        "h": null,
+        "verdict": {
+          "A": false,
+          "B": false,
+          "C": false
+        },
+        "adv": "—",
+        "strict_reason": "missing h/ode"
+      },
+      {
+        "h": "log(cosh(x*x + y*y - 1))",
+        "verdict": {
+          "A": true,
+          "B": false,
+          "C": false
+        },
+        "adv": "—",
+        "strict_reason": "oracle reject: Positivity failed: min (V - V(x*)) away from equilibrium = -"
+      },
+      {
+        "h": "log(cosh(x)) + 0.5 * y**2",
+        "verdict": {
+          "A": true,
+          "B": true,
+          "C": true
+        },
+        "adv": "survived (6pts)",
+        "strict_reason": null
+      },
+      {
+        "h": "log(cosh(x)) + 0.5 * y * y",
+        "verdict": {
+          "A": true,
+          "B": true,
+          "C": true
+        },
+        "adv": "survived (6pts)",
+        "strict_reason": null
+      },
+      {
+        "h": "log(cosh(x)) + log(cosh(y))",
+        "verdict": {
+          "A": true,
+          "B": true,
+          "C": true
+        },
+        "adv": "survived (6pts)",
+        "strict_reason": null
+      },
+      {
+        "h": "log(cosh(x)) + y**2 / 2",
+        "verdict": {
+          "A": true,
+          "B": false,
+          "C": false
+        },
+        "adv": "—",
+        "strict_reason": "oracle reject: Decrease condition failed: max Vdot = grad V . f = 2.969674 "
+      }
+    ],
+    "datasets": {
+      "A_naive": [
+        {
+          "name": "tanh_limit_cycle",
+          "ode": "dx/dt = y + x * tanh(x*x + y*y - 1), dy/dt = -x + y * tanh(x*x + y*y - 1)",
+          "h": "log(cosh(x*x + y*y - 1))"
+        },
+        {
+          "name": "Tanh_Coupled_Damped_Oscillator",
+          "ode": "dx/dt = y, dy/dt = -tanh(x) - y",
+          "h": "log(cosh(x)) + 0.5 * y**2"
+        },
+        {
+          "name": "tanh_stabilized_double_integrator",
+          "ode": "dx/dt = y, dy/dt = -tanh(x) - y",
+          "h": "log(cosh(x)) + 0.5 * y * y"
+        },
+        {
+          "name": "tanh_gradient_flow",
+          "ode": "dx/dt = -tanh(x), dy/dt = -tanh(y)",
+          "h": "log(cosh(x)) + log(cosh(y))"
+        },
+        {
+          "name": "tanh_cosh_skew_system",
+          "ode": "dx/dt = -tanh(x) - y * tanh(x) / cosh(x), dy/dt = tanh(x)",
+          "h": "log(cosh(x)) + y**2 / 2"
+        }
+      ],
+      "B_strict": [
+        {
+          "name": "Tanh_Coupled_Damped_Oscillator",
+          "ode": "dx/dt = y, dy/dt = -tanh(x) - y",
+          "h": "log(cosh(x)) + 0.5 * y**2"
+        },
+        {
+          "name": "tanh_stabilized_double_integrator",
+          "ode": "dx/dt = y, dy/dt = -tanh(x) - y",
+          "h": "log(cosh(x)) + 0.5 * y * y"
+        },
+        {
+          "name": "tanh_gradient_flow",
+          "ode": "dx/dt = -tanh(x), dy/dt = -tanh(y)",
+          "h": "log(cosh(x)) + log(cosh(y))"
+        }
+      ],
+      "C_strict_adv": [
+        {
+          "name": "Tanh_Coupled_Damped_Oscillator",
+          "ode": "dx/dt = y, dy/dt = -tanh(x) - y",
+          "h": "log(cosh(x)) + 0.5 * y**2"
+        },
+        {
+          "name": "tanh_stabilized_double_integrator",
+          "ode": "dx/dt = y, dy/dt = -tanh(x) - y",
+          "h": "log(cosh(x)) + 0.5 * y * y"
+        },
+        {
+          "name": "tanh_gradient_flow",
+          "ode": "dx/dt = -tanh(x), dy/dt = -tanh(y)",
+          "h": "log(cosh(x)) + log(cosh(y))"
+        }
+      ]
+    },
+    "out_tokens": 938
+  },
+  "log": {
+    "family": "log",
+    "pool": 6,
+    "summary": {
+      "A_naive": {
+        "kept": 6,
+        "audited": 6,
+        "mean_violation_rate": 0.3154,
+        "clean_entries(≤1%viol)": 3
+      },
+      "B_strict": {
+        "kept": 3,
+        "audited": 3,
+        "mean_violation_rate": 0.0,
+        "clean_entries(≤1%viol)": 3
+      },
+      "C_strict_adv": {
+        "kept": 3,
+        "audited": 3,
+        "mean_violation_rate": 0.0,
+        "clean_entries(≤1%viol)": 3
+      }
+    },
+    "rows": [
+      {
+        "h": "1 + x * x + y * y - log(1 + x * x + y * y)",
+        "verdict": {
+          "A": true,
+          "B": true,
+          "C": true
+        },
+        "adv": "survived (6pts)",
+        "strict_reason": null
+      },
+      {
+        "h": "0.5*x**2 + 0.5*y**2 - 0.5*log(x**2 + y**2)",
+        "verdict": {
+          "A": true,
+          "B": false,
+          "C": false
+        },
+        "adv": "—",
+        "strict_reason": "oracle reject: Trajectory check failed: V increased along a solution:\n  {'x"
+      },
+      {
+        "h": "log(1 + x**2 + y**2)",
+        "verdict": {
+          "A": true,
+          "B": true,
+          "C": true
+        },
+        "adv": "survived (6pts)",
+        "strict_reason": null
+      },
+      {
+        "h": "log(1 + x**2 + y**2)",
+        "verdict": {
+          "A": true,
+          "B": false,
+          "C": false
+        },
+        "adv": "—",
+        "strict_reason": "oracle reject: Decrease condition failed: max Vdot = grad V . f = 0.259301 "
+      },
+      {
+        "h": "0.5 * log(x**2 + y**2) + exp(-(x**2 + y**2))",
+        "verdict": {
+          "A": true,
+          "B": false,
+          "C": false
+        },
+        "adv": "—",
+        "strict_reason": "symbolic check vacuous (did not run/confirm)"
+      },
+      {
+        "h": "log(1 + x**2 + y**2)",
+        "verdict": {
+          "A": true,
+          "B": true,
+          "C": true
+        },
+        "adv": "survived (6pts)",
+        "strict_reason": null
+      }
+    ],
+    "datasets": {
+      "A_naive": [
+        {
+          "name": "log_damped_oscillator",
+          "ode": "dx/dt = y - x * log(1 + x * x + y * y), dy/dt = -x - y * log(1 + x * x + y * y)",
+          "h": "1 + x * x + y * y - log(1 + x * x + y * y)"
+        },
+        {
+          "name": "Log_Lyapunov_Limit_Cycle",
+          "ode": "dx/dt = -y + x*(1 - (x**2 + y**2)*exp(1 - x**2 - y**2)), dy/dt = x + y*(1 - (x**2 + y**2)*exp(1 - x**2 - y**2))",
+          "h": "0.5*x**2 + 0.5*y**2 - 0.5*log(x**2 + y**2)"
+        },
+        {
+          "name": "log_barrier_gradient_system",
+          "ode": "dx/dt = -x / (1 + x**2 + y**2), dy/dt = -y / (1 + x**2 + y**2)",
+          "h": "log(1 + x**2 + y**2)"
+        },
+        {
+          "name": "log_CFLS_gradient_shaping",
+          "ode": "dx/dt = -2*y + x*exp(-x**2 - y**2)*log(1 + x**2 + y**2), dy/dt = 2*x + y*exp(-x**2 - y**2)*log(1 + x**2 + y**2)",
+          "h": "log(1 + x**2 + y**2)"
+        },
+        {
+          "name": "log_energized_gradient_flow",
+          "ode": "dx/dt = -x * (1 + exp(-(x**2 + y**2))) / (x**2 + y**2), dy/dt = -y * (1 + exp(-(x**2 + y**2))) / (x**2 + y**2)",
+          "h": "0.5 * log(x**2 + y**2) + exp(-(x**2 + y**2))"
+        },
+        {
+          "name": "log_drain_skew",
+          "ode": "dx/dt = -x / (x**2 + y**2) - y, dy/dt = -y / (x**2 + y**2) + x",
+          "h": "log(1 + x**2 + y**2)"
+        }
+      ],
+      "B_strict": [
+        {
+          "name": "log_damped_oscillator",
+          "ode": "dx/dt = y - x * log(1 + x * x + y * y), dy/dt = -x - y * log(1 + x * x + y * y)",
+          "h": "1 + x * x + y * y - log(1 + x * x + y * y)"
+        },
+        {
+          "name": "log_barrier_gradient_system",
+          "ode": "dx/dt = -x / (1 + x**2 + y**2), dy/dt = -y / (1 + x**2 + y**2)",
+          "h": "log(1 + x**2 + y**2)"
+        },
+        {
+          "name": "log_drain_skew",
+          "ode": "dx/dt = -x / (x**2 + y**2) - y, dy/dt = -y / (x**2 + y**2) + x",
+          "h": "log(1 + x**2 + y**2)"
+        }
+      ],
+      "C_strict_adv": [
+        {
+          "name": "log_damped_oscillator",
+          "ode": "dx/dt = y - x * log(1 + x * x + y * y), dy/dt = -x - y * log(1 + x * x + y * y)",
+          "h": "1 + x * x + y * y - log(1 + x * x + y * y)"
+        },
+        {
+          "name": "log_barrier_gradient_system",
+          "ode": "dx/dt = -x / (1 + x**2 + y**2), dy/dt = -y / (1 + x**2 + y**2)",
+          "h": "log(1 + x**2 + y**2)"
+        },
+        {
+          "name": "log_drain_skew",
+          "ode": "dx/dt = -x / (x**2 + y**2) - y, dy/dt = -y / (x**2 + y**2) + x",
+          "h": "log(1 + x**2 + y**2)"
+        }
+      ]
+    },
+    "out_tokens": 1181
+  },
+  "exp": {
+    "family": "exp",
+    "pool": 6,
+    "summary": {
+      "A_naive": {
+        "kept": 6,
+        "audited": 6,
+        "mean_violation_rate": 0.3665,
+        "clean_entries(≤1%viol)": 4
+      },
+      "B_strict": {
+        "kept": 4,
+        "audited": 4,
+        "mean_violation_rate": 0.0,
+        "clean_entries(≤1%viol)": 4
+      },
+      "C_strict_adv": {
+        "kept": 4,
+        "audited": 4,
+        "mean_violation_rate": 0.0,
+        "clean_entries(≤1%viol)": 4
+      }
+    },
+    "rows": [
+      {
+        "h": "exp(x**2 + y**2) - 1",
+        "verdict": {
+          "A": true,
+          "B": true,
+          "C": true
+        },
+        "adv": "survived (6pts)",
+        "strict_reason": null
+      },
+      {
+        "h": "log(1 + x**2 + y**2) - x**2 - y**2 - exp(-x**2 - y**2)",
+        "verdict": {
+          "A": true,
+          "B": false,
+          "C": false
+        },
+        "adv": "—",
+        "strict_reason": "oracle reject: Positivity failed: min (V - V(x*)) away from equilibrium = -"
+      },
+      {
+        "h": "exp(x**2+y**2) - 1",
+        "verdict": {
+          "A": true,
+          "B": true,
+          "C": true
+        },
+        "adv": "survived (6pts)",
+        "strict_reason": null
+      },
+      {
+        "h": "1 - exp(-x**2 - y**2)",
+        "verdict": {
+          "A": true,
+          "B": true,
+          "C": true
+        },
+        "adv": "survived (6pts)",
+        "strict_reason": null
+      },
+      {
+        "h": "0.5 * (exp(2 * (x**2 + y**2)) - 1)",
+        "verdict": {
+          "A": true,
+          "B": true,
+          "C": true
+        },
+        "adv": "survived (6pts)",
+        "strict_reason": null
+      },
+      {
+        "h": "x**2 + y**2 + 2*exp(x) - 2",
+        "verdict": {
+          "A": true,
+          "B": false,
+          "C": false
+        },
+        "adv": "—",
+        "strict_reason": "oracle reject: Positivity failed: min (V - V(x*)) away from equilibrium = -"
+      }
+    ],
+    "datasets": {
+      "A_naive": [
+        {
+          "name": "Exponential Gradient Flow with Logarithmic Barrier",
+          "ode": "dx/dt = -x * exp(x**2 + y**2), dy/dt = -y * exp(x**2 + y**2)",
+          "h": "exp(x**2 + y**2) - 1"
+        },
+        {
+          "name": "exponential_decay_limit_cycle",
+          "ode": "dx/dt = -y + x*(1 - x**2 - y**2) + x*exp(-x**2 - y**2)*(1 - x**2 - y**2), dy/dt = x + y*(1 - x**2 - y**2) + y*exp(-x**2 - y**2)*(1 - x**2 - y**2)",
+          "h": "log(1 + x**2 + y**2) - x**2 - y**2 - exp(-x**2 - y**2)"
+        },
+        {
+          "name": "exponential_relaxation_2d",
+          "ode": "dx/dt = -2*exp(-x**2-y**2)*x - y, dy/dt = x - 2*exp(-x**2-y**2)*y",
+          "h": "exp(x**2+y**2) - 1"
+        },
+        {
+          "name": "exponential_basin_dissipation",
+          "ode": "dx/dt = -2*x*exp(-x**2 - y**2) - y*exp(x**2 + y**2), dy/dt = -2*y*exp(-x**2 - y**2) + x*exp(x**2 + y**2)",
+          "h": "1 - exp(-x**2 - y**2)"
+        },
+        {
+          "name": "exponential_gradient_flow",
+          "ode": "dx/dt = -x * exp(x**2 + y**2), dy/dt = -y * exp(x**2 + y**2)",
+          "h": "0.5 * (exp(2 * (x**2 + y**2)) - 1)"
+        },
+        {
+          "name": "exponentially_skewed_stable_system",
+          "ode": "dx/dt = -x + y*exp(x), dy/dt = -y*exp(x) - y",
+          "h": "x**2 + y**2 + 2*exp(x) - 2"
+        }
+      ],
+      "B_strict": [
+        {
+          "name": "Exponential Gradient Flow with Logarithmic Barrier",
+          "ode": "dx/dt = -x * exp(x**2 + y**2), dy/dt = -y * exp(x**2 + y**2)",
+          "h": "exp(x**2 + y**2) - 1"
+        },
+        {
+          "name": "exponential_relaxation_2d",
+          "ode": "dx/dt = -2*exp(-x**2-y**2)*x - y, dy/dt = x - 2*exp(-x**2-y**2)*y",
+          "h": "exp(x**2+y**2) - 1"
+        },
+        {
+          "name": "exponential_basin_dissipation",
+          "ode": "dx/dt = -2*x*exp(-x**2 - y**2) - y*exp(x**2 + y**2), dy/dt = -2*y*exp(-x**2 - y**2) + x*exp(x**2 + y**2)",
+          "h": "1 - exp(-x**2 - y**2)"
+        },
+        {
+          "name": "exponential_gradient_flow",
+          "ode": "dx/dt = -x * exp(x**2 + y**2), dy/dt = -y * exp(x**2 + y**2)",
+          "h": "0.5 * (exp(2 * (x**2 + y**2)) - 1)"
+        }
+      ],
+      "C_strict_adv": [
+        {
+          "name": "Exponential Gradient Flow with Logarithmic Barrier",
+          "ode": "dx/dt = -x * exp(x**2 + y**2), dy/dt = -y * exp(x**2 + y**2)",
+          "h": "exp(x**2 + y**2) - 1"
+        },
+        {
+          "name": "exponential_relaxation_2d",
+          "ode": "dx/dt = -2*exp(-x**2-y**2)*x - y, dy/dt = x - 2*exp(-x**2-y**2)*y",
+          "h": "exp(x**2+y**2) - 1"
+        },
+        {
+          "name": "exponential_basin_dissipation",
+          "ode": "dx/dt = -2*x*exp(-x**2 - y**2) - y*exp(x**2 + y**2), dy/dt = -2*y*exp(-x**2 - y**2) + x*exp(x**2 + y**2)",
+          "h": "1 - exp(-x**2 - y**2)"
+        },
+        {
+          "name": "exponential_gradient_flow",
+          "ode": "dx/dt = -x * exp(x**2 + y**2), dy/dt = -y * exp(x**2 + y**2)",
+          "h": "0.5 * (exp(2 * (x**2 + y**2)) - 1)"
+        }
+      ]
+    },
+    "out_tokens": 1276
+  }
+}

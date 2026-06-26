@@ -1,0 +1,120 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B1-015",
+    "ode": "dx1/dt = x2, dx2/dt = -x1 - x2 + x1**3/3",
+    "state_vars": [
+      "x1",
+      "x2"
+    ],
+    "f_expr": [
+      "x2",
+      "-x1 - x2 + x1**3/3"
+    ],
+    "X_domain": "ball",
+    "X_u_desc": "ball([-1,-1],0.4)",
+    "X_u_expr": "(x1 - (-1))**2 + (x2 - (-1))**2 <= 0.16000000000000003",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B1-015",
+      "layer": "L1-lit",
+      "group": "B1",
+      "task": "barrier",
+      "cert_class": "poly-explicit",
+      "source": "Prajna 2006 barrier certificate (barr3)"
+    }
+  },
+  "timestamp": "2026-06-11T18:32:31.624897",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "0.4849 - 0.5*x2**2 - 0.5*x1**2 + x1**4/12",
+        "invariant_set": "C = {x in X : 0.5*x2**2 + 0.5*x1**2 - x1**4/12 <= 0.4849}",
+        "condition1_check": "Let E(x1,x2) = 0.5*x2**2 + 0.5*x1**2 - x1**4/12, so h = 0.4849 - E. For the unsafe set X_u = {((x1+1)**2 + (x2+1)**2 <= 0.16)}, write a = x1 + 1 and b = x2 + 1. Then x1 = -1 + a, x2 = -1 + b, and on X_u we have a**2 + b**2 <= 0.16. Since the minimum of E over X_u occurs in the first-quadrant direction from (-1,-1), it is enough to consider a >= 0, b >= 0. Expanding E gives E = 11/12 - (2/3)*a - b + 0.5*b**2 + a**3/3 - a**4/12. For 0 <= a <= 0.4, the last term satisfies a**3/3 - a**4/12 = a**3*(4-a)/12 >= 0. Hence E >= 11/12 - ((2/3)*a + b - 0.5*b**2). The scalar function g(b)=b-0.5*b**2 is concave, so for all b, using its tangent at b=0.3, g(b) <= g(0.3)+g'(0.3)*(b-0.3) = 0.045 + 0.7*b. Therefore (2/3)*a + b - 0.5*b**2 <= (2/3)*a + 0.7*b + 0.045. By Cauchy's inequality and a**2+b**2 <= 0.16, (2/3)*a + 0.7*b <= sqrt((2/3)**2 + 0.7**2)*sqrt(a**2+b**2) <= sqrt(841/900)*0.4 = (29/30)*0.4 = 29/75. Thus (2/3)*a + b - 0.5*b**2 <= 29/75 + 0.045 = 259/600. Consequently E >= 11/12 - 259/600 = 291/600 = 0.485. Therefore h = 0.4849 - E <= 0.4849 - 0.485 = -0.0001 < 0 on X_u. Hence the unsafe set lies strictly in the negative region of h.",
+        "lie_derivative": "Let E(x1,x2) = 0.5*x2**2 + 0.5*x1**2 - x1**4/12. Then h = 0.4849 - E. We compute grad(E) = (x1 - x1**3/3, x2). The dynamics are f1 = x2 and f2 = -x1 - x2 + x1**3/3. Hence dE/dt = (x1 - x1**3/3)*x2 + x2*(-x1 - x2 + x1**3/3) = -x2**2. Therefore dh/dt = -dE/dt = x2**2.",
+        "condition2_check": "On the boundary of C, h(x)=0, equivalently E(x1,x2)=0.4849. The Lie derivative is dh/dt = x2**2. Since x2**2 >= 0 for every real x2, we have dh/dt >= 0 at every boundary point satisfying h=0. Therefore Nagumo's condition is satisfied on ∂C.",
+        "reasoning": "The system has a natural dissipating energy E = 0.5*x2**2 + 0.5*x1**2 - x1**4/12. Along trajectories, E decreases monotonically because dE/dt = -x2**2. Therefore any sublevel set {E <= c} is forward invariant. Since the required convention is C = {h >= 0}, we choose h = c - E. The largest admissible c must be below the minimum of E on the unsafe ball centered at (-1,-1) with radius 0.4. A rigorous lower bound gives E >= 0.485 on that unsafe ball, so choosing c = 0.4849 gives a small strict margin while keeping the invariant safe set large."
+      },
+      "proposer_elapsed_s": 107.223,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "1.0*x2**2",
+          "boundary_epsilon": 0.148489,
+          "boundary_pts_found": 597,
+          "cond1_max_h_in_Xu": -0.065789,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 6e-06,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.021
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.079478,
+          "trajectory_valid": true,
+          "elapsed_s": 0.236
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "Let E(x)=0.5*x2^2+0.5*x1^2-x1^4/12, so h=0.4849-E. On the unsafe ball X_u=ball([-1,-1],0.4), write a=-x1, b=-x2. Then (a-1)^2+(b-1)^2<=0.16 and E=0.5*b^2+0.5*a^2-a^4/12. Since dE/da=a-a^3/3>0 for a in [0.6,1.4] and dE/db=b>0, the minimum over the disk occurs on the lower-left boundary a=1-s, b=1-t, s,t>=0, s^2+t^2=0.16. The reduced one-variable minimization has its unique interior critical point at approximately s=0.261845, t=0.302386, i.e. x≈(-0.738155,-0.697614), with E≈0.49102863. The boundary endpoints give E≈0.6692 and E≈0.5966667. Hence min_{X_u} E≈0.49102863>0.4849, so h(x)<=0.4849-0.49102863≈-0.00612863<0 on all of X_u. For example, h(-1,-1)=0.4849-0.9166667≈-0.4317667.",
+        "lie_derivative_computed": "∇h=(-x1+x1^3/3, -x2). Therefore ḣ=(-x1+x1^3/3)*x2+(-x2)*(-x1-x2+x1^3/3)=x2^2.",
+        "condition2_result": "Condition 2 holds globally, not merely on the boundary: ḣ=x2^2>=0 for every state. Therefore on ∂C, where h=0, the Nagumo condition is satisfied. For instance, at the boundary point (x1,x2)=(0,sqrt(0.9698))≈(0,0.984784), h=0 and ḣ=0.9698>0. Degenerate boundary points with x2=0 have ḣ=0, which is still allowed because the condition is non-strict.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The invariant set can be enlarged by increasing the level threshold. For h_c(x)=c-0.5*x2^2-0.5*x1^2+x1^4/12, the Lie derivative remains ḣ_c=x2^2>=0. Condition 1 requires c<min_{X_u} E≈0.49102863. The current value c=0.4849 is conservative; a concrete safe enlargement is c=0.4909, giving C={E<=0.4909} while preserving strict separation from the unsafe ball."
+      },
+      "refuter_elapsed_s": 206.489
+    }
+  ],
+  "final_barrier": {
+    "h": "0.4849 - 0.5*x2**2 - 0.5*x1**2 + x1**4/12",
+    "invariant_set": "C = {x in X : 0.5*x2**2 + 0.5*x1**2 - x1**4/12 <= 0.4849}",
+    "condition1_check": "Let E(x1,x2) = 0.5*x2**2 + 0.5*x1**2 - x1**4/12, so h = 0.4849 - E. For the unsafe set X_u = {((x1+1)**2 + (x2+1)**2 <= 0.16)}, write a = x1 + 1 and b = x2 + 1. Then x1 = -1 + a, x2 = -1 + b, and on X_u we have a**2 + b**2 <= 0.16. Since the minimum of E over X_u occurs in the first-quadrant direction from (-1,-1), it is enough to consider a >= 0, b >= 0. Expanding E gives E = 11/12 - (2/3)*a - b + 0.5*b**2 + a**3/3 - a**4/12. For 0 <= a <= 0.4, the last term satisfies a**3/3 - a**4/12 = a**3*(4-a)/12 >= 0. Hence E >= 11/12 - ((2/3)*a + b - 0.5*b**2). The scalar function g(b)=b-0.5*b**2 is concave, so for all b, using its tangent at b=0.3, g(b) <= g(0.3)+g'(0.3)*(b-0.3) = 0.045 + 0.7*b. Therefore (2/3)*a + b - 0.5*b**2 <= (2/3)*a + 0.7*b + 0.045. By Cauchy's inequality and a**2+b**2 <= 0.16, (2/3)*a + 0.7*b <= sqrt((2/3)**2 + 0.7**2)*sqrt(a**2+b**2) <= sqrt(841/900)*0.4 = (29/30)*0.4 = 29/75. Thus (2/3)*a + b - 0.5*b**2 <= 29/75 + 0.045 = 259/600. Consequently E >= 11/12 - 259/600 = 291/600 = 0.485. Therefore h = 0.4849 - E <= 0.4849 - 0.485 = -0.0001 < 0 on X_u. Hence the unsafe set lies strictly in the negative region of h.",
+    "lie_derivative": "Let E(x1,x2) = 0.5*x2**2 + 0.5*x1**2 - x1**4/12. Then h = 0.4849 - E. We compute grad(E) = (x1 - x1**3/3, x2). The dynamics are f1 = x2 and f2 = -x1 - x2 + x1**3/3. Hence dE/dt = (x1 - x1**3/3)*x2 + x2*(-x1 - x2 + x1**3/3) = -x2**2. Therefore dh/dt = -dE/dt = x2**2.",
+    "condition2_check": "On the boundary of C, h(x)=0, equivalently E(x1,x2)=0.4849. The Lie derivative is dh/dt = x2**2. Since x2**2 >= 0 for every real x2, we have dh/dt >= 0 at every boundary point satisfying h=0. Therefore Nagumo's condition is satisfied on ∂C.",
+    "reasoning": "The system has a natural dissipating energy E = 0.5*x2**2 + 0.5*x1**2 - x1**4/12. Along trajectories, E decreases monotonically because dE/dt = -x2**2. Therefore any sublevel set {E <= c} is forward invariant. Since the required convention is C = {h >= 0}, we choose h = c - E. The largest admissible c must be below the minimum of E on the unsafe ball centered at (-1,-1) with radius 0.4. A rigorous lower bound gives E >= 0.485 on that unsafe ball, so choosing c = 0.4849 gives a small strict margin while keeping the invariant safe set large."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 313.98
+  },
+  "tokens": {
+    "input": 2331,
+    "output": 13561,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1527,
+        "output_tokens": 4597,
+        "elapsed_s": 107.223
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 804,
+        "output_tokens": 8964,
+        "elapsed_s": 206.489
+      }
+    ]
+  }
+}

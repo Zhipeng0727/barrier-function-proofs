@@ -1,0 +1,92 @@
+{
+ "rows": [
+  {
+   "id": "fossil_nonpoly0",
+   "dim": 2,
+   "source": "FOSSIL NonPoly0 (Darboux non-poly Lyapunov series)",
+   "A0_quad": true,
+   "A0_rounds": 1,
+   "A0_time": 0.4,
+   "A0_blocker": null,
+   "A1_neural": true,
+   "A1_rounds": 1,
+   "A1_time": 0.6,
+   "A1_blocker": null,
+   "A1_cert": "0.1*x1**2 + 0.1*x2**2 + (0.283501729004253 - tanh(0.272345244884491*x1 - 0.18961"
+  },
+  {
+   "id": "fossil_benchmark0",
+   "dim": 2,
+   "source": "FOSSIL Benchmark0",
+   "A0_quad": true,
+   "A0_rounds": 1,
+   "A0_time": 0.1,
+   "A0_blocker": null,
+   "A1_neural": true,
+   "A1_rounds": 1,
+   "A1_time": 0.6,
+   "A1_blocker": null,
+   "A1_cert": "0.1*x1**2 + 0.1*x2**2 + (0.283501729004253 - tanh(0.272345244884491*x1 - 0.18961"
+  },
+  {
+   "id": "fossil_poly2",
+   "dim": 2,
+   "source": "FOSSIL Poly2 (Sriram nolcos13)",
+   "A0_quad": true,
+   "A0_rounds": 2,
+   "A0_time": 0.3,
+   "A0_blocker": null,
+   "A1_neural": true,
+   "A1_rounds": 1,
+   "A1_time": 4.6,
+   "A1_blocker": null,
+   "A1_cert": "0.1*x1**2 + 0.1*x2**2 + (0.169717750389071 - tanh(0.152236000813996*x1 - 0.06950"
+  },
+  {
+   "id": "fossil_poly3",
+   "dim": 2,
+   "source": "FOSSIL Poly3 (Sriram nolcos13)",
+   "A0_quad": false,
+   "A0_rounds": 4,
+   "A0_time": 2.1,
+   "A0_blocker": "max rounds",
+   "A1_neural": false,
+   "A1_rounds": 1,
+   "A1_time": 92.5,
+   "A1_blocker": "verifier-limited (falsifier found no violation)",
+   "A1_cert": ""
+  },
+  {
+   "id": "fossil_poly4",
+   "dim": 2,
+   "source": "FOSSIL Poly4 (Sriram nolcos13)",
+   "A0_quad": false,
+   "A0_rounds": 4,
+   "A0_time": 2.5,
+   "A0_blocker": "max rounds",
+   "A1_neural": false,
+   "A1_rounds": 5,
+   "A1_time": 24.8,
+   "A1_blocker": "max rounds",
+   "A1_cert": ""
+  },
+  {
+   "id": "chang_pendulum_lqr",
+   "dim": 2,
+   "source": "Chang et al. NeurIPS 2019 inverted pendulum, LQR closed loop",
+   "A0_quad": false,
+   "A0_rounds": 1,
+   "A0_time": 0.6,
+   "A0_blocker": "verifier-limited (falsifier found no violation)",
+   "A1_neural": false,
+   "A1_rounds": 1,
+   "A1_time": 1.9,
+   "A1_blocker": "verifier-limited (falsifier found no violation)",
+   "A1_cert": ""
+  }
+ ],
+ "A0": 3,
+ "A1": 3,
+ "exclusive": [],
+ "reverse": []
+}

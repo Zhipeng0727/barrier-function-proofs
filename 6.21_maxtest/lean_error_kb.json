@@ -1,0 +1,145 @@
+{
+  "_meta": {
+    "purpose": "Lean 4 compiler-error taxonomy for the LLM Lean writer/repair agent. Each entry maps a REAL diagnostic signature (harvested via lean_error_harvest.py against leanprover/lean4 v4.29-rc6 + Mathlib) to a root cause, an escalation route (L1 repair / L2 rewrite-strategy / L3 regenerate-barrier), and a concrete fix the model should apply.",
+    "routes": {
+      "L1": "cheap in-place repair, same proof, same conversation",
+      "L2": "rewrite the Lean proof with a different strategy / lemmas / statement (fresh attempt)",
+      "L3": "the certificate itself is formalization-hostile -> go back and propose a different barrier"
+    },
+    "harvested": "leanprover/lean4 v4.29.0-rc6"
+  },
+  "entries": [
+    {
+      "id": "tactic_failed_transcendental",
+      "priority": 1,
+      "signatures": ["linarith failed to find a contradiction"],
+      "requires_any": ["Real.log", "Real.exp", "Real.sin", "Real.cos", "Real.sinh", "Real.cosh", "Real.arctan"],
+      "title": "nlinarith/linarith fails on a goal containing a transcendental term",
+      "root_cause": "nlinarith and polyrith are polynomial/linear-arithmetic engines. They treat Real.log x, Real.exp x, Real.sin x, ... as OPAQUE ATOMS and know none of their analytic properties (concavity, monotonicity, bounds). The goal is provable, but the tactic has no bridging fact to work with.",
+      "route": "L2",
+      "fix": "Inject the bridging lemma as an nlinarith hint so the transcendental step becomes an algebraic hypothesis the tactic can chain. Then nlinarith closes it. Patterns: log -> nlinarith [Real.log_le_sub_one_of_pos hx]; exp -> nlinarith [Real.add_one_le_exp x, Real.exp_pos x]; sin/cos -> nlinarith [Real.neg_one_le_sin x, Real.sin_le_one x, Real.neg_one_le_cos x, Real.cos_le_one x, Real.sin_sq_add_cos_sq x]. Alternatively substitute z := Real.log x (or exp/sin) and prove the resulting polynomial inequality in z. This is the SAME mechanism as the certificate-family skeletons in lean_proof.py _TEMPLATES.",
+      "lemmas": ["Real.log_le_sub_one_of_pos", "Real.add_one_le_exp", "Real.exp_pos", "Real.exp_log", "Real.neg_one_le_sin", "Real.sin_le_one", "Real.neg_one_le_cos", "Real.cos_le_one", "Real.sin_sq_add_cos_sq"],
+      "note": "This is NOT a reason to abandon a log/exp/trig certificate. Lean handles these fine WITH the lemma. Do not route to L3 just because the certificate is transcendental."
+    },
+    {
+      "id": "tactic_failed_nonlinear",
+      "priority": 2,
+      "signatures": ["linarith failed to find a contradiction", "nlinarith failed", "polyrith failed", "ring_nf failed"],
+      "title": "Arithmetic tactic fails on a (purely polynomial) nonlinear goal",
+      "root_cause": "linarith is linear-only and cannot prove nonlinear goals at all. nlinarith can, but only if given the right product/square certificates: it searches over products of the hypotheses you hand it, so a missing sq_nonneg term leaves it unable to find the SOS-style combination.",
+      "route": "L2",
+      "fix": "Switch linarith -> nlinarith and supply the dominating squares as hints, e.g. nlinarith [sq_nonneg (x - y), sq_nonneg (x + y), sq_nonneg x, sq_nonneg y, mul_pos hx hy]. Pick the squares whose expansion cancels the cross terms in the goal. For pure nonnegativity goals try positivity; for polynomial identities try ring / polyrith.",
+      "lemmas": ["sq_nonneg", "mul_pos", "mul_nonneg", "add_pos", "pow_pos"]
+    },
+    {
+      "id": "missing_real_instances",
+      "priority": 3,
+      "signatures": ["failed to synthesize", "synthInstanceFailed", "HAdd", "HPow", "HMul"],
+      "title": "Type-class instances for ℝ not found (HAdd/HPow/HMul ℝ ...)",
+      "root_cause": "Imports are too narrow. Importing only a tactic module (e.g. Mathlib.Tactic.Linarith) does not bring ℝ's field/ring/order instances into scope, so +, *, ^ on ℝ cannot be elaborated.",
+      "route": "L1",
+      "fix": "Add `import Mathlib.Data.Real.Basic` and `import Mathlib.Tactic`. For special functions also import Mathlib.Analysis.SpecialFunctions.Log.Basic / .Exp / .Trigonometric.Basic as needed.",
+      "lemmas": []
+    },
+    {
+      "id": "import_not_found",
+      "priority": 4,
+      "signatures": ["does not exist", "unknown module", "unknown package", "invalid import"],
+      "title": "Import path does not resolve",
+      "root_cause": "The imported module name is wrong, or the full-umbrella `import Mathlib` form is unreliable in this environment.",
+      "route": "L1",
+      "fix": "Remove the bad import. Never use bare `import Mathlib`. Import specific modules only: Mathlib.Data.Real.Basic, Mathlib.Analysis.SpecialFunctions.Log.Basic, Mathlib.Analysis.SpecialFunctions.Exp, Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic, Mathlib.Order.MinMax, Mathlib.Tactic.",
+      "lemmas": []
+    },
+    {
+      "id": "unknown_identifier",
+      "priority": 5,
+      "signatures": ["unknownIdentifier", "Unknown constant", "unknown identifier", "unknown constant"],
+      "title": "Lemma / constant name does not exist",
+      "root_cause": "The referenced lemma or definition name is hallucinated or misspelled — it is not in this Mathlib.",
+      "route": "L1",
+      "fix": "Do NOT invent lemma names. Replace it with a name you are sure exists, or discharge the step with a search tactic: `exact?`, `apply?`, or `rw?`. Verified-correct names: Real.log_le_sub_one_of_pos, Real.add_one_le_exp, Real.exp_pos, sq_nonneg, mul_pos, abs_le, Finset.sum_nonneg, le_max_left, min_le_left.",
+      "lemmas": []
+    },
+    {
+      "id": "unknown_tactic",
+      "priority": 6,
+      "signatures": ["unknown tactic"],
+      "title": "Tactic name unknown (misspelled or not imported)",
+      "root_cause": "The tactic does not exist under that name, or its module is not imported.",
+      "route": "L1",
+      "fix": "Fix the spelling. `import Mathlib.Tactic` provides nlinarith, polyrith, positivity, linarith, ring, field_simp, gcongr. Do not use non-existent tactics.",
+      "lemmas": []
+    },
+    {
+      "id": "type_mismatch",
+      "priority": 7,
+      "signatures": ["Type mismatch", "type mismatch", "has type", "but is expected to have type"],
+      "title": "Type mismatch in a term or statement",
+      "root_cause": "A term's type differs from the expected type — commonly ℕ/ℤ/ℝ literal confusion, a missing coercion, or an incorrectly encoded statement (e.g. derivative obligation stated wrong).",
+      "route": "L2",
+      "fix": "Make the statement well-typed: annotate literals like (2 : ℝ), insert coercions, keep all barrier quantities in ℝ. If a derivative/HasDerivAt obligation is the culprit, restate the decrease condition as an inequality about the explicit closed-form derivative expression instead of re-deriving it.",
+      "lemmas": []
+    },
+    {
+      "id": "unsolved_goals",
+      "priority": 8,
+      "signatures": ["unsolved goals"],
+      "title": "Proof block ended with goals still open",
+      "root_cause": "The tactic sequence did not close every goal; one or more `⊢ ...` remain (often a side condition: a positivity, a domain bound, or one branch of a case split).",
+      "route": "L1",
+      "fix": "Read the printed remaining goal and add tactics to discharge it. Side conditions usually fall to positivity / nlinarith / assumption / linarith. If it is a leftover case, add the missing branch.",
+      "lemmas": []
+    },
+    {
+      "id": "heartbeat_timeout",
+      "priority": 9,
+      "signatures": ["(deterministic) timeout", "maximum number of heartbeats", "maximum recursion depth", "deep recursion"],
+      "title": "Tactic exceeded the heartbeat / recursion budget",
+      "root_cause": "The tactic call is too expensive — typically nlinarith given too many or too-large hints, or a high-degree polynomial blow-up.",
+      "route": "L2",
+      "fix": "Reduce cost first: fewer and simpler nlinarith hints, lower-degree reformulation, or split the proof into named lemmas. You may raise the budget with `set_option maxHeartbeats 400000 in` before the example. If it is irreducibly expensive across strategies, escalate to L3 (the certificate is formalization-hostile; propose a simpler / wider-margin one).",
+      "lemmas": []
+    },
+    {
+      "id": "noncomputable_def",
+      "priority": 6,
+      "signatures": ["dependsOnNoncomputable", "marking it as 'noncomputable'", "marking it as `noncomputable`", "compile definition, consider marking"],
+      "title": "ℝ-valued `def` rejected — needs `noncomputable`",
+      "root_cause": "A `def` whose body uses real division, Real.log/exp/sin/..., or other noncomputable reals cannot generate executable code, so Lean refuses to compile the definition. This is NOT a proof error — the math is fine; only the `def` needs the modifier (or should not be a def at all).",
+      "route": "L1",
+      "fix": "Prefix the definition with `noncomputable`: `noncomputable def V (x y : ℝ) : ℝ := ...`. Better still for a certificate proof: do NOT introduce a `def` for the barrier at all — state the conditions as a `theorem`/`example` with the expression written inline (or via `let`), so there is no top-level definition to compile.",
+      "lemmas": []
+    },
+    {
+      "id": "no_goals",
+      "priority": 7,
+      "signatures": ["No goals to be solved", "no goals to be solved", "no goals."],
+      "title": "A tactic ran after every goal was already closed",
+      "root_cause": "The previous tactic (often nlinarith/positivity/linarith, or a `<;>` combinator) already discharged all goals, so the next tactic in the block has nothing to act on. Over-proving, not under-proving.",
+      "route": "L1",
+      "fix": "Delete the trailing/extra tactic — the goal is already closed by the line before it. If a `<;>` applied a follow-up tactic too broadly, drop the `<;> ...`. Do not add more tactics; remove the offending one.",
+      "lemmas": []
+    },
+    {
+      "id": "declaration_uses_sorry",
+      "priority": 0,
+      "signatures": ["declaration uses 'sorry'", "declaration uses `sorry`", "uses 'sorry'", "uses `sorry`"],
+      "title": "Proof contains `sorry` — compiles (exit 0) but is NOT proven",
+      "root_cause": "A `sorry` placeholder makes the file type-check and EXIT 0, but the theorem is unproved. A naive exit-code check treats this as success.",
+      "route": "L1",
+      "fix": "Replace every `sorry` with a real proof. HARNESS RULE: a compile is only 'proved' if exit code is 0 AND the output contains no \"declaration uses 'sorry'\" warning. lean_compile_check must check both.",
+      "lemmas": []
+    },
+    {
+      "id": "l4_unsound_axiom",
+      "priority": 0,
+      "signatures": ["[L4 unsound]", "depends on non-trusted axioms", "user axiom"],
+      "title": "Compiles sorry-free but is NOT a proof — axiomatized or trivial (L4 soundness gate)",
+      "root_cause": "The file type-checks (exit 0, no sorry) yet proves nothing real: it either DECLARES its own axioms (e.g. `axiom Real : Type`, `axiom realAdd`, or a bridge `axiom nagumo_…`) so the hard facts are assumed unproven, or the proved theorem statement is trivial (`: True`). `#print axioms` then shows the result resting on axioms outside {propext, Classical.choice, Quot.sound}. This is a FALSE 'proved' — the #1 silent soundness hole.",
+      "route": "L2",
+      "fix": "Delete EVERY `axiom` declaration. Never re-declare ℝ or its operations — `import Mathlib.Data.Real.Basic` and use the real ℝ. State the theorem AS the actual barrier/Lyapunov condition (an inequality over the state variables), not a trivially-true restatement. Close every goal with real tactics (nlinarith/polyrith/positivity). A genuine proof depends only on propext/Classical.choice/Quot.sound. If the calculus/Nagumo bridge truly cannot be discharged here, that is a formalization-hostile certificate → escalate (L3), do NOT axiomatize the bridge to fake a pass.",
+      "lemmas": []
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+provider=glm model=glm-5.1 budget={'inner': 2, 'barriers': 2, 'max_calls': 4, 'repeat_l3': 2}
+
+
+================================================================
+L4-014: L4-014 tanh-damped oscillator  | cert: 0.5*x**2+0.5*y**2
+================================================================
+  [L0] barrier candidate #1: h = 0.5*x**2+0.5*y**2
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-fresh (high): in=1789 out=1222
+      attempt b0.0 [fresh] FAIL → L1 (unknown_identifier)
+      ↑ escalate L1  (unknown_identifier)
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-repair (high): in=2546 out=857
+      attempt b0.1 [repair] FAIL → L1 (unknown_identifier)
+      ↑ escalate L3  (unknown_identifier×2)
+  [L3] regenerating barrier (certificate formalization-hostile)…
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] L3-reproposer (high): in=800 out=600
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] L3-reproposer (high): in=800 out=821
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] L3-reproposer (high): in=800 out=611
+  [L0] barrier candidate #2: h = x**2 + y**2
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-fresh (high): in=1782 out=1326
+      attempt b1.0 [fresh] FAIL → L1 (unknown_identifier)
+      ↑ escalate L1  (unknown_identifier)
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-repair (high): in=2637 out=810
+      attempt b1.1 [repair] FAIL → L1 (unsolved_goals)
+      ↑ escalate L1  (unsolved_goals)
+
+  RESULT L4-014: solved=False level=partial calls=4 out_tokens=6247 192s  routes=L1→L1→L1→L1
+  last diag: /Users/zhipeng/lean/_check_esc4.lean:23:17: error: Tactic `rcases` failed: `h : x = 0 → y ≠ 0` is not an inductive datatype | /Users/zhipeng/lean/_check_esc4.lean:42:4: error: expected '{' or indented tactic sequence | /Users/zhipeng/lean/_check_esc4.lean:38:50: error: unsolved goals | y✝ y : ℝ | ⊢ 0 ≤ y * 
+
+================================================================
+B2-008: B2-008 saddle invariant-line separator  | cert: x
+================================================================
+  [L0] barrier candidate #1: h = x
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-fresh (high): in=1738 out=907
+      attempt b0.0 [fresh] FAIL → L1 (unknown_tactic)
+      ↑ escalate L1  (unknown_tactic)
+/opt/anaconda3/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'open.bigmodel.cn'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+  [Tokens] lean-repair (high): in=2124 out=311
+      attempt b0.1 [repair] OK ✅
+
+  RESULT B2-008: solved=True level=repair calls=2 out_tokens=1218 47s  routes=L1→OK
+
+
+################################################################
+SUMMARY
+################################################################
+id         solved  level        calls  out_tok  sec   routes
+L4-014     False   partial      4      6247     192   L1→L1→L1→L1
+B2-008     True    repair       2      1218     47    L1→OK
+
+SOLVED 1/2

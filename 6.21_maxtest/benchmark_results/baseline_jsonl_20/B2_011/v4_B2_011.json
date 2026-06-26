@@ -1,0 +1,120 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B2-011",
+    "ode": "dx1/dt = -2*x1 + tanh(x2), dx2/dt = -2*x2 - tanh(x1)",
+    "state_vars": [
+      "x1",
+      "x2"
+    ],
+    "f_expr": [
+      "-2*x1 + tanh(x2)",
+      "-2*x2 - tanh(x1)"
+    ],
+    "X_domain": "ball",
+    "X_u_desc": "||x|| >= 1.5",
+    "X_u_expr": "x1**2 + x2**2 >= 2.25",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B2-011",
+      "layer": "L2-new",
+      "group": "B2",
+      "task": "barrier",
+      "cert_class": "nonpoly-explicit",
+      "source": "tanh-saturated coupling"
+    }
+  },
+  "timestamp": "2026-06-11T18:20:21.539705",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "2.249999 - x1**2 - x2**2",
+        "invariant_set": "C = { (x1,x2) : x1**2 + x2**2 <= 2.249999 }, i.e. the closed ball of radius sqrt(2.249999) ≈ 1.4999996667, strictly inside the unsafe threshold radius 1.5.",
+        "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 1.5}, equivalently x1**2 + x2**2 >= 2.25. For any x in X_u, h(x) = 2.249999 - x1**2 - x2**2 <= 2.249999 - 2.25 = -0.000001 < 0. Therefore h(x) < 0 for all x in X_u.",
+        "lie_derivative": "Let h(x) = 2.249999 - x1**2 - x2**2. Then ∇h = (-2*x1, -2*x2). The vector field is f1 = -2*x1 + tanh(x2), f2 = -2*x2 - tanh(x1). Hence ḣ = ∇h·f = (-2*x1)*(-2*x1 + tanh(x2)) + (-2*x2)*(-2*x2 - tanh(x1)) = 4*x1**2 - 2*x1*tanh(x2) + 4*x2**2 + 2*x2*tanh(x1). Therefore ḣ(x) = 4*(x1**2 + x2**2) - 2*x1*tanh(x2) + 2*x2*tanh(x1).",
+        "condition2_check": "On the boundary ∂C, h(x)=0, so x1**2 + x2**2 = 2.249999. We prove ḣ >= 0 on this boundary. For every real z, |tanh(z)| <= |z|. Therefore, -2*x1*tanh(x2) >= -2*|x1|*|tanh(x2)| >= -2*|x1|*|x2|, and 2*x2*tanh(x1) >= -2*|x2|*|tanh(x1)| >= -2*|x2|*|x1|. Combining these bounds gives -2*x1*tanh(x2) + 2*x2*tanh(x1) >= -4*|x1|*|x2|. Hence ḣ >= 4*(x1**2 + x2**2) - 4*|x1|*|x2|. Let u=|x1| and v=|x2|. Then 4*(x1**2 + x2**2) - 4*|x1|*|x2| = 4*(u**2 + v**2) - 4*u*v = 2*(u**2 + v**2) + 2*(u-v)**2 >= 2*(u**2 + v**2) = 2*(x1**2 + x2**2). On ∂C this equals 2*2.249999 = 4.499998 > 0. Therefore ḣ(x) >= 4.499998 > 0 on ∂C, so Nagumo's condition is satisfied.",
+        "reasoning": "The dynamics have strong radial damping terms -2*x1 and -2*x2, while the tanh cross-couplings are bounded by the state magnitudes via |tanh(z)| <= |z|. A circular barrier h = r_safe**2 - x1**2 - x2**2 is therefore natural. The Lie derivative of this radial barrier contains a positive damping term 4*(x1**2+x2**2) and cross terms that can be rigorously lower-bounded by -4*|x1|*|x2|. This still leaves a strictly positive lower bound on every nonzero circular boundary. To make C as large as possible while avoiding the unsafe set ||x|| >= 1.5, the radius squared is chosen as 2.249999, just below 1.5**2 = 2.25. Thus C nearly fills the entire safe ball while remaining strictly separated from the unsafe set."
+      },
+      "proposer_elapsed_s": 31.822,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "2*x1*(2*x1 - tanh(x2)) + 2*x2*(2*x2 + tanh(x1))",
+          "boundary_epsilon": 0.354779,
+          "boundary_pts_found": 161,
+          "cond1_max_h_in_Xu": -0.003012,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 7.334053,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.138
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.007398,
+          "trajectory_valid": true,
+          "elapsed_s": 0.163
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "Condition 1 holds. For any x in X_u with ||x|| >= 1.5, h(x) = 2.249999 - ||x||^2 <= 2.249999 - 2.25 = -0.000001 < 0. Specific checks: h(1.5,0) = -0.000001, h(0,1.5) = -0.000001, h(2,0) = -1.750001.",
+        "lie_derivative_computed": "∇h = (-2*x1, -2*x2). Therefore L_f h = (-2*x1)*(-2*x1 + tanh(x2)) + (-2*x2)*(-2*x2 - tanh(x1)) = 4*x1^2 + 4*x2^2 + 2*x2*tanh(x1) - 2*x1*tanh(x2) = 4*(x1^2 + x2^2) + 2*(x2*tanh(x1) - x1*tanh(x2)).",
+        "condition2_result": "Condition 2 holds. On the boundary h=0, x1^2 + x2^2 = 2.249999. Using |tanh(z)| <= |z|, the cross term satisfies 2*(x2*tanh(x1) - x1*tanh(x2)) >= -2*(|x2|*|tanh(x1)| + |x1|*|tanh(x2)|) >= -4*|x1*x2| >= -2*(x1^2 + x2^2). Hence L_f h >= 4*(x1^2+x2^2) - 2*(x1^2+x2^2) = 2*(x1^2+x2^2). On h=0 this gives L_f h >= 2*2.249999 = 4.499998 > 0. Specific boundary check: at x=(sqrt(2.249999),0), L_f h = 8.999996 > 0.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The invariant ball can be enlarged slightly while preserving the same quadratic form. Replace h by h_epsilon(x)=2.25-epsilon-x1^2-x2^2 for any epsilon with 0 < epsilon < 0.000001. Condition 1 remains strict because at ||x||=1.5, h_epsilon=-epsilon<0, and Condition 2 still holds since on the boundary L_f h_epsilon >= 2*(2.25-epsilon)>0. For example, epsilon=1e-12 gives radius sqrt(2.25-1e-12), much closer to the unsafe radius 1.5. However, epsilon cannot be set to 0 under the stated strict Condition 1, because then h=0 on the unsafe boundary ||x||=1.5."
+      },
+      "refuter_elapsed_s": 81.633
+    }
+  ],
+  "final_barrier": {
+    "h": "2.249999 - x1**2 - x2**2",
+    "invariant_set": "C = { (x1,x2) : x1**2 + x2**2 <= 2.249999 }, i.e. the closed ball of radius sqrt(2.249999) ≈ 1.4999996667, strictly inside the unsafe threshold radius 1.5.",
+    "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 1.5}, equivalently x1**2 + x2**2 >= 2.25. For any x in X_u, h(x) = 2.249999 - x1**2 - x2**2 <= 2.249999 - 2.25 = -0.000001 < 0. Therefore h(x) < 0 for all x in X_u.",
+    "lie_derivative": "Let h(x) = 2.249999 - x1**2 - x2**2. Then ∇h = (-2*x1, -2*x2). The vector field is f1 = -2*x1 + tanh(x2), f2 = -2*x2 - tanh(x1). Hence ḣ = ∇h·f = (-2*x1)*(-2*x1 + tanh(x2)) + (-2*x2)*(-2*x2 - tanh(x1)) = 4*x1**2 - 2*x1*tanh(x2) + 4*x2**2 + 2*x2*tanh(x1). Therefore ḣ(x) = 4*(x1**2 + x2**2) - 2*x1*tanh(x2) + 2*x2*tanh(x1).",
+    "condition2_check": "On the boundary ∂C, h(x)=0, so x1**2 + x2**2 = 2.249999. We prove ḣ >= 0 on this boundary. For every real z, |tanh(z)| <= |z|. Therefore, -2*x1*tanh(x2) >= -2*|x1|*|tanh(x2)| >= -2*|x1|*|x2|, and 2*x2*tanh(x1) >= -2*|x2|*|tanh(x1)| >= -2*|x2|*|x1|. Combining these bounds gives -2*x1*tanh(x2) + 2*x2*tanh(x1) >= -4*|x1|*|x2|. Hence ḣ >= 4*(x1**2 + x2**2) - 4*|x1|*|x2|. Let u=|x1| and v=|x2|. Then 4*(x1**2 + x2**2) - 4*|x1|*|x2| = 4*(u**2 + v**2) - 4*u*v = 2*(u**2 + v**2) + 2*(u-v)**2 >= 2*(u**2 + v**2) = 2*(x1**2 + x2**2). On ∂C this equals 2*2.249999 = 4.499998 > 0. Therefore ḣ(x) >= 4.499998 > 0 on ∂C, so Nagumo's condition is satisfied.",
+    "reasoning": "The dynamics have strong radial damping terms -2*x1 and -2*x2, while the tanh cross-couplings are bounded by the state magnitudes via |tanh(z)| <= |z|. A circular barrier h = r_safe**2 - x1**2 - x2**2 is therefore natural. The Lie derivative of this radial barrier contains a positive damping term 4*(x1**2+x2**2) and cross terms that can be rigorously lower-bounded by -4*|x1|*|x2|. This still leaves a strictly positive lower bound on every nonzero circular boundary. To make C as large as possible while avoiding the unsafe set ||x|| >= 1.5, the radius squared is chosen as 2.249999, just below 1.5**2 = 2.25. Thus C nearly fills the entire safe ball while remaining strictly separated from the unsafe set."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 113.766
+  },
+  "tokens": {
+    "input": 2348,
+    "output": 5767,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1531,
+        "output_tokens": 1474,
+        "elapsed_s": 31.822
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 817,
+        "output_tokens": 4293,
+        "elapsed_s": 81.633
+      }
+    ]
+  }
+}

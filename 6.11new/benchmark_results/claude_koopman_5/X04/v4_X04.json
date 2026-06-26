@@ -1,0 +1,118 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "Strengthened Ahmadi-Krstic-Parrilo: tunable super-polynomial excursion family (a",
+    "ode": "dx1/dt = -x1 + x1*x2, dx2/dt = -x2",
+    "state_vars": [
+      "x1",
+      "x2"
+    ],
+    "f_expr": [
+      "-x1 + x1*x2",
+      "-x2"
+    ],
+    "X_domain": "R^2; representative numerical instance of the family with k = 1",
+    "X_u_desc": "Invented unsafe set for safety verification: states outside the radius-2 ball around the globally asymptotically stable origin.",
+    "X_u_expr": "x1**2 + x2**2 >= 4",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "title": "Strengthened Ahmadi-Krstic-Parrilo: tunable super-polynomial excursion family (alpha = 2k-1)",
+      "group": "B* — Growth-lemma constructions",
+      "system_class": "polynomial (degree 2k in x,y)",
+      "poly_failure_mechanism": "growth-lemma"
+    }
+  },
+  "timestamp": "2026-06-11T20:30:26.798559",
+  "model": "claude-sonnet-4-6",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "high",
+      "proposal": {
+        "h": "4 - x1**2 - x2**2",
+        "invariant_set": "x1**2 + x2**2 <= 4 (ball of radius 2 centered at origin)",
+        "condition1_check": "On X_u, we have x1**2 + x2**2 > 4. Therefore h(x) = 4 - x1**2 - x2**2 < 4 - 4 = 0. Condition 1 is satisfied.",
+        "lie_derivative": "∇h = [-2*x1, -2*x2]. f(x) = [x1*(x2-1), -x2]. ḣ = ∇h · f = -2*x1 * x1*(x2-1) + (-2*x2)*(-x2) = -2*x1**2*(x2-1) + 2*x2**2 = 2*x1**2*(1-x2) + 2*x2**2.",
+        "condition2_check": "On ∂C, h(x)=0 implies x1**2 + x2**2 = 4, so x1**2 = 4 - x2**2 with x2 ∈ [-2,2]. Substituting into ḣ: ḣ = 2*(4-x2**2)*(1-x2) + 2*x2**2 = 2*(4 - 4*x2 - x2**2 + x2**3) + 2*x2**2 = 8 - 8*x2 + 2*x2**3 = 2*(x2**3 - 4*x2 + 4). Define p(y) = y**3 - 4*y + 4 for y ∈ [-2,2]. Then p'(y) = 3*y**2 - 4, giving critical points y = ±2/sqrt(3). Check: p(-2) = 4, p(2) = 4, p(-2/sqrt(3)) = -8/(3*sqrt(3)) + 8/sqrt(3) + 4 = 16/(3*sqrt(3)) + 4 = 16*sqrt(3)/9 + 4 > 0, p(2/sqrt(3)) = 8/(3*sqrt(3)) - 8/sqrt(3) + 4 = -16/(3*sqrt(3)) + 4 = 4 - 16*sqrt(3)/9. Since 16*sqrt(3)/9 ≈ 3.08 < 4, we have p(2/sqrt(3)) > 0. Therefore p(y) > 0 for all y ∈ [-2,2], so ḣ = 2*p(x2) > 0 on ∂C. Condition 2 is satisfied.",
+        "reasoning": "The barrier function h(x) = 4 - x1**2 - x2**2 defines a ball of radius 2, which is the exact complement of the unsafe set X_u = {x : x1**2 + x2**2 > 4}. This is the largest possible invariant set. The system has a globally asymptotically stable equilibrium at the origin (x2 decays exponentially, and x1 follows). The Lie derivative analysis shows that on the boundary ∂C, the flow points strictly inward (ḣ > 0), confirming that C is invariant. This choice maximizes the safe region while satisfying both barrier function conditions."
+      },
+      "proposer_elapsed_s": 36.392,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "-2*x1**2*(x2 - 1) + 2*x2**2",
+          "boundary_epsilon": 0.354779,
+          "boundary_pts_found": 196,
+          "cond1_max_h_in_Xu": -0.001574,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 1.896024,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.015
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.09111,
+          "trajectory_valid": true,
+          "elapsed_s": 0.157
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "X_u = {x : x1²+x2² > 4}. On X_u, x1²+x2² > 4, so h(x) = 4 - x1²-x2² < 4-4 = 0. The inequality is strict and holds for every point in X_u. Spot checks: (3,0): h = 4-9 = -5 < 0 ✓; (2,2): h = 4-4-4 = -4 < 0 ✓; (0,3): h = 4-9 = -5 < 0 ✓. Condition 1 is satisfied globally on X_u.",
+        "lie_derivative_computed": "∇h = (-2x1, -2x2). f(x) = (-x1+x1·x2, -x2). ḣ = (-2x1)(-x1+x1·x2) + (-2x2)(-x2) = 2x1²- 2x1²·x2 + 2x2². On ∂C where x1²+x2² = 4: ḣ = 2x1²- 2x1²·x2 + 2x2² = 2(x1²+x2²) - 2x1²·x2 = 8 - 2x1²·x2.",
+        "condition2_result": "On ∂C: x1²+x2² = 4, so |x2| ≤ 2 and x1² = 4-x2². Need ḣ = 8 - 2x1²·x2 ≥ 0, i.e. x1²·x2 ≤ 4. Worst case: maximize x1²·x2 subject to x1²+x2² = 4. Substitute x1² = 4-x2², maximize g(x2) = (4-x2²)·x2 over x2 ∈ [-2,2]. g'(x2) = 4-3x2² = 0 → x2 = 2/√3 ≈ 1.1547. Maximum value: g(2/√3) = (4 - 4/3)·(2/√3) = (8/3)·(2/√3) = 16/(3√3) = 16√3/9 ≈ 3.079. Since 3.079 < 4, ḣ = 8 - 2·(16√3/9) = 8 - 32√3/9 ≈ 8 - 6.158 = 1.842 > 0 at the critical point. At corners x2 = ±2, x1 = 0: ḣ = 8 - 0 = 8 > 0. At x2 = -2/√3 (minimum of g): ḣ = 8 - 2·(-16√3/9) > 0 trivially. Therefore ḣ ≥ 8 - 2·(16√3/9) = 8 - 32√3/9 > 0 everywhere on ∂C. Condition 2 is strictly satisfied.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The barrier is valid with strict slack: the minimum of ḣ on ∂C is 8 - 32√3/9 ≈ 1.84 > 0, not near zero. This slack suggests the safe radius can be enlarged. Replace h(x) = R² - x1²- x2² and ask: for which R does ḣ ≥ 0 on ∂C still hold? On ∂C (x1²+x2²=R²): ḣ = 2R² - 2x1²·x2. Need x1²·x2 ≤ R². The same calculus gives max of (R²-x2²)·x2 at x2 = R/√3, maximum value = (2R²/3)·(R/√3) = 2R³/(3√3). Condition: 2R³/(3√3) ≤ R², i.e. R ≤ 3√3/2 ≈ 2.598. So the safe ball can be enlarged from radius 2 up to radius 3√3/2 ≈ 2.598 while preserving the Nagumo condition. Concretely, h(x) = (3√3/2)² - x1²-x2² = 27/4 - x1²-x2² is the largest quadratic barrier of this form that still works."
+      },
+      "refuter_elapsed_s": 22.217
+    }
+  ],
+  "final_barrier": {
+    "h": "4 - x1**2 - x2**2",
+    "invariant_set": "x1**2 + x2**2 <= 4 (ball of radius 2 centered at origin)",
+    "condition1_check": "On X_u, we have x1**2 + x2**2 > 4. Therefore h(x) = 4 - x1**2 - x2**2 < 4 - 4 = 0. Condition 1 is satisfied.",
+    "lie_derivative": "∇h = [-2*x1, -2*x2]. f(x) = [x1*(x2-1), -x2]. ḣ = ∇h · f = -2*x1 * x1*(x2-1) + (-2*x2)*(-x2) = -2*x1**2*(x2-1) + 2*x2**2 = 2*x1**2*(1-x2) + 2*x2**2.",
+    "condition2_check": "On ∂C, h(x)=0 implies x1**2 + x2**2 = 4, so x1**2 = 4 - x2**2 with x2 ∈ [-2,2]. Substituting into ḣ: ḣ = 2*(4-x2**2)*(1-x2) + 2*x2**2 = 2*(4 - 4*x2 - x2**2 + x2**3) + 2*x2**2 = 8 - 8*x2 + 2*x2**3 = 2*(x2**3 - 4*x2 + 4). Define p(y) = y**3 - 4*y + 4 for y ∈ [-2,2]. Then p'(y) = 3*y**2 - 4, giving critical points y = ±2/sqrt(3). Check: p(-2) = 4, p(2) = 4, p(-2/sqrt(3)) = -8/(3*sqrt(3)) + 8/sqrt(3) + 4 = 16/(3*sqrt(3)) + 4 = 16*sqrt(3)/9 + 4 > 0, p(2/sqrt(3)) = 8/(3*sqrt(3)) - 8/sqrt(3) + 4 = -16/(3*sqrt(3)) + 4 = 4 - 16*sqrt(3)/9. Since 16*sqrt(3)/9 ≈ 3.08 < 4, we have p(2/sqrt(3)) > 0. Therefore p(y) > 0 for all y ∈ [-2,2], so ḣ = 2*p(x2) > 0 on ∂C. Condition 2 is satisfied.",
+    "reasoning": "The barrier function h(x) = 4 - x1**2 - x2**2 defines a ball of radius 2, which is the exact complement of the unsafe set X_u = {x : x1**2 + x2**2 > 4}. This is the largest possible invariant set. The system has a globally asymptotically stable equilibrium at the origin (x2 decays exponentially, and x1 follows). The Lie derivative analysis shows that on the boundary ∂C, the flow points strictly inward (ḣ > 0), confirming that C is invariant. This choice maximizes the safe region while satisfying both barrier function conditions."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 58.797
+  },
+  "tokens": {
+    "input": 1056,
+    "output": 3351,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "high",
+        "input_tokens": 840,
+        "output_tokens": 2314,
+        "elapsed_s": 36.392
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 216,
+        "output_tokens": 1037,
+        "elapsed_s": 22.217
+      }
+    ]
+  }
+}

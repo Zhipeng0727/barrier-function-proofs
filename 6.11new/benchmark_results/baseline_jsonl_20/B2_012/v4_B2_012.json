@@ -1,0 +1,114 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B2-012",
+    "ode": "dx1/dt = -x1",
+    "state_vars": [
+      "x1"
+    ],
+    "f_expr": [
+      "-x1"
+    ],
+    "X_domain": "R^n",
+    "X_u_desc": "|x1| >= 1.0",
+    "X_u_expr": "Abs(x1) >= 1.0",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B2-012",
+      "layer": "L2-new",
+      "group": "B2",
+      "task": "barrier",
+      "cert_class": "nonpoly-explicit",
+      "source": "cosh barrier"
+    }
+  },
+  "timestamp": "2026-06-11T18:22:15.309196",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "0.999999 - x1**2",
+        "invariant_set": "C = {x1 in R : x1**2 <= 0.999999}, equivalently |x1| <= sqrt(0.999999), which is strictly contained in the safe region |x1| < 1",
+        "condition1_check": "The unsafe set is X_u = {x1 : |x1| >= 1}. For any x1 in X_u, we have x1**2 >= 1. Therefore h(x1) = 0.999999 - x1**2 <= 0.999999 - 1 = -0.000001 < 0. Hence h(x1) < 0 for all x1 in X_u.",
+        "lie_derivative": "The dynamics are dx1/dt = -x1. Since h(x1) = 0.999999 - x1**2, we have dh/dx1 = -2*x1. Therefore the Lie derivative is hdot(x1) = (dh/dx1)*(dx1/dt) = (-2*x1)*(-x1) = 2*x1**2.",
+        "condition2_check": "The boundary of C is defined by h(x1) = 0, so 0.999999 - x1**2 = 0, equivalently x1**2 = 0.999999. On this boundary, hdot(x1) = 2*x1**2 = 2*0.999999 = 1.999998 > 0. Therefore hdot(x1) >= 0 for all x1 in ∂C, satisfying Nagumo's condition.",
+        "reasoning": "The unsafe set starts at |x1| = 1, while the system dx1/dt = -x1 is globally stable toward the origin. A natural invariant safe set is therefore a symmetric interval around the origin contained strictly inside |x1| < 1. The quadratic barrier h(x1) = 0.999999 - x1**2 gives the superlevel set |x1| <= sqrt(0.999999), which is very close to the maximal safe interval while still ensuring h < 0 on the entire unsafe set including |x1| = 1. On the boundary of this set, the vector field points strictly inward, as shown by hdot = 2*x1**2 > 0."
+      },
+      "proposer_elapsed_s": 21.133,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "2*x1**2",
+          "boundary_epsilon": 0.179831,
+          "boundary_pts_found": 196,
+          "cond1_max_h_in_Xu": -0.002001,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 1.640453,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.005
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.033125,
+          "trajectory_valid": true,
+          "elapsed_s": 0.161
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "Condition 1 holds. For h(x)=0.999999-x1^2 and unsafe set |x1|>=1, we have x1^2>=1, hence h(x)<=0.999999-1=-0.000001<0. Specific checks: at x1=1, h=-0.000001; at x1=-1, h=-0.000001; for |x1|>1, h is even smaller.",
+        "lie_derivative_computed": "∇h = -2*x1, f(x) = -x1, so ḣ(x)=∇h·f=(-2*x1)(-x1)=2*x1^2.",
+        "condition2_result": "Condition 2 holds. The boundary ∂C is given by h(x)=0, i.e. x1^2=0.999999, so x1=±sqrt(0.999999)≈±0.999999499999875. On this boundary, ḣ=2*x1^2=2*0.999999=1.999998>=0.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The invariant set can be enlarged while preserving both conditions by choosing h_epsilon(x)=(1-epsilon)-x1^2 with any smaller positive epsilon, e.g. epsilon=1e-12. Then C_epsilon={|x1|<=sqrt(1-epsilon)} is larger, Condition 1 gives h_epsilon<=-epsilon<0 on |x1|>=1, and on the boundary ḣ=2(1-epsilon)>0. However, epsilon cannot be set to 0 under the stated Condition 1 because h(±1)=0 would fail the strict requirement h<0 on the unsafe set, which includes |x1|=1."
+      },
+      "refuter_elapsed_s": 31.372
+    }
+  ],
+  "final_barrier": {
+    "h": "0.999999 - x1**2",
+    "invariant_set": "C = {x1 in R : x1**2 <= 0.999999}, equivalently |x1| <= sqrt(0.999999), which is strictly contained in the safe region |x1| < 1",
+    "condition1_check": "The unsafe set is X_u = {x1 : |x1| >= 1}. For any x1 in X_u, we have x1**2 >= 1. Therefore h(x1) = 0.999999 - x1**2 <= 0.999999 - 1 = -0.000001 < 0. Hence h(x1) < 0 for all x1 in X_u.",
+    "lie_derivative": "The dynamics are dx1/dt = -x1. Since h(x1) = 0.999999 - x1**2, we have dh/dx1 = -2*x1. Therefore the Lie derivative is hdot(x1) = (dh/dx1)*(dx1/dt) = (-2*x1)*(-x1) = 2*x1**2.",
+    "condition2_check": "The boundary of C is defined by h(x1) = 0, so 0.999999 - x1**2 = 0, equivalently x1**2 = 0.999999. On this boundary, hdot(x1) = 2*x1**2 = 2*0.999999 = 1.999998 > 0. Therefore hdot(x1) >= 0 for all x1 in ∂C, satisfying Nagumo's condition.",
+    "reasoning": "The unsafe set starts at |x1| = 1, while the system dx1/dt = -x1 is globally stable toward the origin. A natural invariant safe set is therefore a symmetric interval around the origin contained strictly inside |x1| < 1. The quadratic barrier h(x1) = 0.999999 - x1**2 gives the superlevel set |x1| <= sqrt(0.999999), which is very close to the maximal safe interval while still ensuring h < 0 on the entire unsafe set including |x1| = 1. On the boundary of this set, the vector field points strictly inward, as shown by hdot = 2*x1**2 > 0."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 52.678
+  },
+  "tokens": {
+    "input": 2297,
+    "output": 2341,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1537,
+        "output_tokens": 998,
+        "elapsed_s": 21.133
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 760,
+        "output_tokens": 1343,
+        "elapsed_s": 31.372
+      }
+    ]
+  }
+}

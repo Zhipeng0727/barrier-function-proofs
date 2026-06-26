@@ -1,0 +1,318 @@
+[
+ {
+  "name": "base",
+  "cfg": {
+   "kind": "structural",
+   "width": 5,
+   "alpha": 0.1,
+   "margin": 0.001,
+   "lr": 0.02,
+   "iters": 400,
+   "n_samples": 500,
+   "verifier": "interval",
+   "max_rounds": 4
+  },
+  "result": {
+   "solved": 7,
+   "n": 8,
+   "time": 17.9,
+   "avg_rounds": 1.88,
+   "per": [
+    {
+     "id": "L1-001",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.12,
+     "blocker": null
+    },
+    {
+     "id": "L1-002",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.12,
+     "blocker": null
+    },
+    {
+     "id": "L1-003",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.11,
+     "blocker": null
+    },
+    {
+     "id": "L1-004",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.12,
+     "blocker": null
+    },
+    {
+     "id": "L1-005",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.12,
+     "blocker": null
+    },
+    {
+     "id": "L1-007",
+     "solved": true,
+     "rounds": 2,
+     "time": 1.91,
+     "blocker": null
+    },
+    {
+     "id": "L1-008",
+     "solved": false,
+     "rounds": 4,
+     "time": 1.37,
+     "blocker": "max rounds"
+    },
+    {
+     "id": "L1-009",
+     "solved": true,
+     "rounds": 4,
+     "time": 13.99,
+     "blocker": null
+    }
+   ]
+  },
+  "rationale": "seed"
+ },
+ {
+  "name": "wider_margin",
+  "cfg": {
+   "kind": "structural",
+   "width": 8,
+   "alpha": 0.1,
+   "margin": 0.01,
+   "lr": 0.02,
+   "iters": 400,
+   "n_samples": 500,
+   "verifier": "interval",
+   "max_rounds": 4
+  },
+  "result": {
+   "solved": 7,
+   "n": 8,
+   "time": 8.7,
+   "avg_rounds": 1.38,
+   "per": [
+    {
+     "id": "L1-001",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.17,
+     "blocker": null
+    },
+    {
+     "id": "L1-002",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.13,
+     "blocker": null
+    },
+    {
+     "id": "L1-003",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.12,
+     "blocker": null
+    },
+    {
+     "id": "L1-004",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.14,
+     "blocker": null
+    },
+    {
+     "id": "L1-005",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.12,
+     "blocker": null
+    },
+    {
+     "id": "L1-007",
+     "solved": true,
+     "rounds": 1,
+     "time": 1.72,
+     "blocker": null
+    },
+    {
+     "id": "L1-008",
+     "solved": false,
+     "rounds": 4,
+     "time": 2.2,
+     "blocker": "max rounds"
+    },
+    {
+     "id": "L1-009",
+     "solved": true,
+     "rounds": 1,
+     "time": 4.07,
+     "blocker": null
+    }
+   ]
+  },
+  "rationale": "Increase width to 8 for more expressivity to capture the missed certificate and raise margin to 0.01 to enforce a stricter safety buffer, aiming to solve the final system soundly."
+ },
+ {
+  "name": "wider_margin_r6",
+  "cfg": {
+   "kind": "structural",
+   "width": 8,
+   "alpha": 0.1,
+   "margin": 0.01,
+   "lr": 0.02,
+   "iters": 400,
+   "n_samples": 500,
+   "verifier": "interval",
+   "max_rounds": 6
+  },
+  "result": {
+   "solved": 7,
+   "n": 8,
+   "time": 8.9,
+   "avg_rounds": 1.62,
+   "per": [
+    {
+     "id": "L1-001",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.22,
+     "blocker": null
+    },
+    {
+     "id": "L1-002",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.13,
+     "blocker": null
+    },
+    {
+     "id": "L1-003",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.12,
+     "blocker": null
+    },
+    {
+     "id": "L1-004",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.14,
+     "blocker": null
+    },
+    {
+     "id": "L1-005",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.12,
+     "blocker": null
+    },
+    {
+     "id": "L1-007",
+     "solved": true,
+     "rounds": 1,
+     "time": 1.62,
+     "blocker": null
+    },
+    {
+     "id": "L1-008",
+     "solved": false,
+     "rounds": 6,
+     "time": 2.65,
+     "blocker": "max rounds"
+    },
+    {
+     "id": "L1-009",
+     "solved": true,
+     "rounds": 1,
+     "time": 3.93,
+     "blocker": null
+    }
+   ]
+  },
+  "rationale": "Increasing max_rounds from 4 to 6 gives the CEGIS loop more chances to solve the final system and potentially hit 8/8 without changing the fast-converging 8-width, 0.01-margin architecture."
+ },
+ {
+  "name": "wide_margin_8iters",
+  "cfg": {
+   "kind": "structural",
+   "width": 8,
+   "alpha": 0.1,
+   "margin": 0.01,
+   "lr": 0.02,
+   "iters": 800,
+   "n_samples": 500,
+   "verifier": "interval",
+   "max_rounds": 4
+  },
+  "result": {
+   "solved": 7,
+   "n": 8,
+   "time": 9.6,
+   "avg_rounds": 1.38,
+   "per": [
+    {
+     "id": "L1-001",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.28,
+     "blocker": null
+    },
+    {
+     "id": "L1-002",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.26,
+     "blocker": null
+    },
+    {
+     "id": "L1-003",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.26,
+     "blocker": null
+    },
+    {
+     "id": "L1-004",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.26,
+     "blocker": null
+    },
+    {
+     "id": "L1-005",
+     "solved": true,
+     "rounds": 1,
+     "time": 0.27,
+     "blocker": null
+    },
+    {
+     "id": "L1-007",
+     "solved": true,
+     "rounds": 1,
+     "time": 1.77,
+     "blocker": null
+    },
+    {
+     "id": "L1-008",
+     "solved": false,
+     "rounds": 4,
+     "time": 2.41,
+     "blocker": "max rounds"
+    },
+    {
+     "id": "L1-009",
+     "solved": true,
+     "rounds": 1,
+     "time": 4.07,
+     "blocker": null
+    }
+   ]
+  },
+  "rationale": "Increasing iters from 400 to 800 on the fastest config (wider_margin) may help close the gap to 8/8 solved while maintaining low average rounds and wall time."
+ }
+]

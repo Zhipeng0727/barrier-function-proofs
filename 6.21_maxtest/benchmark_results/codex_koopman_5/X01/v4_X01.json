@@ -1,0 +1,124 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "Double-exponential cascade: xdot=x(z-1), zdot=z(y-1), ydot=-y, transient excursi",
+    "ode": "dx1/dt = x1*(x2 - 1), dx2/dt = x2*(x3 - 1), dx3/dt = -x3",
+    "state_vars": [
+      "x1",
+      "x2",
+      "x3"
+    ],
+    "f_expr": [
+      "x1*(x2 - 1)",
+      "x2*(x3 - 1)",
+      "-x3"
+    ],
+    "X_domain": "x1 > 0, x2 > 0, x3 in R; positive x1 and x2 cone with invariant boundary, origin attracts the closure",
+    "X_u_desc": "No unsafe set was specified; invented unsafe set representing a large transient excursion in x: x1 >= 10",
+    "X_u_expr": "x1 >= 10",
+    "X_bounds": [
+      [
+        0,
+        20
+      ],
+      [
+        0,
+        20
+      ],
+      [
+        -5,
+        20
+      ]
+    ],
+    "meta": {
+      "title": "Double-exponential cascade: xdot=x(z-1), zdot=z(y-1), ydot=-y, transient excursion log x ~ e^N/N (alpha makes log log x ~ N)",
+      "group": "B* — Growth-lemma constructions",
+      "system_class": "polynomial, quadratic (degree 2)",
+      "poly_failure_mechanism": "growth-lemma"
+    }
+  },
+  "timestamp": "2026-06-11T19:02:32.110345",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "log(10) - log(x1) - x2*(exp(x3) + 0.13*exp(-x3))",
+        "invariant_set": "C = { (x1,x2,x3) in X : log(x1) + x2*(exp(x3) + 0.13*exp(-x3)) <= log(10) }, with X = {x1 > 0, x2 > 0, x3 in R}. Equivalently, x1 <= 10*exp(-x2*(exp(x3) + 0.13*exp(-x3))).",
+        "condition1_check": "On the unsafe set X_u = {x in X : x1 >= 10}, we have log(10) - log(x1) <= 0. Also, because x2 > 0 and exp(x3) + 0.13*exp(-x3) > 0 for every real x3, the term -x2*(exp(x3) + 0.13*exp(-x3)) is strictly negative. Therefore h(x) = log(10) - log(x1) - x2*(exp(x3) + 0.13*exp(-x3)) < 0 for every x in X_u. Hence the unsafe set lies strictly in the negative region of h.",
+        "lie_derivative": "Let B(x2,x3) = x2*(exp(x3) + 0.13*exp(-x3)). Then h = log(10) - log(x1) - B. The system is x1dot = x1*(x2 - 1), x2dot = x2*(x3 - 1), x3dot = -x3. First, d/dt log(x1) = x1dot/x1 = x2 - 1. Next, partial B/partial x2 = exp(x3) + 0.13*exp(-x3), and partial B/partial x3 = x2*(exp(x3) - 0.13*exp(-x3)). Thus dB/dt = (exp(x3) + 0.13*exp(-x3))*x2*(x3 - 1) + x2*(exp(x3) - 0.13*exp(-x3))*(-x3). Collecting terms gives dB/dt = x2*((x3 - 1)*exp(x3) + 0.13*(x3 - 1)*exp(-x3) - x3*exp(x3) + 0.13*x3*exp(-x3)) = x2*(-exp(x3) + 0.13*(2*x3 - 1)*exp(-x3)). Therefore dh/dt = -(x2 - 1) - dB/dt = 1 - x2 - x2*(-exp(x3) + 0.13*(2*x3 - 1)*exp(-x3)) = 1 + x2*(exp(x3) - 1 - 0.13*(2*x3 - 1)*exp(-x3)).",
+        "condition2_check": "We prove the stronger fact that dh/dt >= 1 for all x in X, not only on the boundary h = 0. It suffices to prove exp(z) - 1 - 0.13*(2*z - 1)*exp(-z) >= 0 for every real z. Since exp(z) > 0, multiply by exp(z) to obtain the equivalent inequality F(z) := exp(2*z) - exp(z) - 0.26*z + 0.13 >= 0. Let u = exp(z) > 0, so z = log(u). Then F(z) = phi(u), where phi(u) = u**2 - u - 0.26*log(u) + 0.13 for u > 0. Compute phi'(u) = 2*u - 1 - 0.26/u. The unique positive critical point satisfies 2*u**2 - u - 0.26 = 0, hence u_* = (1 + sqrt(3.08))/4. Also phi''(u) = 2 + 0.26/u**2 > 0, so this critical point is the global minimizer. Numerically, u_* = (1 + sqrt(3.08))/4 approximately 0.6887457, and phi(u_*) = u_* **2 - u_* - 0.26*log(u_*) + 0.13 approximately 0.012254 > 0. Therefore phi(u) >= 0 for all u > 0, equivalently F(z) >= 0 for all real z. Hence exp(x3) - 1 - 0.13*(2*x3 - 1)*exp(-x3) >= 0. Since x2 > 0, dh/dt = 1 + x2*(exp(x3) - 1 - 0.13*(2*x3 - 1)*exp(-x3)) >= 1 > 0. In particular, on the boundary partial C = {h = 0}, dh/dt >= 0, satisfying Nagumo's condition.",
+        "reasoning": "The key idea is to dominate the possible transient growth of x1 by a storage term depending on the cascade variables x2 and x3. Since d/dt log(x1) = x2 - 1, a barrier of the form h = log(10) - log(x1) - B(x2,x3) is natural. The term B = x2*(exp(x3) + 0.13*exp(-x3)) is chosen so that its Lie derivative is sufficiently negative to compensate the positive x2 contribution in d/dt log(x1). Indeed, dB/dt = x2*(-exp(x3) + 0.13*(2*x3 - 1)*exp(-x3)), which yields dh/dt >= 1 globally after the scalar exponential inequality is verified. Thus the superlevel set h >= 0 is forward invariant and is strictly separated from the unsafe region x1 >= 10. The coefficient 0.13 is chosen small enough to reduce conservatism compared with a symmetric exp(x3)+exp(-x3) storage term, while still making the required inequality hold globally for all x3 in R."
+      },
+      "proposer_elapsed_s": 174.182,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "-0.26*x2*x3*exp(-x3) + x2*exp(x3) - x2 + 0.13*x2*exp(-x3) + 1",
+          "boundary_epsilon": 184418301.111541,
+          "boundary_pts_found": 2682,
+          "cond1_max_h_in_Xu": -0.431956,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 1.016303,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.11
+        },
+        "trajectory": {
+          "n_trajs": 10,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.011884,
+          "trajectory_valid": true,
+          "elapsed_s": 0.06
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "For any unsafe state in X with x1 >= 10, x2 > 0, A(x3)=exp(x3)+0.13 exp(-x3)>0. Thus h = log(10)-log(x1)-x2 A(x3) <= -x2 A(x3) < 0. Example: at (x1,x2,x3)=(10,1,0), h = -1.13 < 0. At (20,0.1,2), h = log(10)-log(20)-0.1*(exp(2)+0.13 exp(-2)) ≈ -1.4335 < 0. Degenerate note: strictness uses x2>0; on the closure point x2=0,x1=10 one would get h=0, but that point is outside the stated domain X.",
+        "lie_derivative_computed": "∇h = (-1/x1, -(exp(x3)+0.13 exp(-x3)), -x2*(exp(x3)-0.13 exp(-x3))). Therefore ḣ = -(x2-1) - x2*(exp(x3)+0.13 exp(-x3))*(x3-1) + x2*x3*(exp(x3)-0.13 exp(-x3)) = 1 + x2*(exp(x3)-1+0.13 exp(-x3)*(1-2*x3)).",
+        "condition2_result": "On the boundary h=0, x1=10*exp(-x2*(exp(x3)+0.13 exp(-x3))), with x2>0 and x3 arbitrary. The Lie derivative is independent of x1, so it suffices to prove g(z)=exp(z)-1+0.13 exp(-z)*(1-2z) >= 0 for all z. Compute g'(z)=exp(z)+0.13 exp(-z)*(2z-3), and exp(z)g'(z)=F(z)=exp(2z)+0.13*(2z-3). Since F'(z)=2 exp(2z)+0.26>0, F has one zero, hence g has one global minimum. Certified bracketing gives F(-0.37)=exp(-0.74)-0.4862<0 and F(-0.36)=exp(-0.72)-0.4836>0, so the minimizer lies in (-0.37,-0.36). On this interval, exp(z)>=exp(-0.37)>0.6907 and 0.13 exp(-z)(1-2z) >= 0.13 exp(0.36)*1.72 > 0.3204. Hence g(z)>0.6907-1+0.3204=0.0111>0 at the global minimum, so g(z)>0 for all z. Therefore ḣ = 1+x2*g(x3) > 1 on all of X, in particular ḣ>=0 on ∂C. Numerical boundary checks: at x3=0,x2=1,x1=10 exp(-1.13), ḣ=1.13; near the worst case x3≈-0.365,x2=1, ḣ≈1.011.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The threshold log(10) cannot be increased without violating Condition 1 near x1=10 and x2→0+. However, the coefficient 0.13 can likely be reduced slightly, enlarging C especially for negative x3. For h_a=log(10)-log(x1)-x2*(exp(x3)+a exp(-x3)), the same proof requires exp(z)-1+a exp(-z)*(1-2z) >= 0 for all z. The minimal admissible value is approximately a_min = sup_{t>0} exp(-t)*(1-exp(-t))/(1+2t) ≈ 0.12285, attained near t≈0.3849, i.e. x3≈-0.3849. Thus replacing 0.13 by a value closer to about 0.123 would enlarge the certified invariant set while preserving the Nagumo condition; going below about 0.12285 would fail for large x2 on the boundary."
+      },
+      "refuter_elapsed_s": 173.077
+    }
+  ],
+  "final_barrier": {
+    "h": "log(10) - log(x1) - x2*(exp(x3) + 0.13*exp(-x3))",
+    "invariant_set": "C = { (x1,x2,x3) in X : log(x1) + x2*(exp(x3) + 0.13*exp(-x3)) <= log(10) }, with X = {x1 > 0, x2 > 0, x3 in R}. Equivalently, x1 <= 10*exp(-x2*(exp(x3) + 0.13*exp(-x3))).",
+    "condition1_check": "On the unsafe set X_u = {x in X : x1 >= 10}, we have log(10) - log(x1) <= 0. Also, because x2 > 0 and exp(x3) + 0.13*exp(-x3) > 0 for every real x3, the term -x2*(exp(x3) + 0.13*exp(-x3)) is strictly negative. Therefore h(x) = log(10) - log(x1) - x2*(exp(x3) + 0.13*exp(-x3)) < 0 for every x in X_u. Hence the unsafe set lies strictly in the negative region of h.",
+    "lie_derivative": "Let B(x2,x3) = x2*(exp(x3) + 0.13*exp(-x3)). Then h = log(10) - log(x1) - B. The system is x1dot = x1*(x2 - 1), x2dot = x2*(x3 - 1), x3dot = -x3. First, d/dt log(x1) = x1dot/x1 = x2 - 1. Next, partial B/partial x2 = exp(x3) + 0.13*exp(-x3), and partial B/partial x3 = x2*(exp(x3) - 0.13*exp(-x3)). Thus dB/dt = (exp(x3) + 0.13*exp(-x3))*x2*(x3 - 1) + x2*(exp(x3) - 0.13*exp(-x3))*(-x3). Collecting terms gives dB/dt = x2*((x3 - 1)*exp(x3) + 0.13*(x3 - 1)*exp(-x3) - x3*exp(x3) + 0.13*x3*exp(-x3)) = x2*(-exp(x3) + 0.13*(2*x3 - 1)*exp(-x3)). Therefore dh/dt = -(x2 - 1) - dB/dt = 1 - x2 - x2*(-exp(x3) + 0.13*(2*x3 - 1)*exp(-x3)) = 1 + x2*(exp(x3) - 1 - 0.13*(2*x3 - 1)*exp(-x3)).",
+    "condition2_check": "We prove the stronger fact that dh/dt >= 1 for all x in X, not only on the boundary h = 0. It suffices to prove exp(z) - 1 - 0.13*(2*z - 1)*exp(-z) >= 0 for every real z. Since exp(z) > 0, multiply by exp(z) to obtain the equivalent inequality F(z) := exp(2*z) - exp(z) - 0.26*z + 0.13 >= 0. Let u = exp(z) > 0, so z = log(u). Then F(z) = phi(u), where phi(u) = u**2 - u - 0.26*log(u) + 0.13 for u > 0. Compute phi'(u) = 2*u - 1 - 0.26/u. The unique positive critical point satisfies 2*u**2 - u - 0.26 = 0, hence u_* = (1 + sqrt(3.08))/4. Also phi''(u) = 2 + 0.26/u**2 > 0, so this critical point is the global minimizer. Numerically, u_* = (1 + sqrt(3.08))/4 approximately 0.6887457, and phi(u_*) = u_* **2 - u_* - 0.26*log(u_*) + 0.13 approximately 0.012254 > 0. Therefore phi(u) >= 0 for all u > 0, equivalently F(z) >= 0 for all real z. Hence exp(x3) - 1 - 0.13*(2*x3 - 1)*exp(-x3) >= 0. Since x2 > 0, dh/dt = 1 + x2*(exp(x3) - 1 - 0.13*(2*x3 - 1)*exp(-x3)) >= 1 > 0. In particular, on the boundary partial C = {h = 0}, dh/dt >= 0, satisfying Nagumo's condition.",
+    "reasoning": "The key idea is to dominate the possible transient growth of x1 by a storage term depending on the cascade variables x2 and x3. Since d/dt log(x1) = x2 - 1, a barrier of the form h = log(10) - log(x1) - B(x2,x3) is natural. The term B = x2*(exp(x3) + 0.13*exp(-x3)) is chosen so that its Lie derivative is sufficiently negative to compensate the positive x2 contribution in d/dt log(x1). Indeed, dB/dt = x2*(-exp(x3) + 0.13*(2*x3 - 1)*exp(-x3)), which yields dh/dt >= 1 globally after the scalar exponential inequality is verified. Thus the superlevel set h >= 0 is forward invariant and is strictly separated from the unsafe region x1 >= 10. The coefficient 0.13 is chosen small enough to reduce conservatism compared with a symmetric exp(x3)+exp(-x3) storage term, while still making the required inequality hold globally for all x3 in R."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 347.467
+  },
+  "tokens": {
+    "input": 2735,
+    "output": 14243,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1766,
+        "output_tokens": 4997,
+        "elapsed_s": 174.182
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 969,
+        "output_tokens": 9246,
+        "elapsed_s": 173.077
+      }
+    ]
+  }
+}

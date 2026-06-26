@@ -1,0 +1,120 @@
+{
+  "pipeline": "v4",
+  "system": {
+    "name": "B2-017",
+    "ode": "dx1/dt = -x1*(1+cos(x1)**2), dx2/dt = -x2*(1+cos(x2)**2)",
+    "state_vars": [
+      "x1",
+      "x2"
+    ],
+    "f_expr": [
+      "-x1*(1+cos(x1)**2)",
+      "-x2*(1+cos(x2)**2)"
+    ],
+    "X_domain": "ball",
+    "X_u_desc": "||x|| >= 2.404",
+    "X_u_expr": "x1**2 + x2**2 >= 5.779216",
+    "X_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ]
+    ],
+    "meta": {
+      "id": "B2-017",
+      "layer": "L2-new",
+      "group": "B2",
+      "task": "barrier",
+      "cert_class": "nonpoly-explicit",
+      "source": "cos^2-damped (c=2)"
+    }
+  },
+  "timestamp": "2026-06-11T18:28:37.470674",
+  "model": "gpt-5.5",
+  "rounds": [
+    {
+      "turn": 1,
+      "effort": "medium",
+      "proposal": {
+        "h": "5.779215999 - x1**2 - x2**2",
+        "invariant_set": "C = {x : x1**2 + x2**2 <= 5.779215999}, i.e. the closed disk of radius sqrt(5.779215999), which is just inside the unsafe radius 2.404.",
+        "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 2.404}, equivalently x1**2 + x2**2 >= 2.404**2 = 5.779216. For any x in X_u, h(x) = 5.779215999 - x1**2 - x2**2 <= 5.779215999 - 5.779216 = -0.000000001 < 0. Therefore h(x) < 0 on the entire unsafe set.",
+        "lie_derivative": "Given h(x) = 5.779215999 - x1**2 - x2**2, we have grad h = (-2*x1, -2*x2). The dynamics are f1 = -x1*(1 + cos(x1)**2), f2 = -x2*(1 + cos(x2)**2). Hence dh/dt = grad h · f = (-2*x1)*(-x1*(1 + cos(x1)**2)) + (-2*x2)*(-x2*(1 + cos(x2)**2)) = 2*x1**2*(1 + cos(x1)**2) + 2*x2**2*(1 + cos(x2)**2).",
+        "condition2_check": "On the boundary partial C, h(x)=0, so x1**2 + x2**2 = 5.779215999. Since cos(z)**2 >= 0 for every real z, we have 1 + cos(z)**2 >= 1. Therefore 2*x1**2*(1 + cos(x1)**2) >= 2*x1**2 and 2*x2**2*(1 + cos(x2)**2) >= 2*x2**2. Thus, on partial C, dh/dt >= 2*x1**2 + 2*x2**2 = 2*(x1**2 + x2**2) = 2*5.779215999 = 11.558431998 > 0. Hence dh/dt >= 0 on the entire boundary partial C, satisfying Nagumo's condition.",
+        "reasoning": "The system is componentwise dissipative: each coordinate satisfies dx_i/dt = -x_i*(1 + cos(x_i)**2), so x_i*dx_i/dt <= -x_i**2. Therefore the squared radius x1**2 + x2**2 strictly decreases away from the origin. Euclidean disks centered at the origin are forward invariant. To maximize the safe invariant set while keeping the unsafe set {||x|| >= 2.404} strictly in the negative region of h, choose a disk with squared radius just below 2.404**2 = 5.779216. The value 5.779215999 gives an invariant disk arbitrarily close to the largest possible safe disk while preserving the strict condition h < 0 on the unsafe boundary."
+      },
+      "proposer_elapsed_s": 23.718,
+      "local_verification": {
+        "passed": true,
+        "cache_fails": [],
+        "symbolic": {
+          "lie_derivative": "2*x1**2*(cos(x1)**2 + 1) + 2*x2**2*(cos(x2)**2 + 1)",
+          "boundary_epsilon": 0.354779,
+          "boundary_pts_found": 202,
+          "cond1_max_h_in_Xu": -0.000566,
+          "cond1_ok": true,
+          "cond2_min_lie_on_boundary": 10.964135,
+          "cond2_ok": true,
+          "symbolic_valid": true,
+          "elapsed_s": 0.044
+        },
+        "trajectory": {
+          "n_trajs": 30,
+          "t_span": 15.0,
+          "min_h_on_trajs": 0.380586,
+          "trajectory_valid": true,
+          "elapsed_s": 0.187
+        }
+      },
+      "refutation": {
+        "verdict": "valid",
+        "condition1_result": "For the unsafe set ||x|| >= 2.404, we have x1^2 + x2^2 >= 2.404^2 = 5.779216. The proposed h(x) = 5.779215999 - x1^2 - x2^2 therefore satisfies h(x) <= 5.779215999 - 5.779216 = -0.000000001 < 0 on all of X_u. For example, at x = (2.404, 0), h(x) = -1.000000082740371e-9 < 0.",
+        "lie_derivative_computed": "∇h(x) = (-2x1, -2x2). With f1 = -x1(1 + cos(x1)^2), f2 = -x2(1 + cos(x2)^2), the Lie derivative is ḣ(x) = ∇h·f = 2x1^2(1 + cos(x1)^2) + 2x2^2(1 + cos(x2)^2).",
+        "condition2_result": "On the boundary ∂C, h(x)=0, so x1^2 + x2^2 = 5.779215999. Since 1 + cos(xi)^2 >= 1 for each i, we get ḣ(x) = 2x1^2(1 + cos(x1)^2) + 2x2^2(1 + cos(x2)^2) >= 2(x1^2 + x2^2) = 11.558431998 > 0. Thus the Nagumo condition ḣ >= 0 holds strictly everywhere on ∂C. For example, at x = (sqrt(5.779215999), 0) ≈ (2.403999999792, 0), ḣ = 2x1^2(1 + cos(x1)^2) >= 11.558431998 > 0.",
+        "counterexample": null,
+        "flaw": null,
+        "suggestion": null,
+        "enlargement_suggestion": "The same quadratic form h_a(x) = a - x1^2 - x2^2 remains valid for any a < 2.404^2 = 5.779216. The current value a = 5.779215999 leaves a margin of about 1e-9 in squared radius. It could be enlarged slightly, for example to h(x) = 5.779215999999 - x1^2 - x2^2, while still satisfying h < 0 on ||x|| >= 2.404. The exact threshold a = 5.779216 would fail the strict Condition 1 because h = 0 at ||x|| = 2.404."
+      },
+      "refuter_elapsed_s": 24.48
+    }
+  ],
+  "final_barrier": {
+    "h": "5.779215999 - x1**2 - x2**2",
+    "invariant_set": "C = {x : x1**2 + x2**2 <= 5.779215999}, i.e. the closed disk of radius sqrt(5.779215999), which is just inside the unsafe radius 2.404.",
+    "condition1_check": "The unsafe set is X_u = {x : ||x|| >= 2.404}, equivalently x1**2 + x2**2 >= 2.404**2 = 5.779216. For any x in X_u, h(x) = 5.779215999 - x1**2 - x2**2 <= 5.779215999 - 5.779216 = -0.000000001 < 0. Therefore h(x) < 0 on the entire unsafe set.",
+    "lie_derivative": "Given h(x) = 5.779215999 - x1**2 - x2**2, we have grad h = (-2*x1, -2*x2). The dynamics are f1 = -x1*(1 + cos(x1)**2), f2 = -x2*(1 + cos(x2)**2). Hence dh/dt = grad h · f = (-2*x1)*(-x1*(1 + cos(x1)**2)) + (-2*x2)*(-x2*(1 + cos(x2)**2)) = 2*x1**2*(1 + cos(x1)**2) + 2*x2**2*(1 + cos(x2)**2).",
+    "condition2_check": "On the boundary partial C, h(x)=0, so x1**2 + x2**2 = 5.779215999. Since cos(z)**2 >= 0 for every real z, we have 1 + cos(z)**2 >= 1. Therefore 2*x1**2*(1 + cos(x1)**2) >= 2*x1**2 and 2*x2**2*(1 + cos(x2)**2) >= 2*x2**2. Thus, on partial C, dh/dt >= 2*x1**2 + 2*x2**2 = 2*(x1**2 + x2**2) = 2*5.779215999 = 11.558431998 > 0. Hence dh/dt >= 0 on the entire boundary partial C, satisfying Nagumo's condition.",
+    "reasoning": "The system is componentwise dissipative: each coordinate satisfies dx_i/dt = -x_i*(1 + cos(x_i)**2), so x_i*dx_i/dt <= -x_i**2. Therefore the squared radius x1**2 + x2**2 strictly decreases away from the origin. Euclidean disks centered at the origin are forward invariant. To maximize the safe invariant set while keeping the unsafe set {||x|| >= 2.404} strictly in the negative region of h, choose a disk with squared radius just below 2.404**2 = 5.779216. The value 5.779215999 gives an invariant disk arbitrarily close to the largest possible safe disk while preserving the strict condition h < 0 on the unsafe boundary."
+  },
+  "solved": true,
+  "refuter_calls": 1,
+  "lean4": null,
+  "timing": {
+    "total_elapsed_s": 48.44
+  },
+  "tokens": {
+    "input": 2346,
+    "output": 2277,
+    "calls": [
+      {
+        "label": "proposer#1",
+        "effort": "medium",
+        "input_tokens": 1532,
+        "output_tokens": 1137,
+        "elapsed_s": 23.718
+      },
+      {
+        "label": "refuter#1",
+        "effort": "high",
+        "input_tokens": 814,
+        "output_tokens": 1140,
+        "elapsed_s": 24.48
+      }
+    ]
+  }
+}
